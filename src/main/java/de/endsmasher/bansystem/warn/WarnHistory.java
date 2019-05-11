@@ -49,8 +49,6 @@ public class WarnHistory implements CommandExecutor {
                     .build();
 
 
-
-
             List <PlayerWarn> playerWarns = warnService.getReader().readAllObjects(query, PlayerWarn.class);
             List <PlayerBan> playerBans = banService.getReader().readAllObjects(query, PlayerBan.class);
             List <PlayerMute> playerMutes = muteService.getReader().readAllObjects(query, PlayerMute.class);
