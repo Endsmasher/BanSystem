@@ -48,17 +48,10 @@ public class WarnHistory implements CommandExecutor {
                     .close()
                     .build();
 
-            Query query1 = new Query()
-                    .addEq()
-                    .setField("id")
-                    .setValue(target.getUniqueId().toString())
-                    .setField("kind")
-                    .setValue("ACTIVE")
-                    .close()
-                    .build();
 
 
-            List <PlayerWarn> playerWarns = warnService.getReader().readAllObjects(query1, PlayerWarn.class);
+
+            List <PlayerWarn> playerWarns = warnService.getReader().readAllObjects(query, PlayerWarn.class);
             List <PlayerBan> playerBans = banService.getReader().readAllObjects(query, PlayerBan.class);
             List <PlayerMute> playerMutes = muteService.getReader().readAllObjects(query, PlayerMute.class);
 
@@ -76,6 +69,7 @@ public class WarnHistory implements CommandExecutor {
             for (PlayerWarn playerWarn : playerWarns) {
                 sender.sendMessage("§7 - " + playerWarn.getPrettyWarnDate());
                 sender.sendMessage("   §6> Reason: §7" + playerWarn.getReason());
+                sender.sendMessage("   §6> Info: §7" + playerWarn.getInfo());
                 sender.sendMessage(" ");
             }
 
