@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="module_bansystem" default="compile.module.bansystem">
+  <dirname property="module.bansystem.basedir" file="${ant.file.module_bansystem}"/>
+  
+  <property name="module.jdk.home.bansystem" value="${project.jdk.home}"/>
+  <property name="module.jdk.bin.bansystem" value="${project.jdk.bin}"/>
+  <property name="module.jdk.classpath.bansystem" value="${project.jdk.classpath}"/>
+  
+  <property name="compiler.args.bansystem" value="-encoding UTF-8 -source 8 -target 1.8 ${compiler.args}"/>
+  
+  <property name="bansystem.output.dir" value="${module.bansystem.basedir}/target/classes"/>
+  <property name="bansystem.testoutput.dir" value="${module.bansystem.basedir}/target/test-classes"/>
+  
+  <path id="bansystem.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="bansystem.module.production.classpath">
+    <path refid="${module.jdk.classpath.bansystem}"/>
+    <path refid="library.maven:_org.spigotmc:spigot-api:1.8.8-r0.1-snapshot.classpath"/>
+    <path refid="library.maven:_commons-lang:commons-lang:2.6.classpath"/>
+    <path refid="library.maven:_com.googlecode.json-simple:json-simple:1.1.1.classpath"/>
+    <path refid="library.maven:_junit:junit:4.10.classpath"/>
+    <path refid="library.maven:_org.hamcrest:hamcrest-core:1.1.classpath"/>
+    <path refid="library.maven:_com.google.guava:guava:17.0.classpath"/>
+    <path refid="library.maven:_com.google.code.gson:gson:2.2.4.classpath"/>
+    <path refid="library.maven:_org.avaje:ebean:2.8.1.classpath"/>
+    <path refid="library.maven:_javax.persistence:persistence-api:1.0.classpath"/>
+    <path refid="library.maven:_org.yaml:snakeyaml:1.15.classpath"/>
+    <path refid="library.maven:_net.md-5:bungeecord-chat:1.8-snapshot.classpath"/>
+    <path refid="library.maven:_net.endrealm:realm-drive:0.0.1-pre.classpath"/>
+    <path refid="library.maven:_org.mongodb:mongo-java-driver:3.10.2.classpath"/>
+  </path>
+  
+  <path id="bansystem.runtime.production.module.classpath">
+    <pathelement location="${bansystem.output.dir}"/>
+    <path refid="library.maven:_net.endrealm:realm-drive:0.0.1-pre.classpath"/>
+    <path refid="library.maven:_org.mongodb:mongo-java-driver:3.10.2.classpath"/>
+  </path>
+  
+  <path id="bansystem.module.classpath">
+    <path refid="${module.jdk.classpath.bansystem}"/>
+    <pathelement location="${bansystem.output.dir}"/>
+    <path refid="library.maven:_org.spigotmc:spigot-api:1.8.8-r0.1-snapshot.classpath"/>
+    <path refid="library.maven:_commons-lang:commons-lang:2.6.classpath"/>
+    <path refid="library.maven:_com.googlecode.json-simple:json-simple:1.1.1.classpath"/>
+    <path refid="library.maven:_junit:junit:4.10.classpath"/>
+    <path refid="library.maven:_org.hamcrest:hamcrest-core:1.1.classpath"/>
+    <path refid="library.maven:_com.google.guava:guava:17.0.classpath"/>
+    <path refid="library.maven:_com.google.code.gson:gson:2.2.4.classpath"/>
+    <path refid="library.maven:_org.avaje:ebean:2.8.1.classpath"/>
+    <path refid="library.maven:_javax.persistence:persistence-api:1.0.classpath"/>
+    <path refid="library.maven:_org.yaml:snakeyaml:1.15.classpath"/>
+    <path refid="library.maven:_net.md-5:bungeecord-chat:1.8-snapshot.classpath"/>
+    <path refid="library.maven:_net.endrealm:realm-drive:0.0.1-pre.classpath"/>
+    <path refid="library.maven:_org.mongodb:mongo-java-driver:3.10.2.classpath"/>
+  </path>
+  
+  <path id="bansystem.runtime.module.classpath">
+    <pathelement location="${bansystem.testoutput.dir}"/>
+    <pathelement location="${bansystem.output.dir}"/>
+    <path refid="library.maven:_org.spigotmc:spigot-api:1.8.8-r0.1-snapshot.classpath"/>
+    <path refid="library.maven:_commons-lang:commons-lang:2.6.classpath"/>
+    <path refid="library.maven:_com.googlecode.json-simple:json-simple:1.1.1.classpath"/>
+    <path refid="library.maven:_junit:junit:4.10.classpath"/>
+    <path refid="library.maven:_org.hamcrest:hamcrest-core:1.1.classpath"/>
+    <path refid="library.maven:_com.google.guava:guava:17.0.classpath"/>
+    <path refid="library.maven:_com.google.code.gson:gson:2.2.4.classpath"/>
+    <path refid="library.maven:_org.avaje:ebean:2.8.1.classpath"/>
+    <path refid="library.maven:_javax.persistence:persistence-api:1.0.classpath"/>
+    <path refid="library.maven:_org.yaml:snakeyaml:1.15.classpath"/>
+    <path refid="library.maven:_net.md-5:bungeecord-chat:1.8-snapshot.classpath"/>
+    <path refid="library.maven:_net.endrealm:realm-drive:0.0.1-pre.classpath"/>
+    <path refid="library.maven:_org.mongodb:mongo-java-driver:3.10.2.classpath"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.bansystem">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.bansystem">
+    <patternset refid="excluded.from.module.bansystem"/>
+  </patternset>
+  
+  <path id="bansystem.module.sourcepath">
+    <dirset dir="${module.bansystem.basedir}">
+      <include name="src/main/java"/>
+      <include name="src/main/resources"/>
+    </dirset>
+  </path>
+  
+  <path id="bansystem.module.test.sourcepath">
+    <dirset dir="${module.bansystem.basedir}">
+      <include name="src/test/java"/>
+      <include name="src/test/resources"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.bansystem" depends="compile.module.bansystem.production,compile.module.bansystem.tests" description="Compile module BanSystem"/>
+  
+  <target name="compile.module.bansystem.production" depends="register.custom.compilers" description="Compile module BanSystem; production classes">
+    <mkdir dir="${bansystem.output.dir}"/>
+    <javac2 destdir="${bansystem.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.bansystem}/javac">
+      <compilerarg line="${compiler.args.bansystem}"/>
+      <bootclasspath refid="bansystem.module.bootclasspath"/>
+      <classpath refid="bansystem.module.production.classpath"/>
+      <src refid="bansystem.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.bansystem"/>
+    </javac2>
+    
+    <copy todir="${bansystem.output.dir}">
+      <fileset dir="${module.bansystem.basedir}/src/main/java">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+      <fileset dir="${module.bansystem.basedir}/src/main/resources">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.bansystem.tests" depends="register.custom.compilers,compile.module.bansystem.production" description="compile module BanSystem; test classes" unless="skip.tests">
+    <mkdir dir="${bansystem.testoutput.dir}"/>
+    <javac2 destdir="${bansystem.testoutput.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.bansystem}/javac">
+      <compilerarg line="${compiler.args.bansystem}"/>
+      <bootclasspath refid="bansystem.module.bootclasspath"/>
+      <classpath refid="bansystem.module.classpath"/>
+      <src refid="bansystem.module.test.sourcepath"/>
+      <patternset refid="excluded.from.compilation.bansystem"/>
+    </javac2>
+    
+    <copy todir="${bansystem.testoutput.dir}">
+      <fileset dir="${module.bansystem.basedir}/src/test/java">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+      <fileset dir="${module.bansystem.basedir}/src/test/resources">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="clean.module.bansystem" description="cleanup module">
+    <delete dir="${bansystem.output.dir}"/>
+    <delete dir="${bansystem.testoutput.dir}"/>
+  </target>
+</project>

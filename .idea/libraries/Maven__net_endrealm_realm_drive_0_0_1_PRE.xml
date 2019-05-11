@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: net.endrealm:realm-drive:0.0.1-PRE">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/net/endrealm/realm-drive/0.0.1-PRE/realm-drive-0.0.1-PRE.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/net/endrealm/realm-drive/0.0.1-PRE/realm-drive-0.0.1-PRE-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/net/endrealm/realm-drive/0.0.1-PRE/realm-drive-0.0.1-PRE-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

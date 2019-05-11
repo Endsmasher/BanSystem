@@ -1,0 +1,11 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="BanSystem:jar">
+    <output-path>$USER_HOME$/Desktop/Development/Server/Server 1.8.8/plugins</output-path>
+    <root id="archive" name="BanSystem.jar">
+      <element id="module-output" name="BanSystem" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/net/endrealm/realm-drive/0.0.1-PRE/realm-drive-0.0.1-PRE.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/mongodb/mongo-java-driver/3.10.2/mongo-java-driver-3.10.2.jar" path-in-jar="/" />
+      <element id="library" level="project" name="Maven: org.mongodb:mongo-java-driver:3.10.2" />
+    </root>
+  </artifact>
+</component>

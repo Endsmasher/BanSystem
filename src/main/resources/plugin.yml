@@ -1,0 +1,31 @@
+name: BanSystem
+version: ${project.version}
+main: de.endsmasher.bansystem.BanSystem
+prefix: Ban
+authors: [Endsmasher]
+description: The best Ban system ever seen
+
+commands:
+  ban:
+    description: Allows you to ban other players
+
+  tempban:
+    description: Allows you to tempban other players
+
+  unban:
+    description: Allows you to unban other players
+
+  warn:
+    description: Warns a player
+
+  unwarn:
+    description: Unwarns the target player if warned
+
+  history:
+    description: Shows you the History of a player
+
+  mute:
+    description: Allows you to mute other players
+
+  unmute:
+    description: Allows you to unmute other players
