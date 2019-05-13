@@ -20,7 +20,6 @@ public class LoginListener implements Listener {
         this.plugin = plugin;
     }
 
-
     @EventHandler(ignoreCancelled = true)
     public void onPlayerJoin(PlayerLoginEvent event) {
         DriveService service = plugin.getBanService();
