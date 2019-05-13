@@ -26,7 +26,7 @@ public class UnMute implements CommandExecutor {
         OfflinePlayer target = Bukkit.getOfflinePlayer(args[0]);
 
 
-        if (sender.hasPermission("BanSystem.unban")) {
+        if (sender.hasPermission("BanSystem.Team")) {
             if (args.length == 1) {
                 Query query = new Query()
                         .addEq()

@@ -28,7 +28,7 @@ public class Mute implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         DriveService service = plugin.getMuteService();
 
-        if (!sender.hasPermission("BanSystem.Mute")) {
+        if (!sender.hasPermission("BanSystem.Team")) {
             sender.sendMessage("§cYou don't have enough permissions to perform this command!");
             return true;
         }
@@ -70,7 +70,7 @@ public class Mute implements CommandExecutor {
 
             muted.add(target.getUniqueId());
 
-            Bukkit.broadcastMessage("§a " + sender.getName() + " muted " + target.getName() + "(" + args[1] + ")");
+            Bukkit.broadcastMessage("§a " + sender.getName() + " muted " + target.getName() + "(" + args[1] + ") " + args[2] + " minutes");
             sender.sendMessage("§aSuccessful muted " + target.getName() + " for " + args[1]);
         } else sender.sendMessage("§c Please use /mute <player> <reason> <mute duration(minutes)> ");
         return false;

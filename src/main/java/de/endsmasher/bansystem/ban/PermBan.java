@@ -27,7 +27,7 @@ public class PermBan implements CommandExecutor {
         DriveService service = plugin.getBanService();
 
 
-        if (!sender.hasPermission("BanSystem.Ban")) {
+        if (!sender.hasPermission("BanSystem.Team")) {
             sender.sendMessage("§cYou don't have enough permissions to perform this command!");
             return true;
         }

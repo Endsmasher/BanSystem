@@ -1,6 +1,5 @@
-package de.endsmasher.bansystem.warn;
+package de.endsmasher.bansystem;
 
-import de.endsmasher.bansystem.BanSystem;
 import de.endsmasher.bansystem.utils.PlayerBan;
 import de.endsmasher.bansystem.utils.PlayerMute;
 import de.endsmasher.bansystem.utils.PlayerWarn;
@@ -14,11 +13,11 @@ import org.bukkit.command.CommandSender;
 
 import java.util.List;
 
-public class WarnHistory implements CommandExecutor {
+public class History implements CommandExecutor {
 
     private BanSystem plugin;
 
-    public WarnHistory(BanSystem plugin) {
+    public History(BanSystem plugin) {
         this.plugin = plugin;
     }
 
@@ -30,7 +29,7 @@ public class WarnHistory implements CommandExecutor {
         DriveService banService = plugin.getBanService();
         DriveService muteService = plugin.getMuteService();
 
-        if (!sender.hasPermission("BanSystem.UnWarn")) {
+        if (!sender.hasPermission("BanSystem.Team")) {
             sender.sendMessage("§cYou don't have enough permissions to perform this command!");
             return true;
         }
@@ -77,8 +76,8 @@ public class WarnHistory implements CommandExecutor {
                 sender.sendMessage("   §6> Reason: §7" + playerMute.getReason());
                 sender.sendMessage(" ");
             }
-                    // for Endsmasher ➥ nice :D
-                    //sender.sendMessage("\u27a5");
+            // for Endsmasher
+            //sender.sendMessage("\u27a5");
         } else sender.sendMessage("§c Please use /history <player>");
         return false;
     }

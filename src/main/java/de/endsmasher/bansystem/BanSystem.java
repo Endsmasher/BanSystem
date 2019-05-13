@@ -11,7 +11,6 @@ import de.endsmasher.bansystem.utils.PlayerBan;
 import de.endsmasher.bansystem.utils.PlayerMute;
 import de.endsmasher.bansystem.utils.PlayerWarn;
 import de.endsmasher.bansystem.warn.UnWarnPlayer;
-import de.endsmasher.bansystem.warn.WarnHistory;
 import de.endsmasher.bansystem.warn.WarnPlayer;
 import net.endrealm.realmdrive.factory.DriveServiceFactory;
 import net.endrealm.realmdrive.interfaces.ConversionHandler;
@@ -39,7 +38,9 @@ public final class BanSystem extends JavaPlugin {
     @Override
     public void onEnable() {
 
+        System.out.println("The Plugin is loading ...");
 
+        // To save the Bans
         DriveSettings settings = DriveSettings.builder()
                 .type(DriveSettings.BackendType.MONGO_DB)
                 .hostURL("mongodb://localhost:27017")
@@ -52,7 +53,7 @@ public final class BanSystem extends JavaPlugin {
 
 
 
-
+        // To save the Warns
         DriveSettings settings1 = DriveSettings.builder()
                 .type(DriveSettings.BackendType.MONGO_DB)
                 .hostURL("mongodb://localhost:27017")
@@ -65,7 +66,7 @@ public final class BanSystem extends JavaPlugin {
 
 
 
-
+        // To save the Mutes
         DriveSettings settingsmute = DriveSettings.builder()
                 .type(DriveSettings.BackendType.MONGO_DB)
                 .hostURL("mongodb://localhost:27017")
@@ -76,8 +77,8 @@ public final class BanSystem extends JavaPlugin {
         ConversionHandler conversionmute = muteService.getConversionHandler();
         conversionmute.registerClasses(PlayerMute.class);
 
-
-
+        System.out.println(" loading ...");
+        // Register the Commands
 
         getCommand("ban").setExecutor(new PermBan(this));
         getCommand("tempban").setExecutor(new TempBan(this));
@@ -85,42 +86,24 @@ public final class BanSystem extends JavaPlugin {
 
         getCommand("warn").setExecutor(new WarnPlayer(this));
         getCommand("unwarn").setExecutor(new UnWarnPlayer(this));
-        getCommand("history").setExecutor(new WarnHistory(this));
+        getCommand("history").setExecutor(new History(this));
 
         getCommand("mute").setExecutor(new Mute(this));
         getCommand("unmute").setExecutor(new UnMute(this));
 
+        System.out.println("The Plugin registered all Commands!");
 
+        // Register the Events
 
         Bukkit.getPluginManager().registerEvents(new CommandListener(), this);
-
         Bukkit.getPluginManager().registerEvents(new LoginListener(this), this);
-
         Bukkit.getPluginManager().registerEvents(new MuteListener(this), this);
-
-
-
-        //Folgender code kann auch wo anders sein
-
-        /*banService.getWriter().write(new PlayerBan("IDOskhösfjhsdfhöesfesf", "Hacking", new Date().getTime()+1000*60*60*24, new Date().getTime()));
-        PlayerBan playerBan = banService.getReader().readObject(
-                new Query()
-                    .addEq()
-                        .setField("id")
-                        .setValue("IDOskhösfjhsdfhöesfesf")
-                    .close()
-                .build(), PlayerBan.class);
-        banService.getWriter().delete(new Query()
-                .addEq()
-                .setField("id")
-                .setValue("IDOskhösfjhsdfhöesfesf")
-                .close()
-                .build(), 1 wie viele einträge ich löschen will); */
-
+        System.out.println("The Plugin registered all Events!");
+        System.out.println("The Plugin started!");
     }
 
     @Override
     public void onDisable() {
-
+    System.out.println("The Plugin turned off!");
     }
 }

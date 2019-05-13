@@ -25,7 +25,7 @@ public class UnWarnPlayer implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         DriveService service = plugin.getWarnService();
 
-        if (!sender.hasPermission("BanSystem.UnWarn")) {
+        if (!sender.hasPermission("BanSystem.Team")) {
             sender.sendMessage("§cYou don't have enough permissions to perform this command!");
             return true;
         }
