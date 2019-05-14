@@ -60,7 +60,7 @@ public class PermBan implements CommandExecutor {
                 return true;
             }
 
-                service.getWriter().write(new PlayerBan(target.getUniqueId().toString(), args[1], "Ban", -1, new Date().getTime()));
+                service.getWriter().write(new PlayerBan(target.getUniqueId().toString(), args[1], -1, new Date().getTime()));
             if (Bukkit.getPlayer(target.getUniqueId()) != null) {
                 Bukkit.getPlayer(target.getUniqueId()).kickPlayer("§c§l Chaincraft.ORG"
                         + "\n"

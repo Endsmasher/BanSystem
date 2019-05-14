@@ -18,19 +18,15 @@ public class PlayerBan  {
     private String reason;
 
     @SaveVar
-    private String kind;
-
-    @SaveVar
     private long unbanDate;
 
     @SaveVar
     private long banDate;
 
 
-    public PlayerBan(String id, String reason, String kind, long unbanDate, long banDate) {
+    public PlayerBan(String id, String reason, long unbanDate, long banDate) {
         this.id = id;
         this.reason = reason;
-        this.kind = kind;
         this.unbanDate = unbanDate;
         this.banDate = banDate;
     }
@@ -44,8 +40,6 @@ public class PlayerBan  {
     public String getReason() {
         return reason;
     }
-
-    public String getKind() { return kind;}
 
     public long getUnbanDate() {
         return unbanDate;

@@ -32,8 +32,6 @@ public class Unban implements CommandExecutor {
                         .addEq()
                         .setField("id")
                         .setValue(target.getUniqueId().toString())
-                        .setField("kind")
-                        .setValue("Ban")
                         .close()
                         .build();
 
@@ -48,8 +46,6 @@ public class Unban implements CommandExecutor {
                                     .addEq()
                                     .setField("id")
                                     .setValue(target.getUniqueId().toString())
-                                    .setField("kind")
-                                    .setValue("Ban")
                                     .close()
                                     .build(), 1);
 

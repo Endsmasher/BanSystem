@@ -28,8 +28,6 @@ public class LoginListener implements Listener {
                 .addEq()
                 .setField("id")
                 .setValue(player.getUniqueId().toString())
-                .setField("kind")
-                .setValue("Ban")
                 .close()
                 .build();
 
@@ -43,18 +41,25 @@ public class LoginListener implements Listener {
                     .addEq()
                         .setField("id")
                         .setValue(player.getUniqueId().toString())
-                        .setField("kind")
-                        .setValue("Ban")
                     .close()
                     .build(), 1);
             return;
-        } else
+        } if (playerBan.getUnbanDate() == -1) {
 
+            event.setKickMessage("§c§l Chaincraft.ORG"
+                    + "\n"
+                    + "§r§c You were permanently banned "
+                    + "\n"
+                    + "\n§7 Reason: "
+                    + "§r" + playerBan.getReason()
+                    + "\n"
+                    + "\n§7 You can appeal at our Reddit: http://reddit.com/r/ChaincraftORG "
+                    + "\n"
+                    + "\n§7 You were banned at "
+                    + new Date(playerBan.getBanDate()));
+                event.setResult(PlayerLoginEvent.Result.KICK_BANNED);
 
-
-        {
-            event.setResult(PlayerLoginEvent.Result.KICK_BANNED);
-        }
+        } if (playerBan.getUnbanDate() != -1)
 
             event.setKickMessage("§c§l Chaincraft.ORG"
                     + "\n"
@@ -71,19 +76,8 @@ public class LoginListener implements Listener {
                     + "\n"
                     + " You were banned at "
                     + new Date(playerBan.getBanDate()));
+                event.setResult(PlayerLoginEvent.Result.KICK_BANNED);
 
 
-            event.setKickMessage("§c§l Chaincraft.ORG"
-            + "\n"
-            + "§r§c You were permanently banned "
-            + "\n"
-            + "\n§7 Reason: "
-            + "§r"
-            + playerBan.getReason()
-            + "\n"
-            + "\n§7 You can appeal at our Reddit: http://reddit.com/r/ChaincraftORG "
-            + "\n"
-            + "\n§7 You were banned at "
-            + new Date(playerBan.getBanDate()));
     }
 }

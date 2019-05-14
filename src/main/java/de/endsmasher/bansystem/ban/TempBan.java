@@ -49,7 +49,7 @@ public class TempBan implements CommandExecutor {
             } catch (Exception ex) {
                 sender.sendMessage("§cThe entered ban time is not a number!" + "\n Please use /tempban <player> <reason> <time(in days)> !");
             }
-            service.getWriter().write(new PlayerBan(target.getUniqueId().toString(), args[1], "Ban", new Date().getTime() + 1000 * 60 * 60 * 24* days, new Date().getTime()));
+            service.getWriter().write(new PlayerBan(target.getUniqueId().toString(), args[1], new Date().getTime() + 1000 * 60 * 60 * 24* days, new Date().getTime()));
             if (Bukkit.getPlayer(target.getUniqueId()) != null) {
                 Bukkit.getPlayer(target.getUniqueId()).kickPlayer("§c§l Chaincraft.ORG"
                 + "\n"
