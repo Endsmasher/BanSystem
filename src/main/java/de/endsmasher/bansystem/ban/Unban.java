@@ -48,8 +48,8 @@ public class Unban implements CommandExecutor {
                                     .setValue(target.getUniqueId().toString())
                                     .close()
                                     .build(), 1);
-
                     sender.sendMessage("§a Successful unbanned " + target.getName());
+
                 } else sender.sendMessage("Please use /unban <player>");
 
             } else sender.sendMessage("§c You don't have enough permissions");
