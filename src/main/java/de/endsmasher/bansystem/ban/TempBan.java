@@ -38,10 +38,13 @@ public class TempBan implements CommandExecutor {
             if (target == null) {
                 sender.sendMessage("§c Unknown Player " + args[0]);
                 return true;
+
             } else if (target.isOp()) {
                 sender.sendMessage("§c You are not allowed to ban " + target.getName());
                 return true;
             }
+
+            // "Translate" args[2] into a number
 
             int days = 0;
             try {
@@ -49,6 +52,9 @@ public class TempBan implements CommandExecutor {
             } catch (Exception ex) {
                 sender.sendMessage("§cThe entered ban time is not a number!" + "\n Please use /tempban <player> <reason> <time(in days)> !");
             }
+
+            // create the database entry
+
             service.getWriter().write(new PlayerBan(target.getUniqueId().toString(), args[1], new Date().getTime() + 1000 * 60 * 60 * 24* days, new Date().getTime()));
             if (Bukkit.getPlayer(target.getUniqueId()) != null) {
                 Bukkit.getPlayer(target.getUniqueId()).kickPlayer("§c§l Chaincraft.ORG"
@@ -66,7 +72,13 @@ public class TempBan implements CommandExecutor {
                 + " You were banned at "
                 + new Date().toString());
             }
+
+            //Broadcast the Message to the Server if you banned a player
+
             Bukkit.broadcastMessage("§a " + sender.getName() + " temporarily banned " + target.getName() + "(" + args[1] + ")");
+
+            //Sends a ban confirmation to the Command Sender
+
             sender.sendMessage("§a Successful temp banned " + target.getName() + " for " + args[1]);
 
 
