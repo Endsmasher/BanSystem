@@ -9,11 +9,11 @@ import org.bukkit.command.CommandSender;
 public class Register implements CommandExecutor {
 
     @Override
-    public void onCommand(CommandSender sender, Command command, String label, String args[]) {
+    public boolean onCommand(CommandSender sender, Command command, String label, String args[]) {
 
         if (!sender.hasPermission("BanSystem.Admin")) {
             sender.sendMessage("§cYou don't have enough permissions to perform this command!");
-            return;
+            return true;
         }
         if (args.length == 1) {
 
@@ -22,7 +22,7 @@ public class Register implements CommandExecutor {
 
             if (target == null) {
                 sender.sendMessage("§c Unknown Player " + args[0]);
-                return;
+                return true;
 
             }
 
