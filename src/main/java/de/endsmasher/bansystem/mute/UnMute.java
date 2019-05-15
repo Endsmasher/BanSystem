@@ -22,11 +22,12 @@ public class UnMute implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         DriveService service = plugin.getMuteService();
-        OfflinePlayer target = Bukkit.getOfflinePlayer(args[0]);
+
 
 
         if (sender.hasPermission("BanSystem.Team")) {
             if (args.length == 1) {
+                OfflinePlayer target = Bukkit.getOfflinePlayer(args[0]);
                 Query query = new Query()
                         .addEq()
                         .setField("id")
