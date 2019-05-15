@@ -8,6 +8,7 @@ import de.endsmasher.bansystem.mute.Mute;
 import de.endsmasher.bansystem.mute.MuteListener;
 import de.endsmasher.bansystem.mute.UnMute;
 import de.endsmasher.bansystem.utils.PlayerBan;
+import de.endsmasher.bansystem.utils.PlayerLog;
 import de.endsmasher.bansystem.utils.PlayerMute;
 import de.endsmasher.bansystem.utils.PlayerWarn;
 import de.endsmasher.bansystem.warn.UnWarnPlayer;
@@ -35,10 +36,16 @@ public final class BanSystem extends JavaPlugin {
 
     public DriveService getMuteService() {return muteService;}
 
+    public DriveService logService;
+
+    public DriveService getLogService() {return getLogService();}
+
     @Override
     public void onEnable() {
 
         System.out.println("The Plugin is loading ...");
+
+
 
         // To save the Bans
         DriveSettings settings = DriveSettings.builder()
@@ -76,6 +83,21 @@ public final class BanSystem extends JavaPlugin {
         muteService = new DriveServiceFactory().getDriveService(settingsmute);
         ConversionHandler conversionmute = muteService.getConversionHandler();
         conversionmute.registerClasses(PlayerMute.class);
+
+
+
+        //To save the logged players
+        DriveSettings settingslog = DriveSettings.builder()
+                .type(DriveSettings.BackendType.MONGO_DB)
+                .hostURL("mongodb://localhost:27017")
+                .database("BanSystem")
+                .table("log")
+                .build();
+         logService = new DriveServiceFactory().getDriveService(settingslog);
+         ConversionHandler conversionlog = logService.getConversionHandler();
+         conversionlog.registerClasses(PlayerLog.class);
+
+
 
         System.out.println(" loading ...");
         // Register the Commands

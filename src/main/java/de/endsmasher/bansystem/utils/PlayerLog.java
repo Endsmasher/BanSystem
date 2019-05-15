@@ -1,6 +1,6 @@
 package de.endsmasher.bansystem.utils;
 
-import net.endrealm.realmdrive.annotations.SaveVar;
+        import net.endrealm.realmdrive.annotations.SaveVar;
 
 public class PlayerLog {
 
@@ -11,20 +11,20 @@ public class PlayerLog {
     private String Targetid;
 
     @SaveVar
-    private String Senderid;
+    private String SenderName;
 
     @SaveVar
-    private boolean AddTime;
+    private long AddTime;
 
 
-    public PlayerLog(String Targetid, String Senderid, boolean AddTime) {
+    public PlayerLog(String Targetid, String SenderName, long AddTime) {
         this.Targetid = Targetid;
-        this.Senderid = Senderid;
+        this.SenderName = SenderName;
         this.AddTime = AddTime;
     }
 
     public String getTargetid() { return Targetid;}
-    public String getSenderid() { return Senderid;}
-    public boolean getAddtime() { return AddTime;}
+    public String getSenderName() { return SenderName;}
+    public long getAddtime() { return AddTime;}
 
 }

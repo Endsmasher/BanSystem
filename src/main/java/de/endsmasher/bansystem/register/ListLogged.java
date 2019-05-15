@@ -10,13 +10,16 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 
-import java.util.Date;
+import java.util.List;
 
-public class Remove implements CommandExecutor {
+public class ListLogged implements CommandExecutor {
+
 
     private BanSystem plugin;
 
-    public Remove(BanSystem plugin) {this.plugin = plugin;}
+    public ListLogged(BanSystem plugin) {
+        this.plugin = plugin;
+    }
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String args[]) {
@@ -35,32 +38,29 @@ public class Remove implements CommandExecutor {
             if (target == null) {
                 sender.sendMessage("§c Unknown Player " + args[0]);
                 return true;
-
             }
+
             Query query = new Query()
                     .addEq()
-                    .setField("id")
-                    .setValue(target.getUniqueId().toString())
+                        .setField("id")
+                        .setValue(target.getUniqueId().toString())
                     .close()
                     .build();
 
+            List<PlayerLog> playerLogs = service.getReader().readAllObjects(query, PlayerLog.class);
+
             if (!service.getReader().containsObject(query)) {
-                sender.sendMessage("This Player isn't logged yet");
+                sender.sendMessage("§c This Player isn't logged yet!");
                 return true;
             }
-                service.getWriter().write(new PlayerLog(target.getUniqueId().toString(), sender.getName(), new Date().getTime()));
 
-                service.getWriter().delete(new Query()
-                        .addEq()
-                        .setField("id")
-                        .setValue(target.getUniqueId().toString())
-                        .close()
-                        .build(), 1);
+            sender.sendMessage("§a ---------- History of " + target.getName() + " ----------");
+            for (PlayerLog playerLog : playerLogs) {
+                sender.sendMessage("- UUUID:   " + playerLog.getTargetid());
+                sender.sendMessage("");
+            }
 
-                sender.sendMessage("§a Successful removed " + target.getName());
-
-
-        } else sender.sendMessage("§c Please use /remove <player>");
+        }
         return false;
     }
 }
