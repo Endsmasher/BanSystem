@@ -29,3 +29,12 @@ commands:
 
   unmute:
     description: Allows you to unmute other players
+
+  register:
+    description: d
+
+  remove:
+    description: d1
+
+  SystemLog:
+    description: d2

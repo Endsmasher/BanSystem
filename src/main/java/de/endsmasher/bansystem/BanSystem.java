@@ -7,6 +7,9 @@ import de.endsmasher.bansystem.ban.Unban;
 import de.endsmasher.bansystem.mute.Mute;
 import de.endsmasher.bansystem.mute.MuteListener;
 import de.endsmasher.bansystem.mute.UnMute;
+import de.endsmasher.bansystem.register.ListLogged;
+import de.endsmasher.bansystem.register.Register;
+import de.endsmasher.bansystem.register.Remove;
 import de.endsmasher.bansystem.utils.PlayerBan;
 import de.endsmasher.bansystem.utils.PlayerLog;
 import de.endsmasher.bansystem.utils.PlayerMute;
@@ -112,6 +115,10 @@ public final class BanSystem extends JavaPlugin {
 
         getCommand("mute").setExecutor(new Mute(this));
         getCommand("unmute").setExecutor(new UnMute(this));
+
+        getCommand("SystemLog").setExecutor(new ListLogged(this));
+        getCommand("Register").setExecutor(new Register(this));
+        getCommand("Remove").setExecutor(new Remove(this));
 
         System.out.println("The Plugin registered all Commands!");
 

@@ -56,8 +56,9 @@ public class ListLogged implements CommandExecutor {
 
             sender.sendMessage("§a ---------- History of " + target.getName() + " ----------");
             for (PlayerLog playerLog : playerLogs) {
-                sender.sendMessage("- UUUID:   " + playerLog.getTargetid());
-                sender.sendMessage("");
+                sender.sendMessage("- UUID:   " + playerLog.getTargetid());
+                sender.sendMessage("- Added by:   " + playerLog.getSenderName());
+                sender.sendMessage("- Date:   " + playerLog.getAddtime());
             }
 
         }
