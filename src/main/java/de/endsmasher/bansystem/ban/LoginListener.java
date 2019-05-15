@@ -72,7 +72,7 @@ public class LoginListener implements Listener {
                     + "\n§7 You can appeal at our Reddit: http://reddit.com/r/ChaincraftORG "
                     + "\n"
                     + "\n§7 Your ban will expire on "
-                    + new Date(playerBan.getUnbanDate())
+                    + playerBan.getUnbanDate()
                     + "\n"
                     + " You were banned at "
                     + new Date(playerBan.getBanDate()));

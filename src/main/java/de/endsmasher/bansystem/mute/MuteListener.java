@@ -37,7 +37,7 @@ public class MuteListener implements Listener {
             if(playerMute.getUnmutedate() <= new Date().getTime()) {
                 return;
             } else
-                event.getPlayer().sendMessage("§7 You'r still muted!");
+                event.getPlayer().sendMessage("§7You'r still muted!");
                 event.setCancelled(true);
         }
     }
