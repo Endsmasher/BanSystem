@@ -20,7 +20,7 @@ public class Remove implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String args[]) {
-        DriveService service = plugin.getMuteService();
+        DriveService service = plugin.getLogService();
 
 
         if (!sender.hasPermission("BanSystem.Admin")) {
