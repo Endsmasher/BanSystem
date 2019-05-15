@@ -41,7 +41,7 @@ public final class BanSystem extends JavaPlugin {
 
     public DriveService logService;
 
-    public DriveService getLogService() {return getLogService();}
+    public DriveService getLogService() {return logService;}
 
     @Override
     public void onEnable() {
@@ -103,6 +103,7 @@ public final class BanSystem extends JavaPlugin {
 
 
         System.out.println(" loading ...");
+
         // Register the Commands
 
         getCommand("ban").setExecutor(new PermBan(this));

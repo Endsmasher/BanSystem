@@ -1,6 +1,7 @@
 package de.endsmasher.bansystem.register;
 
 import de.endsmasher.bansystem.BanSystem;
+import de.endsmasher.bansystem.utils.PlayerBan;
 import de.endsmasher.bansystem.utils.PlayerLog;
 import net.endrealm.realmdrive.interfaces.DriveService;
 import net.endrealm.realmdrive.query.Query;
@@ -48,20 +49,21 @@ public class ListLogged implements CommandExecutor {
                     .build();
 
             List<PlayerLog> playerLogs = service.getReader().readAllObjects(query, PlayerLog.class);
+            PlayerLog playerLog = service.getReader().readObject(query, PlayerLog.class);
 
             if (!service.getReader().containsObject(query)) {
                 sender.sendMessage("§c This Player isn't logged yet!");
                 return true;
             }
 
+
             sender.sendMessage("§a ---------- History of " + target.getName() + " ----------");
-            for (PlayerLog playerLog : playerLogs) {
                 sender.sendMessage("- UUID:   " + playerLog.getTargetid());
                 sender.sendMessage("- Added by:   " + playerLog.getSenderName());
                 sender.sendMessage("- Date:   " + playerLog.getAddtime());
-            }
 
-        }
+
+        } else sender.sendMessage("§c Please use /SystemLog <player> !");
         return false;
     }
 }
