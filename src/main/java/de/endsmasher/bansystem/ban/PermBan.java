@@ -25,6 +25,7 @@ public class PermBan implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         DriveService service = plugin.getBanService();
+        DriveService servicelog = plugin.getLogService();
 
 
         if (!sender.hasPermission("BanSystem.Team")) {
@@ -50,7 +51,7 @@ public class PermBan implements CommandExecutor {
                     .close()
                     .build();
 
-            if (target.isOp()) {
+            if (servicelog.getReader().containsObject(query)) {
                 sender.sendMessage("§c You are not allowed to ban " + target.getName());
                 return true;
             }

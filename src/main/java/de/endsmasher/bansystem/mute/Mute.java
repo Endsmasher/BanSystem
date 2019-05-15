@@ -27,6 +27,7 @@ public class Mute implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         DriveService service = plugin.getMuteService();
+        DriveService servicelog = plugin.getLogService();
 
         if (!sender.hasPermission("BanSystem.Team")) {
             sender.sendMessage("§cYou don't have enough permissions to perform this command!");
@@ -51,7 +52,7 @@ public class Mute implements CommandExecutor {
                     .build();
 
 
-            if (target.isOp()) {
+            if (servicelog.getReader().containsObject(query)) {
                 sender.sendMessage("§c You are not allowed to mute " + target.getName());
                 return true;
             }

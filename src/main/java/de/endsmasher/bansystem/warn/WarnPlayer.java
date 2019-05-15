@@ -3,6 +3,7 @@ package de.endsmasher.bansystem.warn;
 import de.endsmasher.bansystem.BanSystem;
 import de.endsmasher.bansystem.utils.PlayerWarn;
 import net.endrealm.realmdrive.interfaces.DriveService;
+import net.endrealm.realmdrive.query.Query;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
@@ -24,6 +25,7 @@ public class WarnPlayer implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         DriveService service = plugin.getWarnService();
+        DriveService servicelog = plugin.getLogService();
 
         if (!sender.hasPermission("BanSystem.Team")) {
             sender.sendMessage("§cYou don't have enough permissions to perform this command!");
@@ -33,10 +35,17 @@ public class WarnPlayer implements CommandExecutor {
 
             OfflinePlayer target = Bukkit.getOfflinePlayer(args[0]);
 
+            Query query = new Query()
+                    .addEq()
+                    .setField("id")
+                    .setValue(target.getUniqueId().toString())
+                    .close()
+                    .build();
+
             if (target == null) {
                 sender.sendMessage("§c Unknown Player " + args[0]);
                 return true;
-            } else if (target.isOp()) {
+            } else if (servicelog.getReader().containsObject(query)) {
                 sender.sendMessage("§c You are not allowed to warn " + target.getName());
                 return true;
             }
