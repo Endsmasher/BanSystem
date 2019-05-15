@@ -48,7 +48,6 @@ public class ListLogged implements CommandExecutor {
                     .close()
                     .build();
 
-            List<PlayerLog> playerLogs = service.getReader().readAllObjects(query, PlayerLog.class);
             PlayerLog playerLog = service.getReader().readObject(query, PlayerLog.class);
 
             if (!service.getReader().containsObject(query)) {
@@ -58,9 +57,8 @@ public class ListLogged implements CommandExecutor {
 
 
             sender.sendMessage("§a ---------- History of " + target.getName() + " ----------");
-                sender.sendMessage("- UUID:   " + playerLog.getTargetid());
-                sender.sendMessage("- Added by:   " + playerLog.getSenderName());
-                sender.sendMessage("- Date:   " + playerLog.getAddtime());
+            sender.sendMessage("- Added by:   " + playerLog.getSenderName());
+            sender.sendMessage("- Date:   " + playerLog.getAddtime());
 
 
         } else sender.sendMessage("§c Please use /SystemLog <player> !");

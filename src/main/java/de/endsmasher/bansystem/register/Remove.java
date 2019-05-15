@@ -48,7 +48,6 @@ public class Remove implements CommandExecutor {
                 sender.sendMessage("This Player isn't logged yet");
                 return true;
             }
-                service.getWriter().write(new PlayerLog(target.getUniqueId().toString(), sender.getName(), new Date().getTime()));
 
                 service.getWriter().delete(new Query()
                         .addEq()
