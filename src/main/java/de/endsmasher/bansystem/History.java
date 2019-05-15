@@ -53,7 +53,7 @@ public class History implements CommandExecutor {
             List <PlayerMute> playerMutes = muteService.getReader().readAllObjects(query, PlayerMute.class);
 
 
-            sender.sendMessage("§a ---------- History of " + target.getName() + " ---------- ");
+            sender.sendMessage("§6 ---------- History of " + target.getName() + " ---------- ");
             sender.sendMessage("§6 UUID: §7" + target.getUniqueId() );
             sender.sendMessage("§6 Bans: §7");
             for (PlayerBan playerBan : playerBans) {

@@ -11,6 +11,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 
+import java.util.Date;
 import java.util.List;
 
 public class ListLogged implements CommandExecutor {
@@ -56,9 +57,10 @@ public class ListLogged implements CommandExecutor {
             }
 
 
-            sender.sendMessage("§a ---------- History of " + target.getName() + " ----------");
-            sender.sendMessage("- Added by:   " + playerLog.getSenderName());
-            sender.sendMessage("- Date:   " + playerLog.getAddtime());
+            sender.sendMessage("§6 ---------- History of " + target.getName() + " ----------");
+            sender.sendMessage("§6- UUID:   §7" + playerLog.getid());
+            sender.sendMessage("§6- Added by:   §7" + playerLog.getSenderName());
+            sender.sendMessage("§6- Date:   §7" + playerLog.getPrettyBanDate());
 
 
         } else sender.sendMessage("§c Please use /SystemLog <player> !");

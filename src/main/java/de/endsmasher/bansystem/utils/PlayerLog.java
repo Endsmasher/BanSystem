@@ -2,13 +2,16 @@ package de.endsmasher.bansystem.utils;
 
 import net.endrealm.realmdrive.annotations.SaveVar;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class PlayerLog {
 
     public PlayerLog() {
     }
 
     @SaveVar
-    private String Targetid;
+    private String id;
 
     @SaveVar
     private String SenderName;
@@ -17,16 +20,28 @@ public class PlayerLog {
     private long AddTime;
 
 
-    public PlayerLog(String Targetid, String SenderName, long AddTime) {
+    public PlayerLog(String id, String SenderName, long AddTime) {
 
-        this.Targetid = Targetid;
+        this.id = id;
         this.SenderName = SenderName;
         this.AddTime = AddTime;
 
     }
 
-    public String getTargetid() { return Targetid;}
-    public String getSenderName() { return SenderName;}
-    public long getAddtime() { return AddTime;}
+    public String getid() {
+        return id;
+    }
 
+    public String getSenderName() {
+        return SenderName;
+    }
+
+    public long getAddtime() {
+        return AddTime;
+    }
+
+    public String getPrettyBanDate() {
+        SimpleDateFormat format = new SimpleDateFormat("EEE dd / MM / yyyy");
+        return format.format(new Date(getAddtime()));
+    }
 }
