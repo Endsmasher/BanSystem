@@ -77,7 +77,5 @@ public class LoginListener implements Listener {
                     + " You were banned at "
                     + new Date(playerBan.getBanDate()));
                 event.setResult(PlayerLoginEvent.Result.KICK_BANNED);
-
-
     }
 }

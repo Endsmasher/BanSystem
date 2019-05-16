@@ -10,10 +10,7 @@ import de.endsmasher.bansystem.mute.UnMute;
 import de.endsmasher.bansystem.register.ListLogged;
 import de.endsmasher.bansystem.register.Register;
 import de.endsmasher.bansystem.register.Remove;
-import de.endsmasher.bansystem.utils.PlayerBan;
-import de.endsmasher.bansystem.utils.PlayerLog;
-import de.endsmasher.bansystem.utils.PlayerMute;
-import de.endsmasher.bansystem.utils.PlayerWarn;
+import de.endsmasher.bansystem.utils.*;
 import de.endsmasher.bansystem.warn.UnWarnPlayer;
 import de.endsmasher.bansystem.warn.WarnPlayer;
 import net.endrealm.realmdrive.factory.DriveServiceFactory;
@@ -26,22 +23,21 @@ import org.bukkit.plugin.java.JavaPlugin;
 public final class BanSystem extends JavaPlugin {
 
     private DriveService banService;
-
     public DriveService getBanService() {
         return banService;
     }
 
     private DriveService warnService;
-
     public DriveService getWarnService() { return warnService;}
 
     private DriveService muteService;
-
     public DriveService getMuteService() {return muteService;}
 
     public DriveService logService;
-
     public DriveService getLogService() {return logService;}
+
+    public DriveService lService;
+    public DriveService getlService() {return lService;}
 
     @Override
     public void onEnable() {
@@ -99,6 +95,19 @@ public final class BanSystem extends JavaPlugin {
          logService = new DriveServiceFactory().getDriveService(settingslog);
          ConversionHandler conversionlog = logService.getConversionHandler();
          conversionlog.registerClasses(PlayerLog.class);
+
+
+
+        //To register new players
+        DriveSettings settingsl = DriveSettings.builder()
+                .type(DriveSettings.BackendType.MONGO_DB)
+                .hostURL("mongodb://localhost:27017")
+                .database("BanSystem")
+                .table("log")
+                .build();
+        lService = new DriveServiceFactory().getDriveService(settingsl);
+        ConversionHandler conversionl = lService.getConversionHandler();
+        conversionl.registerClasses(PlayerLogall.class);
 
 
 

@@ -2,6 +2,8 @@ package de.endsmasher.bansystem.ban;
 
 import de.endsmasher.bansystem.BanSystem;
 import de.endsmasher.bansystem.utils.PlayerBan;
+import de.endsmasher.bansystem.utils.PlayerLog;
+import de.endsmasher.bansystem.utils.PlayerLogall;
 import net.endrealm.realmdrive.interfaces.DriveService;
 import net.endrealm.realmdrive.query.Query;
 import org.bukkit.Bukkit;
@@ -26,6 +28,7 @@ public class PermBan implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         DriveService service = plugin.getBanService();
         DriveService servicelog = plugin.getLogService();
+        DriveService servicel = plugin.getlService();
 
 
         if (!sender.hasPermission("BanSystem.Team")) {
@@ -36,14 +39,6 @@ public class PermBan implements CommandExecutor {
 
             OfflinePlayer target = Bukkit.getOfflinePlayer(args[0]);
 
-
-
-            if (target == null) {
-                sender.sendMessage("§c Unknown Player " + args[0]);
-                return true;
-
-            }
-
             Query query = new Query()
                     .addEq()
                     .setField("id")
@@ -51,6 +46,20 @@ public class PermBan implements CommandExecutor {
                     .close()
                     .build();
 
+            Query queryl = new Query()
+                    .addEq()
+                    .setField("id")
+                    .setValue(target.getUniqueId().toString())
+                    .close()
+                    .build();
+
+            PlayerLogall playerLogall = servicel.getReader().readObject(queryl, PlayerLogall.class);
+
+            if (!servicel.getReader().containsObject(queryl)) {
+                sender.sendMessage("§c Unknown Player " + args[0]);
+                return true;
+
+            }
             if (servicelog.getReader().containsObject(query)) {
                 sender.sendMessage("§c You are not allowed to ban " + target.getName());
                 return true;
@@ -61,9 +70,9 @@ public class PermBan implements CommandExecutor {
                 return true;
             }
 
-                service.getWriter().write(new PlayerBan(target.getUniqueId().toString(), args[1], -1, new Date().getTime()));
-            if (Bukkit.getPlayer(target.getUniqueId()) != null) {
-                Bukkit.getPlayer(target.getUniqueId()).kickPlayer("§c§l Chaincraft.ORG"
+                service.getWriter().write(new PlayerBan(playerLogall.getId(), args[1], -1, new Date().getTime()));
+            if (Bukkit.getPlayer(playerLogall.getId()) != null) {
+                Bukkit.getPlayer(playerLogall.getId()).kickPlayer("§c§l Chaincraft.ORG"
                         + "\n"
                         + "\n§r§c You were permanently banned "
                         + "\n"
