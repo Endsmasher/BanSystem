@@ -55,7 +55,7 @@ public class TempBan implements CommandExecutor {
 
             PlayerLogall playerLogall = servicel.getReader().readObject(queryl, PlayerLogall.class);
 
-            if (service.getReader().containsObject(queryl)) {
+            if (!service.getReader().containsObject(queryl)) {
                 sender.sendMessage("§c Unknown Player " + args[0]);
                 return true;
 
