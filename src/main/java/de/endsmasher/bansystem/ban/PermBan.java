@@ -46,16 +46,10 @@ public class PermBan implements CommandExecutor {
                     .close()
                     .build();
 
-            Query queryl = new Query()
-                    .addEq()
-                    .setField("id")
-                    .setValue(target.getUniqueId().toString())
-                    .close()
-                    .build();
 
-            PlayerLogall playerLogall = servicel.getReader().readObject(queryl, PlayerLogall.class);
+            PlayerLogall playerLogall = servicel.getReader().readObject(query, PlayerLogall.class);
 
-            if (!servicel.getReader().containsObject(queryl)) {
+            if (!servicel.getReader().containsObject(query)) {
                 sender.sendMessage("§c Unknown Player " + args[0]);
                 return true;
 
@@ -64,15 +58,15 @@ public class PermBan implements CommandExecutor {
                 sender.sendMessage("§c You are not allowed to ban " + target.getName());
                 return true;
             }
-            if (service.getReader().containsObject(query)) {
+            if (!service.getReader().containsObject(query)) {
                 sender.sendMessage("§c The Player " + target.getName() + " is already banned");
 
                 return true;
             }
 
                 service.getWriter().write(new PlayerBan(playerLogall.getId(), args[1], -1, new Date().getTime()));
-            if (Bukkit.getPlayer(playerLogall.getId()) != null) {
-                Bukkit.getPlayer(playerLogall.getId()).kickPlayer("§c§l Chaincraft.ORG"
+            if (Bukkit.getPlayer(target.getUniqueId()) != null) {
+                Bukkit.getPlayer(target.getUniqueId()).kickPlayer("§c§l Chaincraft.ORG"
                         + "\n"
                         + "\n§r§c You were permanently banned "
                         + "\n"
@@ -83,7 +77,7 @@ public class PermBan implements CommandExecutor {
                         + "\n");
                 }
                 Bukkit.broadcastMessage("§a " + sender.getName() + " banned " + target.getName() + "(" + args[1] + ")");
-                sender.sendMessage("§aSuccessful banned " + target.getName() + " for " + args[1]);
+                sender.sendMessage("§aSuccessful banned " + playerLogall.getName() + " for " + args[1]);
 
         } else sender.sendMessage("§cPlease use /ban <Player> <Reason> ");
 

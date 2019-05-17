@@ -28,4 +28,6 @@ public class PlayerLogall {
 
     public long getFirstLogin() {return FirstLogin;}
 
+    public PlayerLogall(){}
+
 }
