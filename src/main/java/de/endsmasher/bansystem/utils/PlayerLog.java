@@ -7,8 +7,6 @@ import java.util.Date;
 
 public class PlayerLog {
 
-    public PlayerLog() {
-    }
 
     @SaveVar
     private String id;
@@ -21,11 +19,9 @@ public class PlayerLog {
 
 
     public PlayerLog(String id, String SenderName, long AddTime) {
-
         this.id = id;
         this.SenderName = SenderName;
         this.AddTime = AddTime;
-
     }
 
     public String getid() {
@@ -39,9 +35,12 @@ public class PlayerLog {
     public long getAddtime() {
         return AddTime;
     }
+    public PlayerLog() {
+    }
 
     public String getPrettyBanDate() {
         SimpleDateFormat format = new SimpleDateFormat("EEE dd / MM / yyyy");
         return format.format(new Date(getAddtime()));
     }
+
 }
