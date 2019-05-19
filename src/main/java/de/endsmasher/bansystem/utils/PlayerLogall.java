@@ -14,10 +14,14 @@ public class PlayerLogall {
     @SaveVar
     public String name;
 
+    @SaveVar
+    public String address;
 
-    public PlayerLogall(String id, String name, long FirstLogin) {
+
+    public PlayerLogall(String id, String name, String fjoinAddress,long FirstLogin) {
         this.id = id;
         this.name = name;
+        this.address = fjoinAddress;
         this.FirstLogin = FirstLogin;
 
     }
@@ -25,6 +29,8 @@ public class PlayerLogall {
     public String getId() {return id;}
 
     public String getName() {return name;}
+
+    public String getAddress() {return address;}
 
     public long getFirstLogin() {return FirstLogin;}
 

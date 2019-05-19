@@ -18,17 +18,25 @@ public class PlayerBan  {
     private String reason;
 
     @SaveVar
-    private long unbanDate;
+    private long unBanDate;
 
     @SaveVar
     private long banDate;
 
+    @SaveVar
+    private String banned_by;
 
-    public PlayerBan(String id, String reason, long unbanDate, long banDate) {
+    @SaveVar
+    private String address;
+
+
+    public PlayerBan(String id,String Banned_by, String Reason,String Address, long UnbanDate, long BanDate) {
         this.id = id;
-        this.reason = reason;
-        this.unbanDate = unbanDate;
-        this.banDate = banDate;
+        this.banned_by = Banned_by;
+        this.reason = Reason;
+        this.address = Address;
+        this.unBanDate = UnbanDate;
+        this.banDate = BanDate;
     }
 
 
@@ -37,12 +45,16 @@ public class PlayerBan  {
         return id;
     }
 
+    public String getBanned_by() {return banned_by;}
+
     public String getReason() {
         return reason;
     }
 
-    public long getUnbanDate() {
-        return unbanDate;
+    public String getAddress() {return  address;}
+
+    public long getUnBanDate() {
+        return unBanDate;
     }
 
     public long getBanDate() {

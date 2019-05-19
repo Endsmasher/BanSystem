@@ -31,12 +31,42 @@ public class LoginListener implements Listener {
                 .close()
                 .build();
 
+        Query queryip = new Query()
+                .addEq()
+                .setField("id")
+                .setValue(player.getUniqueId().toString())
+                .setField("Address")
+                .setValue(player.getAddress().toString())
+                .close()
+                .build();
+
+        PlayerBan playerBan = service.getReader().readObject(query, PlayerBan.class);
+
+     if (service.getReader().containsObject(queryip)) {
+
+         service.getWriter().write(new PlayerBan(player.getUniqueId().toString(), "CONSOLE", "Ban Evading", player.getAddress().toString(), -1, new Date().getTime()));
+
+         event.setKickMessage("§c§l Chaincraft.ORG"
+                 + "\n"
+                 + "§r§c You were permanently banned "
+                 + "\n"
+                 + "\n§7 Reason: "
+                 + "§r"
+                 + playerBan.getReason()
+                 + "\n"
+                 + "\n§7 You can appeal at our Reddit: http://reddit.com/r/ChaincraftORG "
+                 + "\n"
+                 + "\n§7 You were banned at "
+                 + new Date(playerBan.getBanDate()));
+
+         event.setResult(PlayerLoginEvent.Result.KICK_BANNED);
+     }
+
         if (!service.getReader().containsObject(query)) {
             return;
         }
-        PlayerBan playerBan = service.getReader().readObject(query, PlayerBan.class);
 
-        if (playerBan.getUnbanDate() <= new Date().getTime() && playerBan.getUnbanDate() != -1) {
+        if (playerBan.getUnBanDate() <= new Date().getTime() && playerBan.getUnBanDate() != -1) {
             service.getWriter().delete(new Query()
                     .addEq()
                         .setField("id")
@@ -44,7 +74,7 @@ public class LoginListener implements Listener {
                     .close()
                     .build(), 1);
             return;
-        } if (playerBan.getUnbanDate() == -1) {
+        } if (playerBan.getUnBanDate() == -1) {
 
             event.setKickMessage("§c§l Chaincraft.ORG"
                     + "\n"
@@ -59,23 +89,23 @@ public class LoginListener implements Listener {
                     + new Date(playerBan.getBanDate()));
                 event.setResult(PlayerLoginEvent.Result.KICK_BANNED);
 
-        } if (playerBan.getUnbanDate() != -1)
+        }if (playerBan.getUnBanDate() != -1) {
 
             event.setKickMessage("§c§l Chaincraft.ORG"
                     + "\n"
                     + "\n§r§c You were temporarily banned "
                     + "\n"
                     + "\n§7 Reason: "
-                    + "§r"
-                    + playerBan.getReason()
+                    + "§r" + playerBan.getReason()
                     + "\n"
                     + "\n§7 You can appeal at our Reddit: http://reddit.com/r/ChaincraftORG "
                     + "\n"
                     + "\n§7 Your ban will expire on "
-                    + playerBan.getUnbanDate()
+                    + playerBan.getUnBanDate()
                     + "\n"
                     + " You were banned at "
                     + new Date(playerBan.getBanDate()));
-                event.setResult(PlayerLoginEvent.Result.KICK_BANNED);
+            event.setResult(PlayerLoginEvent.Result.KICK_BANNED);
+        }
     }
 }

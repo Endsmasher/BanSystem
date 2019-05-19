@@ -9,7 +9,7 @@ public class CommandListener implements Listener {
     @EventHandler(ignoreCancelled = true)
     public void onPlayerCommandPreprocess(PlayerCommandPreprocessEvent event) {
 
-        if (event.getMessage().equalsIgnoreCase("/ban")
+        if (event.getMessage().equalsIgnoreCase("pardon-ip")
                 || event.getMessage().equalsIgnoreCase("/ban-ip")
                 || event.getMessage().equalsIgnoreCase("/pardon")) {
             event.setCancelled(true);

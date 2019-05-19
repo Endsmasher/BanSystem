@@ -22,27 +22,33 @@ public class PlayerWarn {
     private String info;
 
     @SaveVar
-    private long unwarnDate;
+    private String warned_by;
+
+    @SaveVar
+    private long unWarnDate;
 
     @SaveVar
     private long warnDate;
 
 
-    public PlayerWarn(String id, String reason, String info, long unwarnDate, long warnDate) {
+    public PlayerWarn(String id,String warned_by, String reason, String info, long unWarnDate, long warnDate) {
 
         this.id = id;
+        this.warned_by  = warned_by;
         this.reason = reason;
         this.warnDate = warnDate;
-        this.unwarnDate = unwarnDate;
+        this.unWarnDate = unWarnDate;
         this.info = info;
 
     }
 
     public String getId() { return id;}
 
+    public String getWarned_by() {return warned_by ;}
+
     public String getReason() { return reason;}
 
-    public long getUnwarnDate() {return unwarnDate;}
+    public long getUnWarnDate() {return unWarnDate;}
 
     public long getWarnDate() { return warnDate;}
 

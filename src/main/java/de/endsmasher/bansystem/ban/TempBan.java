@@ -10,6 +10,7 @@ import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
 import java.util.Date;
 
@@ -37,7 +38,7 @@ public class TempBan implements CommandExecutor {
         }
         if (args.length == 3) {
 
-            OfflinePlayer target = Bukkit.getOfflinePlayer(args[0]);
+            Player target = Bukkit.getPlayer(args[0]);
 
             Query query = new Query()
                     .addEq()
@@ -56,15 +57,15 @@ public class TempBan implements CommandExecutor {
             PlayerLogall playerLogall = servicel.getReader().readObject(queryl, PlayerLogall.class);
 
             if (!service.getReader().containsObject(queryl)) {
-                sender.sendMessage("§c Unknown Player " + args[0]);
+                sender.sendMessage("§cUnknown Player " + args[0]);
                 return true;
 
             }if (servicelog.getReader().containsObject(query)) {
-                sender.sendMessage("§c You are not allowed to ban " + target.getName() + " !");
+                sender.sendMessage("§cYou are not allowed to ban " + target.getName() + " !");
                 return true;
 
             }if (service.getReader().containsObject(query)) {
-                sender.sendMessage("§c The target player is already banned!");
+                sender.sendMessage("§cThe target player is already banned!");
                 return true;
             }
 
@@ -79,7 +80,7 @@ public class TempBan implements CommandExecutor {
 
             // create the database entry
 
-            service.getWriter().write(new PlayerBan(playerLogall.getId(), args[1], new Date().getTime() + 1000 * 60 * 60 * 24* days, new Date().getTime()));
+            service.getWriter().write(new PlayerBan(playerLogall.getId(),sender.getName(), args[1],"-1", new Date().getTime() + 1000 * 60 * 60 * 24* days, new Date().getTime()));
             if (Bukkit.getPlayer(playerLogall.getId()) != null) {
                 Bukkit.getPlayer(playerLogall.getId()).kickPlayer("§c§l Chaincraft.ORG"
                 + "\n"
@@ -99,14 +100,14 @@ public class TempBan implements CommandExecutor {
 
             //Broadcast the Message to the Server if you banned a player
 
-            Bukkit.broadcastMessage("§a " + sender.getName() + " temporarily banned " + target.getName() + "(" + args[1] + ")");
+            Bukkit.broadcastMessage("§a" + sender.getName() + " temporarily banned " + target.getName() + "(" + args[1] + ")");
 
             //Sends a ban confirmation to the Command Sender
 
-            sender.sendMessage("§a Successful temp banned " + target.getName() + " for " + args[1]);
+            sender.sendMessage("§aSuccessful temp banned " + target.getName() + " for " + args[1]);
 
 
-        } else sender.sendMessage("§c Please use /tempban <player> <reason> <time(in days)> ");
+        } else sender.sendMessage("§cPlease use /tempban <player> <reason> <time(in days)> ");
         return false;
 
     }

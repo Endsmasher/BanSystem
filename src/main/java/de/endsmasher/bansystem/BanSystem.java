@@ -103,7 +103,7 @@ public final class BanSystem extends JavaPlugin {
                 .type(DriveSettings.BackendType.MONGO_DB)
                 .hostURL("mongodb://localhost:27017")
                 .database("BanSystem")
-                .table("log")
+                .table("logNew")
                 .build();
         lService = new DriveServiceFactory().getDriveService(settingsl);
         ConversionHandler conversionl = lService.getConversionHandler();
@@ -111,7 +111,7 @@ public final class BanSystem extends JavaPlugin {
 
 
 
-        System.out.println(" loading ...");
+        System.out.println("loading ...");
 
         // Register the Commands
 

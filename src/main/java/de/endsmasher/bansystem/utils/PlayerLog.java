@@ -38,9 +38,9 @@ public class PlayerLog {
     public PlayerLog() {
     }
 
-    public String getPrettyBanDate() {
+    public String getPrettyAddDate() {
         SimpleDateFormat format = new SimpleDateFormat("EEE dd / MM / yyyy");
         return format.format(new Date(getAddtime()));
-    }
 
+    }
 }

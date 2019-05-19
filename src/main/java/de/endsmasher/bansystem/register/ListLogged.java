@@ -1,7 +1,6 @@
 package de.endsmasher.bansystem.register;
 
 import de.endsmasher.bansystem.BanSystem;
-import de.endsmasher.bansystem.utils.PlayerBan;
 import de.endsmasher.bansystem.utils.PlayerLog;
 import net.endrealm.realmdrive.interfaces.DriveService;
 import net.endrealm.realmdrive.query.Query;
@@ -10,9 +9,6 @@ import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-
-import java.util.Date;
-import java.util.List;
 
 public class ListLogged implements CommandExecutor {
 
@@ -60,7 +56,7 @@ public class ListLogged implements CommandExecutor {
             sender.sendMessage("§6 ---------- History of " + target.getName() + " ----------");
             sender.sendMessage("§6- UUID:   §7" + playerLog.getid());
             sender.sendMessage("§6- Added by:   §7" + playerLog.getSenderName());
-            sender.sendMessage("§6- Date:   §7" + playerLog.getPrettyBanDate());
+            sender.sendMessage("§6- Date:   §7" + playerLog.getPrettyAddDate());
 
 
         } else sender.sendMessage("§c Please use /SystemLog <player> !");

@@ -1,7 +1,6 @@
 package de.endsmasher.bansystem.warn;
 
 import de.endsmasher.bansystem.BanSystem;
-import de.endsmasher.bansystem.utils.PlayerMute;
 import de.endsmasher.bansystem.utils.PlayerWarn;
 import net.endrealm.realmdrive.interfaces.DriveService;
 import net.endrealm.realmdrive.query.Query;
@@ -61,7 +60,7 @@ public class UnWarnPlayer implements CommandExecutor {
             }
             PlayerWarn playerwarn = service.getReader().readObject(query, PlayerWarn.class);
 
-            service.getWriter().write(new PlayerWarn(target.getUniqueId().toString(), playerwarn.getReason(), "INACTIVE", playerwarn.getUnwarnDate(), playerwarn.getWarnDate()));
+            service.getWriter().write(new PlayerWarn(target.getUniqueId().toString(),playerwarn.getWarned_by(), playerwarn.getReason(), "INACTIVE", playerwarn.getUnWarnDate(), playerwarn.getWarnDate()));
 
 
             service.getWriter()

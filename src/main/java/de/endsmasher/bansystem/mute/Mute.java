@@ -9,6 +9,7 @@ import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -33,9 +34,10 @@ public class Mute implements CommandExecutor {
             sender.sendMessage("§cYou don't have enough permissions to perform this command!");
             return true;
         }
+
         if (args.length == 3) {
 
-            OfflinePlayer target = Bukkit.getOfflinePlayer(args[0]);
+            Player target = Bukkit.getPlayer(args[0]);
 
 
             if (target == null) {

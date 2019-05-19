@@ -11,6 +11,8 @@ import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
+
 import java.util.Date;
 
 public class PermBan implements CommandExecutor {
@@ -37,7 +39,8 @@ public class PermBan implements CommandExecutor {
         }
         if (args.length == 2) {
 
-            OfflinePlayer target = Bukkit.getOfflinePlayer(args[0]);
+            Player target = Bukkit.getPlayer(args[0]);
+
 
             Query query = new Query()
                     .addEq()
@@ -50,21 +53,26 @@ public class PermBan implements CommandExecutor {
             PlayerLogall playerLogall = servicel.getReader().readObject(query, PlayerLogall.class);
 
             if (!servicel.getReader().containsObject(query)) {
-                sender.sendMessage("§c Unknown Player " + args[0]);
+                sender.sendMessage("§cUnknown Player " + args[0]);
                 return true;
 
             }
             if (servicelog.getReader().containsObject(query)) {
-                sender.sendMessage("§c You are not allowed to ban " + target.getName());
+                sender.sendMessage("§cYou are not allowed to ban " + target.getName());
                 return true;
             }
-            if (!service.getReader().containsObject(query)) {
-                sender.sendMessage("§c The Player " + target.getName() + " is already banned");
-
+            if (service.getReader().containsObject(query)) {
+                sender.sendMessage("§cThe Player " + target.getName() + " is already banned");
                 return true;
             }
 
-                service.getWriter().write(new PlayerBan(playerLogall.getId(), args[1], -1, new Date().getTime()));
+                service.getWriter().write(new PlayerBan(playerLogall.getId()
+                        ,sender.getName()
+                        , args[1]
+                        , "-1"
+                        , -1,
+                        new Date().getTime()));
+
             if (Bukkit.getPlayer(target.getUniqueId()) != null) {
                 Bukkit.getPlayer(target.getUniqueId()).kickPlayer("§c§l Chaincraft.ORG"
                         + "\n"
@@ -76,7 +84,7 @@ public class PermBan implements CommandExecutor {
                         + "\n§7 You can appeal at our Reddit: http://reddit.com/r/ChaincraftORG "
                         + "\n");
                 }
-                Bukkit.broadcastMessage("§a " + sender.getName() + " banned " + target.getName() + "(" + args[1] + ")");
+                Bukkit.broadcastMessage("§a" + sender.getName() + " banned " + target.getName() + "(" + args[1] + ")");
                 sender.sendMessage("§aSuccessful banned " + playerLogall.getName() + " for " + args[1]);
 
         } else sender.sendMessage("§cPlease use /ban <Player> <Reason> ");

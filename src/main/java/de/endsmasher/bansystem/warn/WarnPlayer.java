@@ -53,6 +53,7 @@ public class WarnPlayer implements CommandExecutor {
 
             service.getWriter()
                     .write(new PlayerWarn(target.getUniqueId().toString()
+                            , sender.getName()
                             , args[1]
                             , "ACTIVE"
                             , new Date().getTime()+1000*60*60*24*7*2

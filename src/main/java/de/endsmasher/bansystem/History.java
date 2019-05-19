@@ -59,6 +59,7 @@ public class History implements CommandExecutor {
             for (PlayerBan playerBan : playerBans) {
                 sender.sendMessage("§7 - " + playerBan.getPrettyBanDate());
                 sender.sendMessage("§6   > Reason: §7" + playerBan.getReason());
+                sender.sendMessage("§6   > Banned by: §7" + playerBan.getBanned_by());
                 sender.sendMessage(" ");
             }
 

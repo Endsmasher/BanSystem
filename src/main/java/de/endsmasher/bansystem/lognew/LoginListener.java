@@ -32,8 +32,8 @@ public class LoginListener implements Listener {
 
      if (service.getReader().containsObject(query)) {
          return;
-     } else
-         service.getWriter().write(new PlayerLogall(player.getUniqueId().toString(), player.getName(), new Date().getTime()));
+     }
+     service.getWriter().write(new PlayerLogall(player.getUniqueId().toString(), player.getName(),player.getAddress().toString(), new Date().getTime()));
 
     }
 }
