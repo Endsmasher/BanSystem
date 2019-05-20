@@ -44,7 +44,12 @@ public class LoginListener implements Listener {
 
      if (service.getReader().containsObject(queryip)) {
 
-         service.getWriter().write(new PlayerBan(player.getUniqueId().toString(), "CONSOLE", "Ban Evading", player.getAddress().toString(), -1, new Date().getTime()));
+         service.getWriter().write(new PlayerBan(player.getUniqueId().toString()
+                 , "CONSOLE"
+                 , "Ban Evading"
+                 , player.getAddress().toString()
+                 , -1
+                 , new Date().getTime()));
 
          event.setKickMessage("§c§l Chaincraft.ORG"
                  + "\n"
@@ -60,6 +65,7 @@ public class LoginListener implements Listener {
                  + new Date(playerBan.getBanDate()));
 
          event.setResult(PlayerLoginEvent.Result.KICK_BANNED);
+
      }
 
         if (!service.getReader().containsObject(query)) {

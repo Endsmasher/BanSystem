@@ -17,11 +17,15 @@ public class PlayerLogall {
     @SaveVar
     public String address;
 
+    @SaveVar
+    public long connections;
 
-    public PlayerLogall(String id, String name, String fjoinAddress,long FirstLogin) {
+
+    public PlayerLogall(String id, String name, String fjoinAddress,long FirstLogin, long connections) {
         this.id = id;
         this.name = name;
         this.address = fjoinAddress;
+        this.connections = connections;
         this.FirstLogin = FirstLogin;
 
     }
@@ -33,6 +37,8 @@ public class PlayerLogall {
     public String getAddress() {return address;}
 
     public long getFirstLogin() {return FirstLogin;}
+
+    public long getConnections() {return connections;}
 
     public PlayerLogall(){}
 

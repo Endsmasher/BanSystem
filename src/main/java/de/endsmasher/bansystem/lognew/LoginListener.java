@@ -10,6 +10,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 
 import java.util.Date;
+import java.util.List;
 
 public class LoginListener implements Listener {
 
@@ -30,10 +31,29 @@ public class LoginListener implements Listener {
                 .close()
                 .build();
 
+            PlayerLogall playerLogall = service.getReader().readObject(query, PlayerLogall.class);
+
      if (service.getReader().containsObject(query)) {
-         return;
+         service.getWriter().write(new PlayerLogall(playerLogall.getId()
+                 , player.getName()
+                 , player.getAddress().toString()
+                 , playerLogall.getFirstLogin()
+                 , playerLogall.getConnections() + 1));
+         service.getWriter().delete(new Query()
+                 .addEq()
+                 .setField("id")
+                 .setValue(player.getUniqueId().toString())
+                 .setField("connections")
+                 .setValue(playerLogall.getConnections() - 1)
+                 .close()
+                 .build(), 1);
+
      }
-     service.getWriter().write(new PlayerLogall(player.getUniqueId().toString(), player.getName(),player.getAddress().toString(), new Date().getTime()));
+     service.getWriter().write(new PlayerLogall(player.getUniqueId().toString()
+             , player.getName()
+             , player.getAddress().toString()
+             , new Date().getTime()
+             , 1));
 
     }
 }
