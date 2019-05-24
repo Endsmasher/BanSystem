@@ -29,19 +29,21 @@ public class UnMute implements CommandExecutor {
 
         if (sender.hasPermission("BanSystem.Team")) {
             if (args.length == 1) {
-                Player target = Bukkit.getPlayer(args[0]);
                 Query query = new Query()
                         .addEq()
-                        .setField("id")
-                        .setValue(target.getUniqueId().toString())
+                        .setField("name")
+                        .setValue(args[0])
                         .close()
                         .build();
 
                 PlayerLogall playerLogall = servicelogall.getReader().readObject(query, PlayerLogall.class);
 
-
+                if (!servicelogall.getReader().containsObject(query)) {
+                    sender.sendMessage("§c Unknown Player " + args[0]);
+                    return true;
+                }
                 if (!service.getReader().containsObject(query)) {
-                    sender.sendMessage("§cThe Player " + target.getName() + " is not muted!");
+                    sender.sendMessage("§cThe Player " + args[0] + " is not muted!");
                     return true;
                 }
 
@@ -49,14 +51,14 @@ public class UnMute implements CommandExecutor {
                         .delete(new Query()
                                 .addEq()
                                 .setField("id")
-                                .setValue(target.getUniqueId().toString())
+                                .setValue(playerLogall.getId())
                                 .close()
                                 .build(), 1);
-                Mute.muted.remove(target.getUniqueId());
+                Mute.muted.remove(playerLogall.getId());
 
 
-                sender.sendMessage("§a Successful unmuted " + target.getName());
-                Bukkit.broadcastMessage("§a" + sender.getName() + " unmuted " + target.getName());
+                sender.sendMessage("§a Successful unmuted " + args[0]);
+                Bukkit.broadcastMessage("§a" + sender.getName() + " unmuted " + args[0]);
             } else sender.sendMessage("Please use /unmute <player>");
 
         } else sender.sendMessage("§c You don't have enough permissions");

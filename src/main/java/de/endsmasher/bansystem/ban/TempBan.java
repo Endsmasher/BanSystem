@@ -54,7 +54,8 @@ public class TempBan implements CommandExecutor {
                 sender.sendMessage("§cUnknown Player " + args[0]);
                 return true;
 
-            }if (servicelog.getReader().containsObject(query)) {
+            }
+            if (servicelog.getReader().containsObject(query)) {
                 sender.sendMessage("§cYou are not allowed to ban " + args[0] + " !");
                 return true;
 

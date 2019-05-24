@@ -25,10 +25,10 @@ public class PlayerLogall {
     public long connections;
 
 
-    public PlayerLogall(String id, String name, String fjoinAddress,long FirstLogin, long connections) {
+    public PlayerLogall(String id, String name, String Address,long FirstLogin, long connections) {
         this.id = id;
         this.name = name;
-        this.address = fjoinAddress;
+        this.address = Address;
         this.connections = connections;
         this.FirstLogin = FirstLogin;
 

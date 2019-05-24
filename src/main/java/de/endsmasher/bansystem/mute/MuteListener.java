@@ -32,7 +32,7 @@ public class MuteListener implements Listener {
                 .build();
 
 
-        if (Mute.muted.contains(event.getPlayer().getUniqueId())) {
+        if (Mute.muted.contains(event.getPlayer().getUniqueId().toString())) {
             PlayerMute playerMute = service.getReader().readObject(query, PlayerMute.class);
             if(playerMute.getUnmutedate() <= new Date().getTime()) {
                 return;

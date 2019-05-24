@@ -23,7 +23,7 @@ public class ListLogged implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String args[]) {
         DriveService service = plugin.getLogService();
-        DriveService service1 = plugin.getlService();
+        DriveService servicel = plugin.getlService();
 
 
         if (!sender.hasPermission("BanSystem.Admin")) {
@@ -38,18 +38,19 @@ public class ListLogged implements CommandExecutor {
                         .setValue(args[0])
                     .close()
                     .build();
-            PlayerLogall playerLogall = service1.getReader().readObject(queryall, PlayerLogall.class);
+
+            PlayerLogall playerLogall = servicel.getReader().readObject(queryall, PlayerLogall.class);
 
 
-            if (!service1.getReader().containsObject(queryall)) {
+            if (!servicel.getReader().containsObject(queryall)) {
                 sender.sendMessage("§c Unknown Player " + args[0]);
                 return true;
             }
 
             Query query = new Query()
                     .addEq()
-                    .setField("id")
-                    .setValue(playerLogall.getId())
+                        .setField("id")
+                        .setValue(playerLogall.getId())
                     .close()
                     .build();
             PlayerLog playerLog = service.getReader().readObject(query, PlayerLog.class);
