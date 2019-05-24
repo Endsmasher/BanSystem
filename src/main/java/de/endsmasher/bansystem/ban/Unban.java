@@ -31,17 +31,28 @@ public class Unban implements CommandExecutor {
 
                 Query query = new Query()
                         .addEq()
-                        .setField("name")
-                        .setValue(args[0])
+                            .setField("name")
+                            .setValue(args[0])
                         .close()
                         .build();
                 PlayerLogall playerLogall = servicel.getReader().readObject(query, PlayerLogall.class);
 
-                if (!service.getReader().containsObject(query)) {
-                     sender.sendMessage("§cThe Player " + args[0] + " is not banned!");
+
+                if (!servicel.getReader().containsObject(query)) {
+                    sender.sendMessage("§c Unknown Player " + args[0]);
                     return true;
                 }
 
+                Query query1 = new Query()
+                        .addEq()
+                            .setField("id")
+                            .setValue(playerLogall.getId())
+                        .close()
+                        .build();
+                if (!service.getReader().containsObject(query1)) {
+                     sender.sendMessage("§cThe Player " + args[0] + " is not banned!");
+                    return true;
+                }
 
                     service.getWriter()
                             .delete(new Query()

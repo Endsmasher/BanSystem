@@ -2,6 +2,7 @@ package de.endsmasher.bansystem.register;
 
 import de.endsmasher.bansystem.BanSystem;
 import de.endsmasher.bansystem.utils.PlayerLog;
+import de.endsmasher.bansystem.utils.PlayerLogall;
 import net.endrealm.realmdrive.interfaces.DriveService;
 import net.endrealm.realmdrive.query.Query;
 import org.bukkit.Bukkit;
@@ -22,6 +23,7 @@ public class ListLogged implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String args[]) {
         DriveService service = plugin.getLogService();
+        DriveService service1 = plugin.getlService();
 
 
         if (!sender.hasPermission("BanSystem.Admin")) {
@@ -30,21 +32,26 @@ public class ListLogged implements CommandExecutor {
         }
         if (args.length == 1) {
 
-            OfflinePlayer target = Bukkit.getOfflinePlayer(args[0]);
+            Query queryall = new Query()
+                    .addEq()
+                        .setField("name")
+                        .setValue(args[0])
+                    .close()
+                    .build();
+            PlayerLogall playerLogall = service1.getReader().readObject(queryall, PlayerLogall.class);
 
 
-            if (target == null) {
+            if (!service1.getReader().containsObject(queryall)) {
                 sender.sendMessage("§c Unknown Player " + args[0]);
                 return true;
             }
 
             Query query = new Query()
                     .addEq()
-                        .setField("id")
-                        .setValue(target.getUniqueId().toString())
+                    .setField("id")
+                    .setValue(playerLogall.getId())
                     .close()
                     .build();
-
             PlayerLog playerLog = service.getReader().readObject(query, PlayerLog.class);
 
             if (!service.getReader().containsObject(query)) {
@@ -53,7 +60,7 @@ public class ListLogged implements CommandExecutor {
             }
 
 
-            sender.sendMessage("§6 ---------- History of " + target.getName() + " ----------");
+            sender.sendMessage("§6 ---------- " + args[0] + " ----------");
             sender.sendMessage("§6- UUID:   §7" + playerLog.getid());
             sender.sendMessage("§6- Added by:   §7" + playerLog.getSenderName());
             sender.sendMessage("§6- Date:   §7" + playerLog.getPrettyAddDate());
