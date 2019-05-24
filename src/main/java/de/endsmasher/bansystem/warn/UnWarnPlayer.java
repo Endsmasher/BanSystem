@@ -1,6 +1,7 @@
 package de.endsmasher.bansystem.warn;
 
 import de.endsmasher.bansystem.BanSystem;
+import de.endsmasher.bansystem.utils.PlayerLogall;
 import de.endsmasher.bansystem.utils.PlayerWarn;
 import net.endrealm.realmdrive.interfaces.DriveService;
 import net.endrealm.realmdrive.query.Query;
@@ -23,20 +24,35 @@ public class UnWarnPlayer implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         DriveService service = plugin.getWarnService();
+        DriveService servicelogall = plugin.getlService();
 
         if (!sender.hasPermission("BanSystem.Team")) {
             sender.sendMessage("§cYou don't have enough permissions to perform this command!");
             return true;
         }
         if (args.length == 3) {
-            OfflinePlayer target = Bukkit.getOfflinePlayer(args[0]);
-            Query query = new Query()
+
+            Query queryall = new Query()
                     .addEq()
-                    .setField("id")
-                    .setValue(target.getUniqueId().toString())
+                        .setField("name")
+                        .setValue(args[0])
                     .close()
                     .build();
 
+            PlayerLogall playerLogall = servicelogall.getReader().readObject(queryall, PlayerLogall.class);
+
+
+            if (!servicelogall.getReader().containsObject(queryall)) {
+                sender.sendMessage("§c Unknown Player " + args[0]);
+                return true;
+            }
+
+            Query query = new Query()
+                    .addEq()
+                    .setField("id")
+                    .setValue(playerLogall.getId())
+                    .close()
+                    .build();
 
             Query query1 = new Query()
                     .addEq()
@@ -45,11 +61,6 @@ public class UnWarnPlayer implements CommandExecutor {
                     .close()
                     .build();
 
-
-            if (target == null) {
-                sender.sendMessage("§c Unknown Player " + args[0]);
-                return true;
-            }
             if (!service.getReader().containsObject(query)) {
                 sender.sendMessage("§c The Player " + args[0] + " is not warned yet");
                 return true;
@@ -60,14 +71,14 @@ public class UnWarnPlayer implements CommandExecutor {
             }
             PlayerWarn playerwarn = service.getReader().readObject(query, PlayerWarn.class);
 
-            service.getWriter().write(new PlayerWarn(target.getUniqueId().toString(),playerwarn.getWarned_by(), playerwarn.getReason(), "INACTIVE", playerwarn.getUnWarnDate(), playerwarn.getWarnDate()));
+            service.getWriter().write(new PlayerWarn(playerLogall.getId(),playerwarn.getWarned_by(), playerwarn.getReason(), "INACTIVE", playerwarn.getUnWarnDate(), playerwarn.getWarnDate()));
 
 
             service.getWriter()
                     .delete(new Query()
                             .addEq()
                             .setField("id")
-                            .setValue(target.getUniqueId().toString())
+                            .setValue(playerLogall.getId())
                             .setField("reason")
                             .setValue(args[1])
                             .setField("info")
@@ -75,8 +86,8 @@ public class UnWarnPlayer implements CommandExecutor {
                             .close()
                             .build(), 1);
 
-            sender.sendMessage("§a Successful unwarned " + target.getName());
-            Bukkit.broadcastMessage("§a " + sender.getName() + " unwarned " + target.getName() + "(" + args[2] + ")");
+            sender.sendMessage("§a Successful unwarned " + args[0]);
+            Bukkit.broadcastMessage("§a " + sender.getName() + " unwarned " + args[0] + "(" + args[2] + ")");
         } else sender.sendMessage("§c Please use /unwarn <player> <warn reason> <unwarn reason>");
         return false;
     }

@@ -1,6 +1,7 @@
 package de.endsmasher.bansystem.warn;
 
 import de.endsmasher.bansystem.BanSystem;
+import de.endsmasher.bansystem.utils.PlayerLogall;
 import de.endsmasher.bansystem.utils.PlayerWarn;
 import net.endrealm.realmdrive.interfaces.DriveService;
 import net.endrealm.realmdrive.query.Query;
@@ -26,6 +27,7 @@ public class WarnPlayer implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         DriveService service = plugin.getWarnService();
         DriveService servicelog = plugin.getLogService();
+        DriveService servicelogall = plugin.getlService();
 
         if (!sender.hasPermission("BanSystem.Team")) {
             sender.sendMessage("§cYou don't have enough permissions to perform this command!");
@@ -33,26 +35,37 @@ public class WarnPlayer implements CommandExecutor {
         }
         if (args.length == 2) {
 
-            OfflinePlayer target = Bukkit.getOfflinePlayer(args[0]);
+            Query queryall = new Query()
+                    .addEq()
+                    .setField("name")
+                    .setValue(args[0])
+                    .close()
+                    .build();
+
+            PlayerLogall playerLogall = servicelogall.getReader().readObject(queryall, PlayerLogall.class);
+
+
+            if (!servicelogall.getReader().containsObject(queryall)) {
+                sender.sendMessage("§c Unknown Player " + args[0]);
+                return true;
+
+            }
 
             Query query = new Query()
                     .addEq()
                     .setField("id")
-                    .setValue(target.getUniqueId().toString())
+                    .setValue(playerLogall.getId())
                     .close()
                     .build();
 
-            if (target == null) {
-                sender.sendMessage("§c Unknown Player " + args[0]);
-                return true;
-            } else if (servicelog.getReader().containsObject(query)) {
-                sender.sendMessage("§c You are not allowed to warn " + target.getName());
+            if (servicelog.getReader().containsObject(query)) {
+                sender.sendMessage("§c You are not allowed to warn " + args[0]);
                 return true;
             }
 
 
             service.getWriter()
-                    .write(new PlayerWarn(target.getUniqueId().toString()
+                    .write(new PlayerWarn(playerLogall.getId()
                             , sender.getName()
                             , args[1]
                             , "ACTIVE"
@@ -60,12 +73,12 @@ public class WarnPlayer implements CommandExecutor {
                             , new Date().getTime()));
 
 
-            Bukkit.broadcastMessage("§a " + sender.getName() + " warned " + target.getName() + "(" + args[1] + ")");
-            sender.sendMessage("§aSuccessful warned " + target.getName() + " for " + args[1]);
+            Bukkit.broadcastMessage("§a " + sender.getName() + " warned " + args[0] + "(" + args[1] + ")");
+            sender.sendMessage("§aSuccessful warned " + args[0] + " for " + args[1]);
 
-            if (Bukkit.getPlayer(target.getUniqueId()) != null) {
+            if (Bukkit.getPlayer(playerLogall.getId()) != null) {
 
-                Bukkit.getPlayer(target.getUniqueId()).kickPlayer(" §c You have been warned for " + args[1]);
+                Bukkit.getPlayer(playerLogall.getId()).kickPlayer(" §c You have been warned for " + args[1]);
             }
 
         } else sender.sendMessage("§c Please use /warn <player> <reason>");

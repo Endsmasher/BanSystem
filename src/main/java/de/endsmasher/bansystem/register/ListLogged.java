@@ -40,8 +40,6 @@ public class ListLogged implements CommandExecutor {
                     .close()
                     .build();
 
-            System.out.println(servicel.getReader().readObject(queryall));
-
             PlayerLogall playerLogall = servicel.getReader().readObject(queryall, PlayerLogall.class);
 
 

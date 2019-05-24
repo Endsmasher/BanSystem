@@ -1,6 +1,7 @@
 package de.endsmasher.bansystem;
 
 import de.endsmasher.bansystem.utils.PlayerBan;
+import de.endsmasher.bansystem.utils.PlayerLogall;
 import de.endsmasher.bansystem.utils.PlayerMute;
 import de.endsmasher.bansystem.utils.PlayerWarn;
 import net.endrealm.realmdrive.interfaces.DriveService;
@@ -28,22 +29,31 @@ public class History implements CommandExecutor {
         DriveService warnService = plugin.getWarnService();
         DriveService banService = plugin.getBanService();
         DriveService muteService = plugin.getMuteService();
+        DriveService servicelogall = plugin.getlService();
 
         if (!sender.hasPermission("BanSystem.Team")) {
             sender.sendMessage("§cYou don't have enough permissions to perform this command!");
             return true;
         }
         if (args.length == 1) {
-            OfflinePlayer target = Bukkit.getOfflinePlayer(args[0]);
 
-            if (target == null) {
+            Query queryall = new Query()
+                    .addEq()
+                    .setField("name")
+                    .setValue(args[0])
+                    .close()
+                    .build();
+
+            PlayerLogall playerLogall = servicelogall.getReader().readObject(queryall, PlayerLogall.class);
+
+            if (!servicelogall.getReader().containsObject(queryall)) {
                 sender.sendMessage("§c Unknown Player " + args[0]);
                 return true;
             }
             Query query = new Query()
                     .addEq()
                     .setField("id")
-                    .setValue(target.getUniqueId().toString())
+                    .setValue(playerLogall.getId())
                     .close()
                     .build();
 
@@ -53,8 +63,8 @@ public class History implements CommandExecutor {
             List <PlayerMute> playerMutes = muteService.getReader().readAllObjects(query, PlayerMute.class);
 
 
-            sender.sendMessage("§6 ---------- History of " + target.getName() + " ---------- ");
-            sender.sendMessage("§6 UUID: §7" + target.getUniqueId() );
+            sender.sendMessage("§6 ---------- History of " + args[0] + " ---------- ");
+            sender.sendMessage("§6 UUID: §7" + playerLogall.getId());
             sender.sendMessage("§6 Bans: §7");
             for (PlayerBan playerBan : playerBans) {
                 sender.sendMessage("§7 - " + playerBan.getPrettyBanDate());
@@ -77,8 +87,6 @@ public class History implements CommandExecutor {
                 sender.sendMessage("   §6> Reason: §7" + playerMute.getReason());
                 sender.sendMessage(" ");
             }
-            // for Endsmasher
-            //sender.sendMessage("\u27a5");
         } else sender.sendMessage("§c Please use /history <player>");
         return false;
     }
