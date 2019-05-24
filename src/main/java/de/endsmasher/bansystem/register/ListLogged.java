@@ -5,6 +5,7 @@ import de.endsmasher.bansystem.utils.PlayerLog;
 import de.endsmasher.bansystem.utils.PlayerLogall;
 import net.endrealm.realmdrive.interfaces.DriveService;
 import net.endrealm.realmdrive.query.Query;
+import net.endrealm.realmdrive.utils.JsonUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
@@ -38,6 +39,8 @@ public class ListLogged implements CommandExecutor {
                         .setValue(args[0])
                     .close()
                     .build();
+
+            System.out.println(servicel.getReader().readObject(queryall));
 
             PlayerLogall playerLogall = servicel.getReader().readObject(queryall, PlayerLogall.class);
 
