@@ -39,13 +39,11 @@ public class PermBan implements CommandExecutor {
         }
         if (args.length == 2) {
 
-            Player target = Bukkit.getPlayer(args[0]);
-
 
             Query query = new Query()
                     .addEq()
-                    .setField("id")
-                    .setValue(target.getUniqueId().toString())
+                    .setField("name")
+                    .setValue(args[0])
                     .close()
                     .build();
 
@@ -58,11 +56,11 @@ public class PermBan implements CommandExecutor {
 
             }
             if (servicelog.getReader().containsObject(query)) {
-                sender.sendMessage("§cYou are not allowed to ban " + target.getName());
+                sender.sendMessage("§cYou are not allowed to ban " + args[0]);
                 return true;
             }
             if (service.getReader().containsObject(query)) {
-                sender.sendMessage("§cThe Player " + target.getName() + " is already banned");
+                sender.sendMessage("§cThe Player " + args[0] + " is already banned");
                 return true;
             }
 
@@ -73,8 +71,8 @@ public class PermBan implements CommandExecutor {
                         , -1,
                         new Date().getTime()));
 
-            if (Bukkit.getPlayer(target.getUniqueId()) != null) {
-                Bukkit.getPlayer(target.getUniqueId()).kickPlayer("§c§l Chaincraft.ORG"
+            if (Bukkit.getPlayer(playerLogall.getId()) != null) {
+                Bukkit.getPlayer(playerLogall.getId()).kickPlayer("§c§l Chaincraft.ORG"
                         + "\n"
                         + "\n§r§c You were permanently banned "
                         + "\n"
@@ -84,8 +82,8 @@ public class PermBan implements CommandExecutor {
                         + "\n§7 You can appeal at our Reddit: http://reddit.com/r/ChaincraftORG "
                         + "\n");
                 }
-                Bukkit.broadcastMessage("§a" + sender.getName() + " banned " + target.getName() + "(" + args[1] + ")");
-                sender.sendMessage("§aSuccessful banned " + playerLogall.getName() + " for " + args[1]);
+                Bukkit.broadcastMessage("§a" + sender.getName() + " banned " + args[0] + "(" + args[1] + ")");
+                sender.sendMessage("§aSuccessful banned " + args[0] + " for " + args[1]);
 
         } else sender.sendMessage("§cPlease use /ban <Player> <Reason> ");
 

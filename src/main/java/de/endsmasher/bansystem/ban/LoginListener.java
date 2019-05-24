@@ -2,6 +2,7 @@ package de.endsmasher.bansystem.ban;
 
 import de.endsmasher.bansystem.BanSystem;
 import de.endsmasher.bansystem.utils.PlayerBan;
+import de.endsmasher.bansystem.utils.PlayerLogall;
 import net.endrealm.realmdrive.interfaces.DriveService;
 import net.endrealm.realmdrive.query.Query;
 import org.bukkit.entity.Player;
@@ -23,6 +24,7 @@ public class LoginListener implements Listener {
     @EventHandler(ignoreCancelled = true)
     public void onPlayerJoin(PlayerLoginEvent event) {
         DriveService service = plugin.getBanService();
+        DriveService service1 = plugin.getlService();
         Player player = event.getPlayer();
         Query query = new Query()
                 .addEq()
@@ -31,12 +33,17 @@ public class LoginListener implements Listener {
                 .close()
                 .build();
 
+        PlayerLogall playerLogall = service1.getReader().readObject(query, PlayerLogall.class);
+
+        if (service1.getReader().containsObject(query)) {
+
+
         Query queryip = new Query()
                 .addEq()
                 .setField("id")
                 .setValue(player.getUniqueId().toString())
                 .setField("Address")
-                .setValue(player.getAddress().toString())
+                .setValue(playerLogall.getAddress())
                 .close()
                 .build();
 
@@ -97,21 +104,23 @@ public class LoginListener implements Listener {
 
         }if (playerBan.getUnBanDate() != -1) {
 
-            event.setKickMessage("§c§l Chaincraft.ORG"
-                    + "\n"
-                    + "\n§r§c You were temporarily banned "
-                    + "\n"
-                    + "\n§7 Reason: "
-                    + "§r" + playerBan.getReason()
-                    + "\n"
-                    + "\n§7 You can appeal at our Reddit: http://reddit.com/r/ChaincraftORG "
-                    + "\n"
-                    + "\n§7 Your ban will expire on "
-                    + playerBan.getUnBanDate()
-                    + "\n"
-                    + " You were banned at "
-                    + new Date(playerBan.getBanDate()));
-            event.setResult(PlayerLoginEvent.Result.KICK_BANNED);
+                event.setKickMessage("§c§l Chaincraft.ORG"
+                        + "\n"
+                        + "\n§r§c You were temporarily banned "
+                        + "\n"
+                        + "\n§7 Reason: "
+                        + "§r"
+                        + playerBan.getReason()
+                        + "\n"
+                        + "\n§7 You can appeal at our Reddit: http://reddit.com/r/ChaincraftORG "
+                        + "\n"
+                        + "\n§7 Your ban will expire on "
+                        + playerBan.getUnBanDate()
+                        + "\n"
+                        + " You were banned at "
+                        + new Date(playerBan.getBanDate()));
+                event.setResult(PlayerLoginEvent.Result.KICK_BANNED);
+            }
         }
     }
 }

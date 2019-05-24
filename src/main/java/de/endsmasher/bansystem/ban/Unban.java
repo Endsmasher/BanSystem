@@ -1,6 +1,7 @@
 package de.endsmasher.bansystem.ban;
 
 import de.endsmasher.bansystem.BanSystem;
+import de.endsmasher.bansystem.utils.PlayerLogall;
 import net.endrealm.realmdrive.interfaces.DriveService;
 import net.endrealm.realmdrive.query.Query;
 import org.bukkit.Bukkit;
@@ -23,20 +24,21 @@ public class Unban implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         DriveService service = plugin.getBanService();
-        OfflinePlayer target = Bukkit.getOfflinePlayer(args[0]);
-
+        DriveService servicel = plugin.getlService();
 
         if (sender.hasPermission("BanSystem.Team")) {
             if (args.length == 1) {
+
                 Query query = new Query()
                         .addEq()
-                        .setField("id")
-                        .setValue(target.getUniqueId().toString())
+                        .setField("name")
+                        .setValue(args[0])
                         .close()
                         .build();
+                PlayerLogall playerLogall = servicel.getReader().readObject(query, PlayerLogall.class);
 
                 if (!service.getReader().containsObject(query)) {
-                     sender.sendMessage("§cThe Player " + target.getName() + " is not banned!");
+                     sender.sendMessage("§cThe Player " + args[0] + " is not banned!");
                     return true;
                 }
 
@@ -45,10 +47,10 @@ public class Unban implements CommandExecutor {
                             .delete(new Query()
                                     .addEq()
                                     .setField("id")
-                                    .setValue(target.getUniqueId().toString())
+                                    .setValue(playerLogall.getId())
                                     .close()
                                     .build(), 1);
-                    sender.sendMessage("§a Successful unbanned " + target.getName());
+                    sender.sendMessage("§a Successful unbanned " + args[0]);
 
                 } else sender.sendMessage("Please use /unban <player>");
 

@@ -38,30 +38,24 @@ public class TempBan implements CommandExecutor {
         }
         if (args.length == 3) {
 
-            Player target = Bukkit.getPlayer(args[0]);
 
             Query query = new Query()
                     .addEq()
-                    .setField("id")
-                    .setValue(target.getUniqueId().toString())
+                    .setField("name")
+                    .setValue(args[0])
                     .close()
                     .build();
 
-            Query queryl = new Query()
-                    .addEq()
-                    .setField("id")
-                    .setValue(target.getUniqueId().toString())
-                    .close()
-                    .build();
 
-            PlayerLogall playerLogall = servicel.getReader().readObject(queryl, PlayerLogall.class);
 
-            if (!service.getReader().containsObject(queryl)) {
+            PlayerLogall playerLogall = servicel.getReader().readObject(query, PlayerLogall.class);
+
+            if (!service.getReader().containsObject(query)) {
                 sender.sendMessage("§cUnknown Player " + args[0]);
                 return true;
 
             }if (servicelog.getReader().containsObject(query)) {
-                sender.sendMessage("§cYou are not allowed to ban " + target.getName() + " !");
+                sender.sendMessage("§cYou are not allowed to ban " + args[0] + " !");
                 return true;
 
             }if (service.getReader().containsObject(query)) {
@@ -100,11 +94,11 @@ public class TempBan implements CommandExecutor {
 
             //Broadcast the Message to the Server if you banned a player
 
-            Bukkit.broadcastMessage("§a" + sender.getName() + " temporarily banned " + target.getName() + "(" + args[1] + ")");
+            Bukkit.broadcastMessage("§a" + sender.getName() + " temporarily banned " + args[0] + "(" + args[1] + ")");
 
             //Sends a ban confirmation to the Command Sender
 
-            sender.sendMessage("§aSuccessful temp banned " + target.getName() + " for " + args[1]);
+            sender.sendMessage("§aSuccessful temp banned " + args[0] + " for " + args[1]);
 
 
         } else sender.sendMessage("§cPlease use /tempban <player> <reason> <time(in days)> ");

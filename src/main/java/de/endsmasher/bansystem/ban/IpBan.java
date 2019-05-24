@@ -39,41 +39,39 @@ public class IpBan implements CommandExecutor {
             return true;
         }
 
-        Player target = Bukkit.getPlayer(args[0]);
-
         Query query = new Query()
                 .addEq()
-                .setField("id")
-                .setValue(target.getUniqueId().toString())
+                .setField("name")
+                .setValue(args[0])
                 .close()
                 .build();
 
         PlayerLogall playerLogall = servicelogall.getReader().readObject(query, PlayerLogall.class);
 
         if(!servicelogall.getReader().containsObject(query)) {
-            sender.sendMessage("§cUnknown Player " + target.getName());
+            sender.sendMessage("§cUnknown Player " + args[0]);
             return true;
         }
-        if (target == null) {
-            sender.sendMessage("§cYou are not able to ipBan a offline Player!");
+        if (playerLogall.getId() == null) {
+            sender.sendMessage("§cUnknown Player " + args[0]);
             return true;
         }
         if (servicelogteam.getReader().containsObject(query)) {
-            sender.sendMessage("§cYou are not allowed to ban " + target.getName());
+            sender.sendMessage("§cYou are not allowed to ban " + args[0]);
             return true;
         }
         if (serviceban.getReader().containsObject(query)) {
-            sender.sendMessage("§cThe Player " + target.getName() + " is already banned!");
+            sender.sendMessage("§cThe Player " + args[0] + " is already banned!");
         }
         serviceban.getWriter().write(new PlayerBan(playerLogall.getId()
                 , sender.getName()
                 , args[1]
-                , target.getAddress().toString()
+                , playerLogall.getAddress()
                 , -1
                 , new Date().getTime()));
 
-        sender.sendMessage("§aSuccessful ipBanned " + target.getName() + " for " + args[1]);
-        Bukkit.broadcastMessage("§a" + sender.getName() + " ipBanned " + target.getName() + "(" + args[1] + ")");
+        sender.sendMessage("§aSuccessful ipBanned " + args[0] + " for " + args[1]);
+        Bukkit.broadcastMessage("§a" + sender.getName() + " ipBanned " + args[0] + "(" + args[1] + ")");
 
 
         return false;

@@ -4,6 +4,10 @@ import net.endrealm.realmdrive.annotations.SaveVar;
 
 public class PlayerLogall {
 
+    public PlayerLogall(){
+
+    }
+
 
     @SaveVar
     public String id;
@@ -40,6 +44,5 @@ public class PlayerLogall {
 
     public long getConnections() {return connections;}
 
-    public PlayerLogall(){}
 
 }

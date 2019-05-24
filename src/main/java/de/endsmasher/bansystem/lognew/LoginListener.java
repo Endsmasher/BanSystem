@@ -8,9 +8,9 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerLoginEvent;
 
 import java.util.Date;
-import java.util.List;
 
 public class LoginListener implements Listener {
 
@@ -21,7 +21,7 @@ public class LoginListener implements Listener {
     }
 
         @EventHandler(ignoreCancelled = true)
-    public void onPlayerJoin(PlayerJoinEvent event) {
+    public void onPlayerJoin(PlayerLoginEvent event) {
         DriveService service = plugin.getlService();
         Player player = event.getPlayer();
         Query query = new Query()
@@ -33,10 +33,12 @@ public class LoginListener implements Listener {
 
             PlayerLogall playerLogall = service.getReader().readObject(query, PlayerLogall.class);
 
+
+
      if (service.getReader().containsObject(query)) {
-         service.getWriter().write(new PlayerLogall(playerLogall.getId()
+        /* service.getWriter().write(new PlayerLogall(playerLogall.getId()
                  , player.getName()
-                 , player.getAddress().toString()
+                 , playerLogall.getAddress()
                  , playerLogall.getFirstLogin()
                  , playerLogall.getConnections() + 1));
          service.getWriter().delete(new Query()
@@ -46,12 +48,13 @@ public class LoginListener implements Listener {
                  .setField("connections")
                  .setValue(playerLogall.getConnections() - 1)
                  .close()
-                 .build(), 1);
+                 .build(), 1); */
+        return;
 
      }
      service.getWriter().write(new PlayerLogall(player.getUniqueId().toString()
              , player.getName()
-             , player.getAddress().toString()
+             , event.getAddress().getHostAddress()
              , new Date().getTime()
              , 1));
 
