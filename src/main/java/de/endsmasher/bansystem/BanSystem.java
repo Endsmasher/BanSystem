@@ -71,8 +71,8 @@ public final class BanSystem extends JavaPlugin {
                 .build();
         warnService = new DriveServiceFactory().getDriveService(settings1);
         ConversionHandler conversionWarn = warnService.getConversionHandler();
-        WarncountService = new DriveServiceFactory().getDriveService(settings1);
-        ConversionHandler conversionWarnCount = WarncountService.getConversionHandler();
+            WarncountService = new DriveServiceFactory().getDriveService(settings1);
+            ConversionHandler conversionWarnCount = WarncountService.getConversionHandler();
         conversionWarn.registerClasses(PlayerWarn.class, PlayerWarnCount.class);
 
 

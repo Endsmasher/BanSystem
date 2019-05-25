@@ -1,10 +1,7 @@
 package de.endsmasher.bansystem.warn;
 
 import de.endsmasher.bansystem.BanSystem;
-import de.endsmasher.bansystem.utils.PlayerBan;
-import de.endsmasher.bansystem.utils.PlayerLogall;
-import de.endsmasher.bansystem.utils.PlayerWarn;
-import de.endsmasher.bansystem.utils.PlayerWarnCount;
+import de.endsmasher.bansystem.utils.*;
 import net.endrealm.realmdrive.interfaces.DriveService;
 import net.endrealm.realmdrive.query.Query;
 import org.bukkit.Bukkit;
@@ -14,6 +11,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 
 import java.util.Date;
+import java.util.List;
 
 public class WarnPlayer implements CommandExecutor {
 
@@ -62,8 +60,6 @@ public class WarnPlayer implements CommandExecutor {
                     .close()
                     .build();
 
-            PlayerWarn playerWarn = servicelog.getReader().readObject(query, PlayerWarn.class);
-
             Query queryCount = new Query()
                     .addEq()
                         .setField("id")
@@ -90,6 +86,9 @@ public class WarnPlayer implements CommandExecutor {
             Bukkit.broadcastMessage("§a " + sender.getName() + " warned " + args[0] + "(" + args[1] + ")");
             sender.sendMessage("§aSuccessful warned " + args[0] + " for " + args[1]);
             PlayerWarnCount playerWarnCount = serviceWarnCount.getReader().readObject(query, PlayerWarnCount.class);
+            List <PlayerWarn> playerWarns = service.getReader().readAllObjects(query, PlayerWarn.class);
+            PlayerWarn playerwarn = service.getReader().readObject(query, PlayerWarn.class);
+
 
             if (serviceWarnCount.getReader().containsObject(query)) {
                 serviceWarnCount.getWriter().write(playerWarnCount, true, queryCount);
