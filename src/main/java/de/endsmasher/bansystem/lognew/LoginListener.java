@@ -24,35 +24,30 @@ public class LoginListener implements Listener {
     public void onPlayerJoin(PlayerLoginEvent event) {
         DriveService service = plugin.getlService();
         Player player = event.getPlayer();
+
+        Query queryname = new Query()
+                .addEq()
+                    .setField("name")
+                    .setValue(player.getName())
+                .close()
+                .build();
+
         Query query = new Query()
                 .addEq()
                 .setField("id")
                 .setValue(player.getUniqueId().toString())
                 .close()
                 .build();
-
             PlayerLogall playerLogall = service.getReader().readObject(query, PlayerLogall.class);
 
 
 
      if (service.getReader().containsObject(query)) {
-        /* service.getWriter().write(new PlayerLogall(playerLogall.getId()
-                 , player.getName()
-                 , playerLogall.getAddress()
-                 , playerLogall.getFirstLogin()
-                 , playerLogall.getConnections() + 1));
-         service.getWriter().delete(new Query()
-                 .addEq()
-                 .setField("id")
-                 .setValue(player.getUniqueId().toString())
-                 .setField("connections")
-                 .setValue(playerLogall.getConnections() - 1)
-                 .close()
-                 .build(), 1); */
+         service.getWriter().write("name", true, queryname);
         return;
 
-     }
-     service.getWriter().write(new PlayerLogall(player.getUniqueId().toString()
+     } else
+         service.getWriter().write(new PlayerLogall(player.getUniqueId().toString()
              , player.getName()
              , event.getAddress().getHostAddress()
              , new Date().getTime()
