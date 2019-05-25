@@ -21,15 +21,10 @@ public class PlayerLogall {
     @SaveVar
     public String address;
 
-    @SaveVar
-    public long connections;
-
-
-    public PlayerLogall(String id, String name, String Address,long FirstLogin, long connections) {
+    public PlayerLogall(String id, String name, String Address,long FirstLogin) {
         this.id = id;
         this.name = name;
         this.address = Address;
-        this.connections = connections;
         this.FirstLogin = FirstLogin;
 
     }
@@ -42,7 +37,6 @@ public class PlayerLogall {
 
     public long getFirstLogin() {return FirstLogin;}
 
-    public long getConnections() {return connections;}
 
 
 }

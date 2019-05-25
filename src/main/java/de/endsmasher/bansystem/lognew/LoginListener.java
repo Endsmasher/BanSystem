@@ -33,14 +33,12 @@ public class LoginListener implements Listener {
                     .close()
                     .build();
 
-        Query queryname = new Query()
-                .addEq()
-                    .setField("name")
-                    .setValue(player.getName())
-                    .setField("connections")
-                    .setValue(service.getReader().readObject(query, PlayerLogall.class).getConnections() + 1)
-                .close()
-                .build();
+            Query queryname = new Query()
+                    .addEq()
+                        .setField("name")
+                        .setValue(player.getName())
+                    .close()
+                    .build();
 
             PlayerLogall playerLogAllName = service.getReader().readObject(queryname, PlayerLogall.class);
 
@@ -54,8 +52,7 @@ public class LoginListener implements Listener {
          service.getWriter().write(new PlayerLogall(player.getUniqueId().toString()
              , player.getName()
              , event.getAddress().getHostAddress()
-             , new Date().getTime()
-             , 1));
+             , new Date().getTime()));
 
     }
 }
