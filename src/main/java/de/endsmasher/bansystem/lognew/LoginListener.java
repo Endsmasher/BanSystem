@@ -38,12 +38,12 @@ public class LoginListener implements Listener {
                 .setValue(player.getUniqueId().toString())
                 .close()
                 .build();
-            PlayerLogall playerLogall = service.getReader().readObject(query, PlayerLogall.class);
+            PlayerLogall playerLogall = service.getReader().readObject(queryname, PlayerLogall.class);
 
 
 
      if (service.getReader().containsObject(query)) {
-         service.getWriter().write("name", true, queryname);
+         service.getWriter().write(playerLogall, true, queryname);
         return;
 
      } else
