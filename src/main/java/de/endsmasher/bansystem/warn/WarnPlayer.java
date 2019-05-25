@@ -1,8 +1,10 @@
 package de.endsmasher.bansystem.warn;
 
 import de.endsmasher.bansystem.BanSystem;
+import de.endsmasher.bansystem.utils.PlayerBan;
 import de.endsmasher.bansystem.utils.PlayerLogall;
 import de.endsmasher.bansystem.utils.PlayerWarn;
+import de.endsmasher.bansystem.utils.PlayerWarnCount;
 import net.endrealm.realmdrive.interfaces.DriveService;
 import net.endrealm.realmdrive.query.Query;
 import org.bukkit.Bukkit;
@@ -28,6 +30,8 @@ public class WarnPlayer implements CommandExecutor {
         DriveService service = plugin.getWarnService();
         DriveService servicelog = plugin.getLogService();
         DriveService servicelogall = plugin.getlService();
+        DriveService serviceWarnCount = plugin.getWarncountService();
+        DriveService serviceBan = plugin.getBanService();
 
         if (!sender.hasPermission("BanSystem.Team")) {
             sender.sendMessage("§cYou don't have enough permissions to perform this command!");
@@ -58,6 +62,17 @@ public class WarnPlayer implements CommandExecutor {
                     .close()
                     .build();
 
+            PlayerWarn playerWarn = servicelog.getReader().readObject(query, PlayerWarn.class);
+
+            Query queryCount = new Query()
+                    .addEq()
+                        .setField("id")
+                        .setValue(playerLogall.getId())
+                        .setField("count")
+                        .setValue(+1)
+                    .close()
+                    .build();
+
             if (servicelog.getReader().containsObject(query)) {
                 sender.sendMessage("§c You are not allowed to warn " + args[0]);
                 return true;
@@ -72,14 +87,28 @@ public class WarnPlayer implements CommandExecutor {
                             , new Date().getTime()+1000*60*60*24*7*2
                             , new Date().getTime()));
 
-
             Bukkit.broadcastMessage("§a " + sender.getName() + " warned " + args[0] + "(" + args[1] + ")");
             sender.sendMessage("§aSuccessful warned " + args[0] + " for " + args[1]);
+            PlayerWarnCount playerWarnCount = serviceWarnCount.getReader().readObject(query, PlayerWarnCount.class);
 
-            if (Bukkit.getPlayer(playerLogall.getId()) != null) {
+            if (serviceWarnCount.getReader().containsObject(query)) {
+                serviceWarnCount.getWriter().write(playerWarnCount, true, queryCount);
+            } else {
+                serviceWarnCount.getWriter().write(new PlayerWarnCount(playerLogall.getId(), 1));
+            }
+
+            if (Bukkit.getPlayer(playerLogall.getId()) != null && playerWarnCount.getCount() != 4) {
 
                 Bukkit.getPlayer(playerLogall.getId()).kickPlayer(" §c You have been warned for " + args[1]);
-            }
+                return true;
+
+            } else
+                serviceBan.getWriter().write(new PlayerBan(playerLogall.getId(),
+                        "CONSOLE",
+                        "To Many Warns",
+                        "-1",
+                        new Date().getTime() + 1000 * 60 * 60 * 24 * 1,
+                        new Date().getTime()));
 
         } else sender.sendMessage("§c Please use /warn <player> <reason>");
         return false;
