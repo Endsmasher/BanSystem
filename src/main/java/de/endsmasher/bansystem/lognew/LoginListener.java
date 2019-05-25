@@ -25,25 +25,29 @@ public class LoginListener implements Listener {
         DriveService service = plugin.getlService();
         Player player = event.getPlayer();
 
+
+            Query query = new Query()
+                    .addEq()
+                    .setField("id")
+                    .setValue(player.getUniqueId().toString())
+                    .close()
+                    .build();
+
         Query queryname = new Query()
                 .addEq()
                     .setField("name")
                     .setValue(player.getName())
+                    .setField("connections")
+                    .setValue(service.getReader().readObject(query, PlayerLogall.class).getConnections() + 1)
                 .close()
                 .build();
 
-        Query query = new Query()
-                .addEq()
-                .setField("id")
-                .setValue(player.getUniqueId().toString())
-                .close()
-                .build();
-            PlayerLogall playerLogall = service.getReader().readObject(queryname, PlayerLogall.class);
+            PlayerLogall playerLogAllName = service.getReader().readObject(queryname, PlayerLogall.class);
 
 
 
      if (service.getReader().containsObject(query)) {
-         service.getWriter().write(playerLogall, true, queryname);
+         service.getWriter().write(playerLogAllName, true, queryname);
         return;
 
      } else
