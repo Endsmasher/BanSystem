@@ -48,6 +48,7 @@ public class IpBan implements CommandExecutor {
 
         PlayerLogall playerLogall = servicelogall.getReader().readObject(query, PlayerLogall.class);
 
+
         if(!servicelogall.getReader().containsObject(query)) {
             sender.sendMessage("§cUnknown Player " + args[0]);
             return true;
