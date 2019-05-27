@@ -42,12 +42,21 @@ public final class BanSystem extends JavaPlugin {
     public DriveService WarncountService;
     public DriveService getWarncountService() {return WarncountService;}
 
+    public static BanSystem instance;
+
+    private ConfigHolder configHolder;
+
+    public static BanSystem getInstance() {
+        return instance;
+    }
     @Override
     public void onEnable() {
 
         System.out.println("The Plugin is loading ...");
 
+        instance = this;
 
+        configHolder = new ConfigHolder(this);
 
         // To save the Bans
         DriveSettings settings = DriveSettings.builder()
@@ -150,5 +159,9 @@ public final class BanSystem extends JavaPlugin {
     @Override
     public void onDisable() {
     System.out.println("The Plugin turned off!");
+    }
+
+    public ConfigHolder getConfigHolder() {
+        return configHolder;
     }
 }

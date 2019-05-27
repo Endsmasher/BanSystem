@@ -31,6 +31,15 @@ public class WarnPlayer implements CommandExecutor {
         DriveService serviceWarnCount = plugin.getWarncountService();
         DriveService serviceBan = plugin.getBanService();
 
+        String count = ConfigHolder.Configs.CONFIG.getConfig().getString("settings.AutoBan");
+
+        int bancount = 0;
+        try {
+            bancount = Integer.parseInt(count);
+        } catch (Exception ex) {
+            ConfigHolder.Configs.CONFIG.getConfig().set("settings.AutoBan", "This isn't a valid number!");
+        }
+
         if (!sender.hasPermission("BanSystem.Team")) {
             sender.sendMessage("§cYou don't have enough permissions to perform this command!");
             return true;
@@ -96,7 +105,7 @@ public class WarnPlayer implements CommandExecutor {
                 serviceWarnCount.getWriter().write(new PlayerWarnCount(playerLogall.getId(), 1));
             }
 
-            if (Bukkit.getPlayer(playerLogall.getId()) != null && playerWarnCount.getCount() != 4) {
+            if (Bukkit.getPlayer(playerLogall.getId()) != null && playerWarnCount.getCount() != bancount) {
 
                 Bukkit.getPlayer(playerLogall.getId()).kickPlayer(" §c You have been warned for " + args[1]);
                 return true;

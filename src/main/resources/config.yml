@@ -1,0 +1,16 @@
+#     ____               _____           _
+#    |  _ \             / ____|         | |
+#    | |_) | __ _ _ __ | (___  _   _ ___| |_ ___ _ __ ___
+#    |  _ < / _` | '_ \ \___ \| | | / __| __/ _ \ '_ ` _ \
+#    | |_) | (_| | | | |____) | |_| \__ \ ||  __/ | | | | |
+#    |____/ \__,_|_| |_|_____/ \__, |___/\__\___|_| |_| |_|
+#                               __/ |
+#                              |___/
+
+# Don't forget to reload after changing the values!
+
+settings:
+
+# The needed count of warns to get auto banned!
+  AutoBan:
+  Information:
