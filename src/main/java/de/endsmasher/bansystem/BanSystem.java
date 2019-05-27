@@ -157,6 +157,7 @@ public final class BanSystem extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new LoginListener(this), this);
         Bukkit.getPluginManager().registerEvents(new MuteListener(this), this);
         Bukkit.getPluginManager().registerEvents(new de.endsmasher.bansystem.lognew.LoginListener(this), this);
+        Bukkit.getPluginManager().registerEvents(new JoinListener(),this);
         System.out.println("The Plugin registered all Events!");
         System.out.println("The Plugin started!");
     }

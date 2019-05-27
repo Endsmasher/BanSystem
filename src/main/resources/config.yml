@@ -7,9 +7,14 @@
 #                               __/ |
 #                              |___/
 
+# Developed by Endsmasher, Gerolmed
+
 # Don't forget to reload after changing the values!
 
 settings:
+
+  AutoMessageOnJoin: "true"
+
 
 # Don't forget to set these apostrophes!
   hosturl: "mongodb://localhost:27017"
@@ -20,3 +25,5 @@ settings:
 
 # The needed count of warns to get auto banned!
   AutoBan:
+
+
