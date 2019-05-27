@@ -6,7 +6,6 @@ import de.endsmasher.bansystem.utils.PlayerWarn;
 import net.endrealm.realmdrive.interfaces.DriveService;
 import net.endrealm.realmdrive.query.Query;
 import org.bukkit.Bukkit;
-import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -14,7 +13,6 @@ import org.bukkit.command.CommandSender;
 public class UnWarnPlayer implements CommandExecutor {
 
     private BanSystem plugin;
-
 
     public UnWarnPlayer(BanSystem plugin) {
         this.plugin = plugin;
@@ -71,7 +69,12 @@ public class UnWarnPlayer implements CommandExecutor {
             }
             PlayerWarn playerwarn = service.getReader().readObject(query, PlayerWarn.class);
 
-            service.getWriter().write(new PlayerWarn(playerLogall.getId(),playerwarn.getWarned_by(), playerwarn.getReason(), "INACTIVE", playerwarn.getUnWarnDate(), playerwarn.getWarnDate()));
+            service.getWriter().write(new PlayerWarn(playerLogall.getId()
+                    ,playerwarn.getWarned_by()
+                    , playerwarn.getReason()
+                    , "INACTIVE"
+                    , playerwarn.getUnWarnDate()
+                    , playerwarn.getWarnDate()));
 
 
             service.getWriter()

@@ -58,10 +58,15 @@ public final class BanSystem extends JavaPlugin {
 
         configHolder = new ConfigHolder(this);
 
+
+        String hostUrl = ConfigHolder.Configs.CONFIG.getConfig().getString("settings.hosturl");
+        String password = ConfigHolder.Configs.CONFIG.getConfig().getString("settings.password");
+
         // To save the Bans
         DriveSettings settings = DriveSettings.builder()
                 .type(DriveSettings.BackendType.MONGO_DB)
-                .hostURL("mongodb://localhost:27017")
+                .hostURL(hostUrl)
+                .password(password)
                 .database("BanSystem")
                 .table("general")
                 .build();

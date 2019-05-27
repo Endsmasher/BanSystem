@@ -11,6 +11,12 @@
 
 settings:
 
+# Don't forget to set these apostrophes!
+  hosturl: "mongodb://localhost:27017"
+
+# You'r password won't get logged!
+  password: ""
+
+
 # The needed count of warns to get auto banned!
   AutoBan:
-  Information:
