@@ -45,20 +45,25 @@ public class TempBan implements CommandExecutor {
                     .close()
                     .build();
 
-
-
             PlayerLogall playerLogall = servicel.getReader().readObject(query, PlayerLogall.class);
 
-            if (!servicel.getReader().containsObject(query)) {
+            Query uuidquery = new Query()
+                    .addEq()
+                    .setField("id")
+                    .setValue(playerLogall.getId())
+                    .close()
+                    .build();
+
+            if (!servicelog.getReader().containsObject(uuidquery)) {
                 sender.sendMessage(prefix +"Unknown Player " + args[0]);
                 return true;
 
             }
-            if (servicelog.getReader().containsObject(query)) {
+            if (servicel.getReader().containsObject(uuidquery)) {
                 sender.sendMessage(prefix + "You are not permitted to ban " + args[0]);
                 return true;
 
-            }if (service.getReader().containsObject(query)) {
+            }if (service.getReader().containsObject(uuidquery)) {
                 sender.sendMessage(prefix + "The target player is already banned!");
                 return true;
             }

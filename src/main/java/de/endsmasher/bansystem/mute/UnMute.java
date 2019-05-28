@@ -51,8 +51,6 @@ public class UnMute implements CommandExecutor {
                                 .setValue(playerLogall.getId())
                                 .close()
                                 .build(), 1);
-                Mute.muted.remove(playerLogall.getId());
-
 
                 sender.sendMessage(prefix + "Successful unmuted " + args[0]);
                 Bukkit.broadcastMessage(prefix + sender.getName() + " unmuted " + args[0]);

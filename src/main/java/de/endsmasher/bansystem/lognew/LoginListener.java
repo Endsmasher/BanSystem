@@ -6,6 +6,7 @@ import net.endrealm.realmdrive.interfaces.DriveService;
 import net.endrealm.realmdrive.query.Query;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerLoginEvent;
 
@@ -19,7 +20,7 @@ public class LoginListener implements Listener {
         this.plugin = plugin;
     }
 
-        @EventHandler(ignoreCancelled = true)
+        @EventHandler(ignoreCancelled = true, priority = EventPriority.LOWEST)
     public void onPlayerJoin(PlayerLoginEvent event) {
         DriveService service = plugin.getTeamLogService();
         Player player = event.getPlayer();
@@ -32,19 +33,19 @@ public class LoginListener implements Listener {
                     .close()
                     .build();
 
-            Query queryname = new Query()
+            Query querynew = new Query()
                     .addEq()
                         .setField("name")
                         .setValue(player.getName())
+                        .setField("address")
+                        .setValue(event.getAddress().getHostAddress())
                     .close()
                     .build();
 
-            PlayerLogall playerLogAllName = service.getReader().readObject(queryname, PlayerLogall.class);
-
-
+            PlayerLogall playerLogAllName = service.getReader().readObject(querynew, PlayerLogall.class);
 
      if (service.getReader().containsObject(query)) {
-         service.getWriter().write(playerLogAllName, true, queryname);
+         service.getWriter().write(playerLogAllName, true, querynew);
         return;
 
      } else

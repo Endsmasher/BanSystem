@@ -31,10 +31,10 @@ public class MuteListener implements Listener {
                 .close()
                 .build();
 
-
-        if (Mute.muted.contains(event.getPlayer().getUniqueId().toString())) {
-            PlayerMute playerMute = service.getReader().readObject(query, PlayerMute.class);
+        PlayerMute playerMute = service.getReader().readObject(query, PlayerMute.class);
+        if (playerMute != null) {
             if(playerMute.getUnmutedate() <= new Date().getTime()) {
+                service.getWriter().delete(query, 1);
                 return;
             } else
                 event.getPlayer().sendMessage("§7You'r still muted!");

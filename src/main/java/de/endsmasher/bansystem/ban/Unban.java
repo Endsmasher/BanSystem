@@ -55,12 +55,9 @@ public class Unban implements CommandExecutor {
                 }
 
                     service.getWriter()
-                            .delete(new Query()
-                                    .addEq()
-                                    .setField("id")
-                                    .setValue(playerLogall.getId())
-                                    .close()
+                            .delete(query1
                                     .build(), 1);
+
                     sender.sendMessage(prefix + " Successful unbanned " + args[0]);
 
                 } else sender.sendMessage(prefix + "Please use /unban <player>");

@@ -1,5 +1,6 @@
 package de.endsmasher.bansystem.mute;
 
+import com.sun.xml.internal.bind.v2.TODO;
 import de.endsmasher.bansystem.Ocelot;
 import de.endsmasher.bansystem.utils.PlayerLogall;
 import de.endsmasher.bansystem.utils.PlayerMute;
@@ -76,9 +77,6 @@ public class Mute implements CommandExecutor {
                 sender.sendMessage(prefix +"Please use /mute <player> <reason> <time(in minutes)> ");
             }
             service.getWriter().write(new PlayerMute(playerLogall.getId(), sender.getName(), args[1], new Date().getTime() + 1000 * 60 * minutes, new Date().getTime()));
-
-
-            muted.add(playerLogall.getId());
 
             Bukkit.broadcastMessage(prefix + sender.getName() + " muted " + args[0] + " for " + args[1] + " " + args[2] + " minutes");
             sender.sendMessage(prefix +"Successful muted " + args[0] + " for " + args[1]);
