@@ -40,25 +40,33 @@ public class BanIp implements CommandExecutor {
             return true;
         }
 
-        Query query = new Query()
+        Query mainquery = new Query()
                 .addEq()
                 .setField("name")
                 .setValue(args[0])
                 .close()
                 .build();
 
-        PlayerLogall playerLogall = servicelogall.getReader().readObject(query, PlayerLogall.class);
+        PlayerLogall playerLogall = servicelogall.getReader().readObject(mainquery, PlayerLogall.class);
 
 
-        if(!servicelogall.getReader().containsObject(query)) {
+        Query uuidquery = new Query()
+                .addEq()
+                .setField("id")
+                .setValue(playerLogall.getId())
+                .close()
+                .build();
+
+
+        if(!servicelogall.getReader().containsObject(uuidquery)) {
             sender.sendMessage(prefix + "Unknown Player " + args[0]);
             return true;
         }
-        if (servicelogteam.getReader().containsObject(query)) {
+        if (servicelogteam.getReader().containsObject(uuidquery)) {
             sender.sendMessage(prefix + "You are not permitted to ban " + args[0]);
             return true;
         }
-        if (serviceban.getReader().containsObject(query)) {
+        if (serviceban.getReader().containsObject(uuidquery)) {
             sender.sendMessage(prefix + "The Player " + args[0] + " is already banned!");
         }
         serviceban.getWriter().write(new PlayerBan(playerLogall.getId()
