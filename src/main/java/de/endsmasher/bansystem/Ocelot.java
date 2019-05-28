@@ -1,9 +1,6 @@
 package de.endsmasher.bansystem;
 
-import de.endsmasher.bansystem.ban.LoginListener;
-import de.endsmasher.bansystem.ban.PermBan;
-import de.endsmasher.bansystem.ban.TempBan;
-import de.endsmasher.bansystem.ban.Unban;
+import de.endsmasher.bansystem.ban.*;
 import de.endsmasher.bansystem.mute.Mute;
 import de.endsmasher.bansystem.mute.MuteListener;
 import de.endsmasher.bansystem.mute.UnMute;
@@ -20,7 +17,7 @@ import net.endrealm.realmdrive.utils.DriveSettings;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
-public final class BanSystem extends JavaPlugin {
+public final class Ocelot extends JavaPlugin {
 
     private DriveService banService;
     public DriveService getBanService() {
@@ -42,20 +39,21 @@ public final class BanSystem extends JavaPlugin {
     public DriveService WarncountService;
     public DriveService getWarncountService() {return WarncountService;}
 
-    public static BanSystem instance;
+    public static Ocelot instance;
 
     private ConfigHolder configHolder;
 
-    public static BanSystem getInstance() {
+    public static Ocelot getInstance() {
         return instance;
     }
+
     @Override
+
     public void onEnable() {
 
         instance = this;
 
         configHolder = new ConfigHolder(this);
-
 
         String hostUrl = ConfigHolder.Configs.CONFIG.getConfig().getString("settings.hosturl");
         String password = ConfigHolder.Configs.CONFIG.getConfig().getString("settings.password");
@@ -67,7 +65,7 @@ public final class BanSystem extends JavaPlugin {
                 .hostURL(hostUrl)
                 .username(username)
                 .password(password)
-                .database("BanSystem")
+                .database("Ocelot")
                 .table("general")
                 .build();
         banService = new DriveServiceFactory().getDriveService(settings);
@@ -82,7 +80,7 @@ public final class BanSystem extends JavaPlugin {
                 .hostURL(hostUrl)
                 .username(username)
                 .password(password)
-                .database("BanSystem")
+                .database("Ocelot")
                 .table("warn")
                 .build();
         warnService = new DriveServiceFactory().getDriveService(settings1);
@@ -99,7 +97,7 @@ public final class BanSystem extends JavaPlugin {
                 .hostURL(hostUrl)
                 .username(username)
                 .password(password)
-                .database("BanSystem")
+                .database("Ocelot")
                 .table("mute")
                 .build();
         muteService = new DriveServiceFactory().getDriveService(settingsmute);
@@ -114,7 +112,7 @@ public final class BanSystem extends JavaPlugin {
                 .hostURL(hostUrl)
                 .username(username)
                 .password(password)
-                .database("BanSystem")
+                .database("Ocelot")
                 .table("log")
                 .build();
          logService = new DriveServiceFactory().getDriveService(settingslog);
@@ -128,7 +126,8 @@ public final class BanSystem extends JavaPlugin {
                 .type(DriveSettings.BackendType.MONGO_DB)
                 .hostURL(hostUrl)
                 .username(username)
-                .database(password)
+                .password(password)
+                .database("Ocelot")
                 .table("logNew")
                 .build();
         lService = new DriveServiceFactory().getDriveService(settingsl);
@@ -138,20 +137,21 @@ public final class BanSystem extends JavaPlugin {
 
         // Register the Commands
 
+        getCommand("banip").setExecutor(new BanIp(this));
         getCommand("ban").setExecutor(new PermBan(this));
         getCommand("tempban").setExecutor(new TempBan(this));
         getCommand("unban").setExecutor(new Unban(this));
 
         getCommand("warn").setExecutor(new WarnPlayer(this));
         getCommand("unwarn").setExecutor(new UnWarnPlayer(this));
-        getCommand("oc").setExecutor(new History(this));
+        getCommand("oc check").setExecutor(new History(this));
 
         getCommand("mute").setExecutor(new Mute(this));
         getCommand("unmute").setExecutor(new UnMute(this));
 
-        getCommand("oc").setExecutor(new ListLogged(this));
-        getCommand("oc").setExecutor(new Register(this));
-        getCommand("oc").setExecutor(new Remove(this));
+        getCommand("oc log").setExecutor(new ListLogged(this));
+        getCommand("oc add").setExecutor(new Register(this));
+        getCommand("oc remove").setExecutor(new Remove(this));
 
 
         // Register the Events

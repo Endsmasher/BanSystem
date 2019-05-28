@@ -1,6 +1,6 @@
 package de.endsmasher.bansystem.mute;
 
-import de.endsmasher.bansystem.BanSystem;
+import de.endsmasher.bansystem.Ocelot;
 import de.endsmasher.bansystem.utils.PlayerMute;
 import net.endrealm.realmdrive.interfaces.DriveService;
 import net.endrealm.realmdrive.query.Query;
@@ -12,10 +12,10 @@ import java.util.Date;
 
 public class MuteListener implements Listener {
 
-    private BanSystem plugin;
+    private Ocelot plugin;
 
 
-    public MuteListener(BanSystem plugin) {
+    public MuteListener(Ocelot plugin) {
         this.plugin = plugin;
     }
 

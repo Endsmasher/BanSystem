@@ -1,6 +1,6 @@
 package de.endsmasher.bansystem.utils;
 
-import de.endsmasher.bansystem.BanSystem;
+import de.endsmasher.bansystem.Ocelot;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -53,7 +53,7 @@ public class ConfigHolder {
     }
 
     public enum Configs {
-        CONFIG("config.yml"), MESSAGES("messages.yml");
+        CONFIG("config.yml");
 
         private String name;
         private FileConfiguration fileConfiguration;
@@ -71,7 +71,7 @@ public class ConfigHolder {
         }
 
         public void save() {
-            BanSystem.getInstance().getConfigHolder().saveConfig(fileConfiguration, name);
+            Ocelot.getInstance().getConfigHolder().saveConfig(fileConfiguration, name);
         }
     }
 }

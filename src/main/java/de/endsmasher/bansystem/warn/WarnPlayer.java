@@ -1,11 +1,10 @@
 package de.endsmasher.bansystem.warn;
 
-import de.endsmasher.bansystem.BanSystem;
+import de.endsmasher.bansystem.Ocelot;
 import de.endsmasher.bansystem.utils.*;
 import net.endrealm.realmdrive.interfaces.DriveService;
 import net.endrealm.realmdrive.query.Query;
 import org.bukkit.Bukkit;
-import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -15,10 +14,10 @@ import java.util.List;
 
 public class WarnPlayer implements CommandExecutor {
 
-    private BanSystem plugin;
+    private Ocelot plugin;
 
 
-    public WarnPlayer(BanSystem plugin) {
+    public WarnPlayer(Ocelot plugin) {
         this.plugin = plugin;
     }
 
@@ -41,7 +40,7 @@ public class WarnPlayer implements CommandExecutor {
             ConfigHolder.Configs.CONFIG.getConfig().set("settings.AutoBan", "This isn't a valid number");
         }
 
-        if (!sender.hasPermission("BanSystem.Team")) {
+        if (!sender.hasPermission("Ocelot.Team")) {
             sender.sendMessage(prefix +"You don't have enough permissions to perform this command");
             return true;
         }

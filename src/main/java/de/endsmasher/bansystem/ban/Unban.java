@@ -1,11 +1,9 @@
 package de.endsmasher.bansystem.ban;
 
-import de.endsmasher.bansystem.BanSystem;
+import de.endsmasher.bansystem.Ocelot;
 import de.endsmasher.bansystem.utils.PlayerLogall;
 import net.endrealm.realmdrive.interfaces.DriveService;
 import net.endrealm.realmdrive.query.Query;
-import org.bukkit.Bukkit;
-import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -13,10 +11,10 @@ import org.bukkit.command.CommandSender;
 public class Unban implements CommandExecutor {
 
 
-    private BanSystem plugin;
+    private Ocelot plugin;
 
 
-    public Unban(BanSystem plugin) {
+    public Unban(Ocelot plugin) {
         this.plugin = plugin;
     }
 
@@ -28,7 +26,7 @@ public class Unban implements CommandExecutor {
 
         String prefix = "§7[§6Ocelot§7] ";
 
-        if (sender.hasPermission("BanSystem.Team")) {
+        if (sender.hasPermission("Ocelot.Team")) {
             if (args.length == 1) {
 
                 Query query = new Query()

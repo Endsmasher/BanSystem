@@ -1,23 +1,18 @@
 package de.endsmasher.bansystem.register;
 
-import de.endsmasher.bansystem.BanSystem;
-import de.endsmasher.bansystem.utils.PlayerLog;
+import de.endsmasher.bansystem.Ocelot;
 import de.endsmasher.bansystem.utils.PlayerLogall;
 import net.endrealm.realmdrive.interfaces.DriveService;
 import net.endrealm.realmdrive.query.Query;
-import org.bukkit.Bukkit;
-import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 
-import java.util.Date;
-
 public class Remove implements CommandExecutor {
 
-    private BanSystem plugin;
+    private Ocelot plugin;
 
-    public Remove(BanSystem plugin) {this.plugin = plugin;}
+    public Remove(Ocelot plugin) {this.plugin = plugin;}
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String args[]) {
@@ -26,13 +21,16 @@ public class Remove implements CommandExecutor {
 
         String prefix = "§7[§6Ocelot§7] ";
 
-        if (!sender.hasPermission("BanSystem.Admin")) {
+
+        if (!sender.hasPermission("Ocelot.Admin")) {
             sender.sendMessage(prefix +"You don't have enough permissions to perform this command!");
             return true;
         }
+
         if (args.length == 2) {
 
             if(!(args[1] == "check") || !(args[1] == "add") || !(args[1] == "remove" )|| !(args[1] == "check" ))  {
+
                 sender.sendMessage("§7----------§6 Ocelot §7----------");
                 sender.sendMessage(" ");
                 sender.sendMessage("§6oc log <player>§7    : §3Shows you the Team");
@@ -41,8 +39,8 @@ public class Remove implements CommandExecutor {
                 sender.sendMessage("§6oc check <player>§7  : §3Shows you the Warns/Bans/Mutes of the Target player");
                 sender.sendMessage(" ");
                 sender.sendMessage("§7--------------------------------");
-
                 return true;
+
             }
 
             Query queryall = new Query()
@@ -66,7 +64,6 @@ public class Remove implements CommandExecutor {
                 return true;
             }
 
-
             if (!service.getReader().containsObject(query)) {
                 sender.sendMessage(prefix +"This Player isn't logged yet");
                 return true;
@@ -80,7 +77,6 @@ public class Remove implements CommandExecutor {
                         .build(), 1);
 
                 sender.sendMessage(prefix +"Successful removed " + args[0]);
-
 
         } else sender.sendMessage(prefix +"Please use /remove <player>");
         return false;

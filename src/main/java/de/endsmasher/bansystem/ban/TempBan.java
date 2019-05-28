@@ -1,26 +1,24 @@
 package de.endsmasher.bansystem.ban;
 
-import de.endsmasher.bansystem.BanSystem;
+import de.endsmasher.bansystem.Ocelot;
 import de.endsmasher.bansystem.utils.PlayerBan;
 import de.endsmasher.bansystem.utils.PlayerLogall;
 import net.endrealm.realmdrive.interfaces.DriveService;
 import net.endrealm.realmdrive.query.Query;
 import org.bukkit.Bukkit;
-import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 
 import java.util.Date;
 
 public class TempBan implements CommandExecutor {
 
 
-    private BanSystem plugin;
+    private Ocelot plugin;
 
 
-    public TempBan(BanSystem plugin) {
+    public TempBan(Ocelot plugin) {
         this.plugin = plugin;
     }
 
@@ -33,7 +31,7 @@ public class TempBan implements CommandExecutor {
 
         String prefix = "§7[§6Ocelot§7] ";
 
-        if (!sender.hasPermission("BanSystem.Team")) {
+        if (!sender.hasPermission("Ocelot.Team")) {
             sender.sendMessage(prefix + "You don't have enough permissions to perform this command");
             return true;
         }

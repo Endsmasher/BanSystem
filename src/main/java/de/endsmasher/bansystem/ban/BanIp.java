@@ -1,6 +1,6 @@
 package de.endsmasher.bansystem.ban;
 
-import de.endsmasher.bansystem.BanSystem;
+import de.endsmasher.bansystem.Ocelot;
 import de.endsmasher.bansystem.utils.PlayerBan;
 import de.endsmasher.bansystem.utils.PlayerLogall;
 import net.endrealm.realmdrive.interfaces.DriveService;
@@ -9,16 +9,15 @@ import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 
 import java.util.Date;
 
-public class IpBan implements CommandExecutor {
+public class BanIp implements CommandExecutor {
 
-    private BanSystem plugin;
+    private Ocelot plugin;
 
 
-    public IpBan(BanSystem plugin) {
+    public BanIp(Ocelot plugin) {
         this.plugin = plugin;
     }
 
@@ -31,13 +30,13 @@ public class IpBan implements CommandExecutor {
 
         String prefix = "§7[§6Ocelot§7] ";
 
-        if (!sender.hasPermission("BanSystem.IpBan")) {
+        if (!sender.hasPermission("Ocelot.BanIp")) {
             sender.sendMessage(prefix + "You are not allowed to perform this command");
             return true;
         }
         if (args.length != 2) {
-            sender.sendMessage(prefix + "Please use /IpBan <target> <reason>");
-            sender.sendMessage(prefix + "Keep in mind IpBan's are permanently");
+            sender.sendMessage(prefix + "Please use /BanIp <target> <reason>");
+            sender.sendMessage(prefix + "Keep in mind BanIp's are permanently");
             return true;
         }
 
@@ -71,7 +70,6 @@ public class IpBan implements CommandExecutor {
 
         sender.sendMessage(prefix + "Successful banned " + args[0] + " for " + args[1]);
         Bukkit.broadcastMessage(prefix + sender.getName() + " banned " + args[0] + " for " + args[1]);
-
 
         return false;
     }

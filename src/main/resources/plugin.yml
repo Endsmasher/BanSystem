@@ -1,40 +1,44 @@
-name: BanSystem
+name: Ocelot
 version: ${project.version}
-main: de.endsmasher.bansystem.BanSystem
-prefix: Ban
+main: de.endsmasher.bansystem.Ocelot
+prefix: Ocelot
 authors: [Endsmasher]
 description: The best Ban system ever seen
 
 commands:
+
+  banip:
+    description: Bans the Target players Ip address
+
   ban:
-    description: Allows you to ban other players
+    description: Ban the Target player without unban Date
 
   tempban:
-    description: Allows you to tempban other players
+    description: Ban the Target player for a defined time
 
   unban:
-    description: Allows you to unban other players
+    description: Unbans the Target player it also unbans the Ip
 
   warn:
-    description: Warns a player
+    description: Warns a player with a specific reason
 
   unwarn:
     description: Unwarns the target player if warned
 
-  history:
+  oc check:
     description: Shows you the History of a player
 
   mute:
-    description: Allows you to mute other players
+    description: Mute the Target player for a specific reason
 
   unmute:
     description: Allows you to unmute other players
 
-  register:
-    description: d
+  oc add:
+    description: Add the Target player to the Team
 
-  remove:
-    description: d1
+  oc remove:
+    description: Remove the Target player from the Team
 
-  SystemLog:
-    description: d2
+  oc log:
+    description: Shows you the

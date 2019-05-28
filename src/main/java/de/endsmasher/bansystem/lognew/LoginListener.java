@@ -1,6 +1,6 @@
 package de.endsmasher.bansystem.lognew;
 
-import de.endsmasher.bansystem.BanSystem;
+import de.endsmasher.bansystem.Ocelot;
 import de.endsmasher.bansystem.utils.PlayerLogall;
 import net.endrealm.realmdrive.interfaces.DriveService;
 import net.endrealm.realmdrive.query.Query;
@@ -13,9 +13,9 @@ import java.util.Date;
 
 public class LoginListener implements Listener {
 
-        private BanSystem plugin;
+        private Ocelot plugin;
 
-    public LoginListener(BanSystem plugin) {
+    public LoginListener(Ocelot plugin) {
         this.plugin = plugin;
     }
 

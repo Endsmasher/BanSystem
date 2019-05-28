@@ -1,12 +1,10 @@
 package de.endsmasher.bansystem.register;
 
-import de.endsmasher.bansystem.BanSystem;
+import de.endsmasher.bansystem.Ocelot;
 import de.endsmasher.bansystem.utils.PlayerLog;
 import de.endsmasher.bansystem.utils.PlayerLogall;
 import net.endrealm.realmdrive.interfaces.DriveService;
 import net.endrealm.realmdrive.query.Query;
-import org.bukkit.Bukkit;
-import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -15,9 +13,9 @@ import java.util.Date;
 
 public class Register implements CommandExecutor {
 
-    private BanSystem plugin;
+    private Ocelot plugin;
 
-    public Register(BanSystem plugin) {
+    public Register(Ocelot plugin) {
         this.plugin = plugin;
     }
 
@@ -28,7 +26,7 @@ public class Register implements CommandExecutor {
 
         String prefix = "§7[§6Ocelot§7] ";
 
-        if (!sender.hasPermission("BanSystem.Admin")) {
+        if (!sender.hasPermission("Ocelot.Admin")) {
             sender.sendMessage(prefix +"You don't have enough permissions to perform this command!");
             return true;
         }

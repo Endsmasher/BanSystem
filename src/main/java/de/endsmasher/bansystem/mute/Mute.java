@@ -1,28 +1,25 @@
 package de.endsmasher.bansystem.mute;
 
-import de.endsmasher.bansystem.BanSystem;
+import de.endsmasher.bansystem.Ocelot;
 import de.endsmasher.bansystem.utils.PlayerLogall;
 import de.endsmasher.bansystem.utils.PlayerMute;
 import net.endrealm.realmdrive.interfaces.DriveService;
 import net.endrealm.realmdrive.query.Query;
 import org.bukkit.Bukkit;
-import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.UUID;
 
 public class Mute implements CommandExecutor {
 
-    private BanSystem plugin;
+    private Ocelot plugin;
 
     public static ArrayList<String> muted = new ArrayList<>();
 
-    public Mute(BanSystem plugin) {
+    public Mute(Ocelot plugin) {
         this.plugin = plugin;
     }
 
@@ -34,7 +31,7 @@ public class Mute implements CommandExecutor {
 
         String prefix = "§7[§6Ocelot§7] ";
 
-        if (!sender.hasPermission("BanSystem.Team")) {
+        if (!sender.hasPermission("Ocelot.Team")) {
             sender.sendMessage(prefix +"You don't have enough permissions to perform this command");
             return true;
         }

@@ -1,23 +1,20 @@
 package de.endsmasher.bansystem.mute;
 
-import de.endsmasher.bansystem.BanSystem;
+import de.endsmasher.bansystem.Ocelot;
 import de.endsmasher.bansystem.utils.PlayerLogall;
-import de.endsmasher.bansystem.utils.PlayerMute;
 import net.endrealm.realmdrive.interfaces.DriveService;
 import net.endrealm.realmdrive.query.Query;
 import org.bukkit.Bukkit;
-import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 
 
 public class UnMute implements CommandExecutor {
 
-    private BanSystem plugin;
+    private Ocelot plugin;
 
-    public UnMute(BanSystem plugin) {
+    public UnMute(Ocelot plugin) {
         this.plugin = plugin;
     }
     @Override
@@ -27,7 +24,7 @@ public class UnMute implements CommandExecutor {
 
         String prefix = "§7[§6Ocelot§7] ";
 
-        if (sender.hasPermission("BanSystem.Team")) {
+        if (sender.hasPermission("Ocelot.Team")) {
             if (args.length == 1) {
                 Query query = new Query()
                         .addEq()

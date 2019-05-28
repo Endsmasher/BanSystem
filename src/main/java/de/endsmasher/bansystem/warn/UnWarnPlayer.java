@@ -1,6 +1,6 @@
 package de.endsmasher.bansystem.warn;
 
-import de.endsmasher.bansystem.BanSystem;
+import de.endsmasher.bansystem.Ocelot;
 import de.endsmasher.bansystem.utils.PlayerLogall;
 import de.endsmasher.bansystem.utils.PlayerWarn;
 import net.endrealm.realmdrive.interfaces.DriveService;
@@ -12,9 +12,9 @@ import org.bukkit.command.CommandSender;
 
 public class UnWarnPlayer implements CommandExecutor {
 
-    private BanSystem plugin;
+    private Ocelot plugin;
 
-    public UnWarnPlayer(BanSystem plugin) {
+    public UnWarnPlayer(Ocelot plugin) {
         this.plugin = plugin;
     }
 
@@ -26,7 +26,7 @@ public class UnWarnPlayer implements CommandExecutor {
 
         String prefix = "§7[§6Ocelot§7] ";
 
-        if (!sender.hasPermission("BanSystem.Team")) {
+        if (!sender.hasPermission("Ocelot.Team")) {
             sender.sendMessage(prefix +"You don't have enough permissions to perform this command");
             return true;
         }

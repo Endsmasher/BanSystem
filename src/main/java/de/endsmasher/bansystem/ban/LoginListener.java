@@ -1,6 +1,6 @@
 package de.endsmasher.bansystem.ban;
 
-import de.endsmasher.bansystem.BanSystem;
+import de.endsmasher.bansystem.Ocelot;
 import de.endsmasher.bansystem.utils.PlayerBan;
 import de.endsmasher.bansystem.utils.PlayerLogall;
 import de.endsmasher.bansystem.utils.PlayerWarn;
@@ -16,14 +16,15 @@ import java.util.List;
 
 public class LoginListener implements Listener {
 
-    private BanSystem plugin;
+    private Ocelot plugin;
 
-
-    public LoginListener(BanSystem plugin) {
+    public LoginListener(Ocelot plugin) {
         this.plugin = plugin;
     }
 
+
     @EventHandler(ignoreCancelled = true)
+
     public void onPlayerJoin(PlayerLoginEvent event) {
         DriveService service = plugin.getBanService();
         DriveService service1 = plugin.getlService();
