@@ -31,17 +31,18 @@ public class WarnPlayer implements CommandExecutor {
         DriveService serviceWarnCount = plugin.getWarncountService();
         DriveService serviceBan = plugin.getBanService();
 
+        String prefix = "§7[§6Ocelot§7] ";
         String count = ConfigHolder.Configs.CONFIG.getConfig().getString("settings.AutoBan");
 
         int bancount = 0;
         try {
             bancount = Integer.parseInt(count);
         } catch (Exception ex) {
-            ConfigHolder.Configs.CONFIG.getConfig().set("settings.AutoBan", "This isn't a valid number!");
+            ConfigHolder.Configs.CONFIG.getConfig().set("settings.AutoBan", "This isn't a valid number");
         }
 
         if (!sender.hasPermission("BanSystem.Team")) {
-            sender.sendMessage("§cYou don't have enough permissions to perform this command!");
+            sender.sendMessage(prefix +"You don't have enough permissions to perform this command");
             return true;
         }
         if (args.length == 2) {
@@ -57,7 +58,7 @@ public class WarnPlayer implements CommandExecutor {
 
 
             if (!servicelogall.getReader().containsObject(queryall)) {
-                sender.sendMessage("§c Unknown Player " + args[0]);
+                sender.sendMessage(prefix + "Unknown Player " + args[0]);
                 return true;
 
             }
@@ -79,7 +80,7 @@ public class WarnPlayer implements CommandExecutor {
                     .build();
 
             if (servicelog.getReader().containsObject(query)) {
-                sender.sendMessage("§c You are not allowed to warn " + args[0]);
+                sender.sendMessage(prefix + "You are not allowed to warn " + args[0]);
                 return true;
             }
 
@@ -92,8 +93,8 @@ public class WarnPlayer implements CommandExecutor {
                             , new Date().getTime()+1000*60*60*24*7*2
                             , new Date().getTime()));
 
-            Bukkit.broadcastMessage("§a " + sender.getName() + " warned " + args[0] + "(" + args[1] + ")");
-            sender.sendMessage("§aSuccessful warned " + args[0] + " for " + args[1]);
+            Bukkit.broadcastMessage(prefix + sender.getName() + " warned " + args[0] + " for " + args[1]);
+            sender.sendMessage(prefix + "Successful warned " + args[0] + " for " + args[1]);
             PlayerWarnCount playerWarnCount = serviceWarnCount.getReader().readObject(query, PlayerWarnCount.class);
             List <PlayerWarn> playerWarns = service.getReader().readAllObjects(query, PlayerWarn.class);
             PlayerWarn playerwarn = service.getReader().readObject(query, PlayerWarn.class);
@@ -107,7 +108,7 @@ public class WarnPlayer implements CommandExecutor {
 
             if (Bukkit.getPlayer(playerLogall.getId()) != null && playerWarnCount.getCount() != bancount) {
 
-                Bukkit.getPlayer(playerLogall.getId()).kickPlayer(" §c You have been warned for " + args[1]);
+                Bukkit.getPlayer(playerLogall.getId()).kickPlayer(prefix + "You have been warned for " + args[1]);
                 return true;
 
             } else
@@ -118,7 +119,7 @@ public class WarnPlayer implements CommandExecutor {
                         new Date().getTime() + 1000 * 60 * 60 * 24 * 1,
                         new Date().getTime()));
 
-        } else sender.sendMessage("§c Please use /warn <player> <reason>");
+        } else sender.sendMessage(prefix +"Please use /warn <player> <reason>");
         return false;
     }
 }

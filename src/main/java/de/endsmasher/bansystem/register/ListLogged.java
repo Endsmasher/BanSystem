@@ -26,12 +26,28 @@ public class ListLogged implements CommandExecutor {
         DriveService service = plugin.getLogService();
         DriveService servicel = plugin.getlService();
 
+        String prefix = "§7[§6Ocelot§7] ";
 
         if (!sender.hasPermission("BanSystem.Admin")) {
             sender.sendMessage("§cYou don't have enough permissions to perform this command!");
             return true;
         }
-        if (args.length == 1) {
+
+        if(!(args[1] == "check") || !(args[1] == "add") || !(args[1] == "remove" )|| !(args[1] == "check" ))  {
+            sender.sendMessage("§7----------§6 Ocelot §7----------");
+            sender.sendMessage(" ");
+            sender.sendMessage("§6oc log <player>§7    : §3Shows you the Team");
+            sender.sendMessage("§6oc add <player>§7    : §3Allows you to add the Target player to the Team");
+            sender.sendMessage("§6oc remove <player>§7 : §3Allows you to remove the Target player from the Team");
+            sender.sendMessage("§6oc check <player>§7  : §3Shows you the Warns/Bans/Mutes of the Target player");
+            sender.sendMessage(" ");
+            sender.sendMessage("§7--------------------------------");
+
+            return true;
+        }
+
+        if (args.length == 2) {
+
 
             Query queryall = new Query()
                     .addEq()
@@ -68,7 +84,9 @@ public class ListLogged implements CommandExecutor {
             sender.sendMessage("§6- Date:   §7" + playerLog.getPrettyAddDate());
 
 
-        } else sender.sendMessage("§c Please use /SystemLog <player> !");
+        } else
+            sender.sendMessage(prefix + "please use /oc check <player> ");
+
         return false;
     }
 }

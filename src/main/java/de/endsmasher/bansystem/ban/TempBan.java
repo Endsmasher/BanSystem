@@ -31,9 +31,10 @@ public class TempBan implements CommandExecutor {
         DriveService servicelog = plugin.getLogService();
         DriveService servicel = plugin.getlService();
 
+        String prefix = "§7[§6Ocelot§7] ";
 
         if (!sender.hasPermission("BanSystem.Team")) {
-            sender.sendMessage("§cYou don't have enough permissions to perform this command!");
+            sender.sendMessage(prefix + "You don't have enough permissions to perform this command");
             return true;
         }
         if (args.length == 3) {
@@ -51,16 +52,16 @@ public class TempBan implements CommandExecutor {
             PlayerLogall playerLogall = servicel.getReader().readObject(query, PlayerLogall.class);
 
             if (!servicel.getReader().containsObject(query)) {
-                sender.sendMessage("§cUnknown Player " + args[0]);
+                sender.sendMessage(prefix +"Unknown Player " + args[0]);
                 return true;
 
             }
             if (servicelog.getReader().containsObject(query)) {
-                sender.sendMessage("§cYou are not allowed to ban " + args[0] + " !");
+                sender.sendMessage(prefix + "You are not permitted to ban " + args[0]);
                 return true;
 
             }if (service.getReader().containsObject(query)) {
-                sender.sendMessage("§cThe target player is already banned!");
+                sender.sendMessage(prefix + "The target player is already banned!");
                 return true;
             }
 
@@ -70,7 +71,8 @@ public class TempBan implements CommandExecutor {
             try {
                 days = Integer.parseInt(args[2]);
             } catch (Exception ex) {
-                sender.sendMessage("§cThe entered ban time is not a number!" + "\n Please use /tempban <player> <reason> <time(in days)> !");
+                sender.sendMessage(prefix + "The entered ban time is not a number!");
+                sender.sendMessage(prefix + "Please use /tempban <player> <reason> <time(in days)> ");
             }
 
             // create the database entry
@@ -95,14 +97,14 @@ public class TempBan implements CommandExecutor {
 
             //Broadcast the Message to the Server if you banned a player
 
-            Bukkit.broadcastMessage("§a" + sender.getName() + " temporarily banned " + args[0] + "(" + args[1] + ")");
+            Bukkit.broadcastMessage(prefix + sender.getName() + " temporarily banned " + args[0] + " for " + args[1]);
 
             //Sends a ban confirmation to the Command Sender
 
-            sender.sendMessage("§aSuccessful temp banned " + args[0] + " for " + args[1]);
+            sender.sendMessage(prefix + "Successful temp banned " + args[0] + " for " + args[1]);
 
 
-        } else sender.sendMessage("§cPlease use /tempban <player> <reason> <time(in days)> ");
+        } else sender.sendMessage(prefix + "Please use /tempban <player> <reason> <time(in days)> ");
         return false;
 
     }

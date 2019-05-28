@@ -24,12 +24,26 @@ public class Remove implements CommandExecutor {
         DriveService service = plugin.getLogService();
         DriveService servicelogall = plugin.getlService();
 
+        String prefix = "§7[§6Ocelot§7] ";
 
         if (!sender.hasPermission("BanSystem.Admin")) {
-            sender.sendMessage("§cYou don't have enough permissions to perform this command!");
+            sender.sendMessage(prefix +"You don't have enough permissions to perform this command!");
             return true;
         }
-        if (args.length == 1) {
+        if (args.length == 2) {
+
+            if(!(args[1] == "check") || !(args[1] == "add") || !(args[1] == "remove" )|| !(args[1] == "check" ))  {
+                sender.sendMessage("§7----------§6 Ocelot §7----------");
+                sender.sendMessage(" ");
+                sender.sendMessage("§6oc log <player>§7    : §3Shows you the Team");
+                sender.sendMessage("§6oc add <player>§7    : §3Allows you to add the Target player to the Team");
+                sender.sendMessage("§6oc remove <player>§7 : §3Allows you to remove the Target player from the Team");
+                sender.sendMessage("§6oc check <player>§7  : §3Shows you the Warns/Bans/Mutes of the Target player");
+                sender.sendMessage(" ");
+                sender.sendMessage("§7--------------------------------");
+
+                return true;
+            }
 
             Query queryall = new Query()
                     .addEq()
@@ -37,13 +51,8 @@ public class Remove implements CommandExecutor {
                     .setValue(args[0])
                     .close()
                     .build();
+
             PlayerLogall playerLogall = servicelogall.getReader().readObject(queryall, PlayerLogall.class);
-
-
-            if (!servicelogall.getReader().containsObject(queryall)) {
-                sender.sendMessage("§c Unknown Player " + args[0]);
-                return true;
-            }
 
             Query query = new Query()
                     .addEq()
@@ -52,8 +61,14 @@ public class Remove implements CommandExecutor {
                     .close()
                     .build();
 
+            if (!servicelogall.getReader().containsObject(queryall)) {
+                sender.sendMessage(prefix +"Unknown Player " + args[0]);
+                return true;
+            }
+
+
             if (!service.getReader().containsObject(query)) {
-                sender.sendMessage("This Player isn't logged yet");
+                sender.sendMessage(prefix +"This Player isn't logged yet");
                 return true;
             }
 
@@ -64,10 +79,10 @@ public class Remove implements CommandExecutor {
                         .close()
                         .build(), 1);
 
-                sender.sendMessage("§a Successful removed " + args[0]);
+                sender.sendMessage(prefix +"Successful removed " + args[0]);
 
 
-        } else sender.sendMessage("§c Please use /remove <player>");
+        } else sender.sendMessage(prefix +"Please use /remove <player>");
         return false;
     }
 }

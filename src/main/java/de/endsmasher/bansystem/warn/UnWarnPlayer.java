@@ -24,10 +24,25 @@ public class UnWarnPlayer implements CommandExecutor {
         DriveService service = plugin.getWarnService();
         DriveService servicelogall = plugin.getlService();
 
+        String prefix = "§7[§6Ocelot§7] ";
+
         if (!sender.hasPermission("BanSystem.Team")) {
-            sender.sendMessage("§cYou don't have enough permissions to perform this command!");
+            sender.sendMessage(prefix +"You don't have enough permissions to perform this command");
             return true;
         }
+        if(!(args[1] == "check") || !(args[1] == "add") || !(args[1] == "remove" )|| !(args[1] == "check" ))  {
+            sender.sendMessage("§7----------§6 Ocelot §7----------");
+            sender.sendMessage(" ");
+            sender.sendMessage("§6oc log <player>§7    : §3Shows you the Team");
+            sender.sendMessage("§6oc add <player>§7    : §3Allows you to add the Target player to the Team");
+            sender.sendMessage("§6oc remove <player>§7 : §3Allows you to remove the Target player from the Team");
+            sender.sendMessage("§6oc check <player>§7  : §3Shows you the Warns/Bans/Mutes of the Target player");
+            sender.sendMessage(" ");
+            sender.sendMessage("§7--------------------------------");
+
+            return true;
+        }
+
         if (args.length == 3) {
 
             Query queryall = new Query()
@@ -41,7 +56,7 @@ public class UnWarnPlayer implements CommandExecutor {
 
 
             if (!servicelogall.getReader().containsObject(queryall)) {
-                sender.sendMessage("§c Unknown Player " + args[0]);
+                sender.sendMessage(prefix +"Unknown Player " + args[0]);
                 return true;
             }
 
@@ -59,39 +74,33 @@ public class UnWarnPlayer implements CommandExecutor {
                     .close()
                     .build();
 
+            Query query2 = new Query()
+                    .addEq()
+                        .setField("info")
+                        .setValue("INACTIVE")
+                    .close()
+                    .build();
+
+
             if (!service.getReader().containsObject(query)) {
-                sender.sendMessage("§c The Player " + args[0] + " is not warned yet");
+                sender.sendMessage(prefix +"The Player " + args[0] + " is not warned yet");
                 return true;
             }
             if (!service.getReader().containsObject(query1)) {
-                sender.sendMessage("§c Invalid warn!");
+                sender.sendMessage(prefix + "Invalid warn");
+                return true;
+            }
+            if (!service.getReader().containsObject(query2)) {
+                sender.sendMessage(prefix + "Invalid warn");
                 return true;
             }
             PlayerWarn playerwarn = service.getReader().readObject(query, PlayerWarn.class);
 
-            service.getWriter().write(new PlayerWarn(playerLogall.getId()
-                    ,playerwarn.getWarned_by()
-                    , playerwarn.getReason()
-                    , "INACTIVE"
-                    , playerwarn.getUnWarnDate()
-                    , playerwarn.getWarnDate()));
+            service.getWriter().write(playerwarn, true, query2);
 
-
-            service.getWriter()
-                    .delete(new Query()
-                            .addEq()
-                            .setField("id")
-                            .setValue(playerLogall.getId())
-                            .setField("reason")
-                            .setValue(args[1])
-                            .setField("info")
-                            .setValue("ACTIVE")
-                            .close()
-                            .build(), 1);
-
-            sender.sendMessage("§a Successful unwarned " + args[0]);
-            Bukkit.broadcastMessage("§a " + sender.getName() + " unwarned " + args[0] + "(" + args[2] + ")");
-        } else sender.sendMessage("§c Please use /unwarn <player> <warn reason> <unwarn reason>");
+            sender.sendMessage(prefix +"Successful unwarned " + args[0]);
+            Bukkit.broadcastMessage(prefix + sender.getName() + " unwarned " + args[0] + " for reason: " + args[2]);
+        } else sender.sendMessage(prefix + "§c Please use /unwarn <player> <warn reason> <unwarn reason>");
         return false;
     }
 }

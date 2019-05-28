@@ -52,8 +52,6 @@ public final class BanSystem extends JavaPlugin {
     @Override
     public void onEnable() {
 
-        System.out.println("The Plugin is loading ...");
-
         instance = this;
 
         configHolder = new ConfigHolder(this);
@@ -61,11 +59,13 @@ public final class BanSystem extends JavaPlugin {
 
         String hostUrl = ConfigHolder.Configs.CONFIG.getConfig().getString("settings.hosturl");
         String password = ConfigHolder.Configs.CONFIG.getConfig().getString("settings.password");
+        String username = ConfigHolder.Configs.CONFIG.getConfig().getString("settings.username");
 
         // To save the Bans
         DriveSettings settings = DriveSettings.builder()
                 .type(DriveSettings.BackendType.MONGO_DB)
                 .hostURL(hostUrl)
+                .username(username)
                 .password(password)
                 .database("BanSystem")
                 .table("general")
@@ -79,7 +79,9 @@ public final class BanSystem extends JavaPlugin {
         // To save the Warns
         DriveSettings settings1 = DriveSettings.builder()
                 .type(DriveSettings.BackendType.MONGO_DB)
-                .hostURL("mongodb://localhost:27017")
+                .hostURL(hostUrl)
+                .username(username)
+                .password(password)
                 .database("BanSystem")
                 .table("warn")
                 .build();
@@ -94,7 +96,9 @@ public final class BanSystem extends JavaPlugin {
         // To save the Mutes
         DriveSettings settingsmute = DriveSettings.builder()
                 .type(DriveSettings.BackendType.MONGO_DB)
-                .hostURL("mongodb://localhost:27017")
+                .hostURL(hostUrl)
+                .username(username)
+                .password(password)
                 .database("BanSystem")
                 .table("mute")
                 .build();
@@ -107,7 +111,9 @@ public final class BanSystem extends JavaPlugin {
         //To save the logged players
         DriveSettings settingslog = DriveSettings.builder()
                 .type(DriveSettings.BackendType.MONGO_DB)
-                .hostURL("mongodb://localhost:27017")
+                .hostURL(hostUrl)
+                .username(username)
+                .password(password)
                 .database("BanSystem")
                 .table("log")
                 .build();
@@ -120,17 +126,15 @@ public final class BanSystem extends JavaPlugin {
         //To register new players
         DriveSettings settingsl = DriveSettings.builder()
                 .type(DriveSettings.BackendType.MONGO_DB)
-                .hostURL("mongodb://localhost:27017")
-                .database("BanSystem")
+                .hostURL(hostUrl)
+                .username(username)
+                .database(password)
                 .table("logNew")
                 .build();
         lService = new DriveServiceFactory().getDriveService(settingsl);
         ConversionHandler conversionl = lService.getConversionHandler();
         conversionl.registerClasses(PlayerLogall.class);
 
-
-
-        System.out.println("loading ...");
 
         // Register the Commands
 
@@ -140,16 +144,15 @@ public final class BanSystem extends JavaPlugin {
 
         getCommand("warn").setExecutor(new WarnPlayer(this));
         getCommand("unwarn").setExecutor(new UnWarnPlayer(this));
-        getCommand("history").setExecutor(new History(this));
+        getCommand("oc").setExecutor(new History(this));
 
         getCommand("mute").setExecutor(new Mute(this));
         getCommand("unmute").setExecutor(new UnMute(this));
 
-        getCommand("SystemLog").setExecutor(new ListLogged(this));
-        getCommand("Register").setExecutor(new Register(this));
-        getCommand("Remove").setExecutor(new Remove(this));
+        getCommand("oc").setExecutor(new ListLogged(this));
+        getCommand("oc").setExecutor(new Register(this));
+        getCommand("oc").setExecutor(new Remove(this));
 
-        System.out.println("The Plugin registered all Commands!");
 
         // Register the Events
 
@@ -157,14 +160,12 @@ public final class BanSystem extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new LoginListener(this), this);
         Bukkit.getPluginManager().registerEvents(new MuteListener(this), this);
         Bukkit.getPluginManager().registerEvents(new de.endsmasher.bansystem.lognew.LoginListener(this), this);
-        Bukkit.getPluginManager().registerEvents(new JoinListener(),this);
-        System.out.println("The Plugin registered all Events!");
-        System.out.println("The Plugin started!");
+
     }
 
     @Override
     public void onDisable() {
-    System.out.println("The Plugin turned off!");
+
     }
 
     public ConfigHolder getConfigHolder() {

@@ -32,8 +32,10 @@ public class Mute implements CommandExecutor {
         DriveService servicelog = plugin.getLogService();
         DriveService servicel = plugin.getlService();
 
+        String prefix = "§7[§6Ocelot§7] ";
+
         if (!sender.hasPermission("BanSystem.Team")) {
-            sender.sendMessage("§cYou don't have enough permissions to perform this command!");
+            sender.sendMessage(prefix +"You don't have enough permissions to perform this command");
             return true;
         }
 
@@ -48,7 +50,7 @@ public class Mute implements CommandExecutor {
             PlayerLogall playerLogall = servicel.getReader().readObject(querylog, PlayerLogall.class);
 
             if (!servicel.getReader().containsObject(querylog)) {
-                sender.sendMessage("§cUnknown Player " + args[0]);
+                sender.sendMessage(prefix + "Unknown Player " + args[0]);
                 return true;
 
             }
@@ -62,26 +64,27 @@ public class Mute implements CommandExecutor {
 
 
             if (servicelog.getReader().containsObject(query)) {
-                sender.sendMessage("§c You are not allowed to mute " + args[0]);
+                sender.sendMessage(prefix + "You are not allowed to mute " + args[0]);
                 return true;
             }
             if (service.getReader().containsObject(query)) {
-                sender.sendMessage("§c The Player " + args[0] + " is already muted");
+                sender.sendMessage(prefix + "The Player " + args[0] + " is already muted");
                 return true;
             }
             int minutes = 0;
             try {
                 minutes = Integer.parseInt(args[2]);
             } catch (Exception ex) {
-                sender.sendMessage("§cThe entered ban time is not a number!" + "\n Please use /mute <player> <reason> <time(in minutes)> !");
+                sender.sendMessage(prefix + "The entered ban time is not a number!");
+                sender.sendMessage(prefix +"Please use /mute <player> <reason> <time(in minutes)> ");
             }
             service.getWriter().write(new PlayerMute(playerLogall.getId(), sender.getName(), args[1], new Date().getTime() + 1000 * 60 * minutes, new Date().getTime()));
 
 
             muted.add(playerLogall.getId());
 
-            Bukkit.broadcastMessage("§a " + sender.getName() + " muted " + args[0] + "(" + args[1] + ") " + args[2] + " minutes");
-            sender.sendMessage("§aSuccessful muted " + args[0] + " for " + args[1]);
+            Bukkit.broadcastMessage(prefix + sender.getName() + " muted " + args[0] + " for " + args[1] + " " + args[2] + " minutes");
+            sender.sendMessage(prefix +"Successful muted " + args[0] + " for " + args[1]);
         } else sender.sendMessage("§c Please use /mute <player> <reason> <mute duration(minutes)> ");
         return false;
     }

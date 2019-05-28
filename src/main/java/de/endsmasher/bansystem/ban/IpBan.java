@@ -29,13 +29,15 @@ public class IpBan implements CommandExecutor {
         DriveService servicelogteam = plugin.getLogService();
         DriveService servicelogall = plugin.getlService();
 
+        String prefix = "§7[§6Ocelot§7] ";
+
         if (!sender.hasPermission("BanSystem.IpBan")) {
-            sender.sendMessage("§cYou are not allowed to perform this command!");
+            sender.sendMessage(prefix + "You are not allowed to perform this command");
             return true;
         }
         if (args.length != 2) {
-            sender.sendMessage("§cPlease use /IpBan <target> <reason>");
-            sender.sendMessage("§cKeep in mind IpBan's are permanently!");
+            sender.sendMessage(prefix + "Please use /IpBan <target> <reason>");
+            sender.sendMessage(prefix + "Keep in mind IpBan's are permanently");
             return true;
         }
 
@@ -50,19 +52,15 @@ public class IpBan implements CommandExecutor {
 
 
         if(!servicelogall.getReader().containsObject(query)) {
-            sender.sendMessage("§cUnknown Player " + args[0]);
-            return true;
-        }
-        if (playerLogall.getId() == null) {
-            sender.sendMessage("§cUnknown Player " + args[0]);
+            sender.sendMessage(prefix + "Unknown Player " + args[0]);
             return true;
         }
         if (servicelogteam.getReader().containsObject(query)) {
-            sender.sendMessage("§cYou are not allowed to ban " + args[0]);
+            sender.sendMessage(prefix + "You are not permitted to ban " + args[0]);
             return true;
         }
         if (serviceban.getReader().containsObject(query)) {
-            sender.sendMessage("§cThe Player " + args[0] + " is already banned!");
+            sender.sendMessage(prefix + "The Player " + args[0] + " is already banned!");
         }
         serviceban.getWriter().write(new PlayerBan(playerLogall.getId()
                 , sender.getName()
@@ -71,8 +69,8 @@ public class IpBan implements CommandExecutor {
                 , -1
                 , new Date().getTime()));
 
-        sender.sendMessage("§aSuccessful ipBanned " + args[0] + " for " + args[1]);
-        Bukkit.broadcastMessage("§a" + sender.getName() + " ipBanned " + args[0] + "(" + args[1] + ")");
+        sender.sendMessage(prefix + "Successful banned " + args[0] + " for " + args[1]);
+        Bukkit.broadcastMessage(prefix + sender.getName() + " banned " + args[0] + " for " + args[1]);
 
 
         return false;

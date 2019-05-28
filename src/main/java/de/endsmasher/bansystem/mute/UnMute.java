@@ -25,7 +25,7 @@ public class UnMute implements CommandExecutor {
         DriveService service = plugin.getMuteService();
         DriveService servicelogall = plugin.getlService();
 
-
+        String prefix = "§7[§6Ocelot§7] ";
 
         if (sender.hasPermission("BanSystem.Team")) {
             if (args.length == 1) {
@@ -39,11 +39,11 @@ public class UnMute implements CommandExecutor {
                 PlayerLogall playerLogall = servicelogall.getReader().readObject(query, PlayerLogall.class);
 
                 if (!servicelogall.getReader().containsObject(query)) {
-                    sender.sendMessage("§c Unknown Player " + args[0]);
+                    sender.sendMessage(prefix +"Unknown Player " + args[0]);
                     return true;
                 }
                 if (!service.getReader().containsObject(query)) {
-                    sender.sendMessage("§cThe Player " + args[0] + " is not muted!");
+                    sender.sendMessage(prefix +"The Player " + args[0] + " is not muted");
                     return true;
                 }
 
@@ -57,11 +57,11 @@ public class UnMute implements CommandExecutor {
                 Mute.muted.remove(playerLogall.getId());
 
 
-                sender.sendMessage("§a Successful unmuted " + args[0]);
-                Bukkit.broadcastMessage("§a" + sender.getName() + " unmuted " + args[0]);
-            } else sender.sendMessage("Please use /unmute <player>");
+                sender.sendMessage(prefix + "Successful unmuted " + args[0]);
+                Bukkit.broadcastMessage(prefix + sender.getName() + " unmuted " + args[0]);
+            } else sender.sendMessage(prefix + "Please use /unmute <player>");
 
-        } else sender.sendMessage("§c You don't have enough permissions");
+        } else sender.sendMessage(prefix +"You don't have enough permissions");
         return true;
     }
 }

@@ -26,6 +26,8 @@ public class Unban implements CommandExecutor {
         DriveService service = plugin.getBanService();
         DriveService servicel = plugin.getlService();
 
+        String prefix = "§7[§6Ocelot§7] ";
+
         if (sender.hasPermission("BanSystem.Team")) {
             if (args.length == 1) {
 
@@ -39,7 +41,7 @@ public class Unban implements CommandExecutor {
 
 
                 if (!servicel.getReader().containsObject(query)) {
-                    sender.sendMessage("§c Unknown Player " + args[0]);
+                    sender.sendMessage(prefix +"Unknown Player " + args[0]);
                     return true;
                 }
 
@@ -50,7 +52,7 @@ public class Unban implements CommandExecutor {
                         .close()
                         .build();
                 if (!service.getReader().containsObject(query1)) {
-                     sender.sendMessage("§cThe Player " + args[0] + " is not banned!");
+                     sender.sendMessage(prefix + "The Player " + args[0] + " is not banned");
                     return true;
                 }
 
@@ -61,11 +63,11 @@ public class Unban implements CommandExecutor {
                                     .setValue(playerLogall.getId())
                                     .close()
                                     .build(), 1);
-                    sender.sendMessage("§a Successful unbanned " + args[0]);
+                    sender.sendMessage(prefix + " Successful unbanned " + args[0]);
 
-                } else sender.sendMessage("Please use /unban <player>");
+                } else sender.sendMessage(prefix + "Please use /unban <player>");
 
-            } else sender.sendMessage("§c You don't have enough permissions");
+            } else sender.sendMessage(prefix + " You don't have enough permissions");
             return true;
         }
 

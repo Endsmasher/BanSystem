@@ -13,11 +13,11 @@
 
 settings:
 
-  AutoMessageOnJoin: "true"
-
 
 # Don't forget to set these apostrophes!
   hosturl: "mongodb://localhost:27017"
+
+  username: ""
 
 # You'r password won't get logged!
   password: ""

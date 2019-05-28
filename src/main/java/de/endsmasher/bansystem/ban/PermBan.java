@@ -32,9 +32,11 @@ public class PermBan implements CommandExecutor {
         DriveService servicelog = plugin.getLogService();
         DriveService servicel = plugin.getlService();
 
+        String prefix = "§7[§6Ocelot§7] ";
+
 
         if (!sender.hasPermission("BanSystem.Team")) {
-            sender.sendMessage("§cYou don't have enough permissions to perform this command!");
+            sender.sendMessage(prefix + "You don't have enough permissions");
             return true;
         }
         if (args.length == 2) {
@@ -51,16 +53,16 @@ public class PermBan implements CommandExecutor {
             PlayerLogall playerLogall = servicel.getReader().readObject(query, PlayerLogall.class);
 
             if (!servicel.getReader().containsObject(query)) {
-                sender.sendMessage("§cUnknown Player " + args[0]);
+                sender.sendMessage(prefix + "Unknown Player " + args[0]);
                 return true;
 
             }
             if (servicelog.getReader().containsObject(query)) {
-                sender.sendMessage("§cYou are not allowed to ban " + args[0]);
+                sender.sendMessage(prefix + "You are not permitted to ban " + args[0]);
                 return true;
             }
             if (service.getReader().containsObject(query)) {
-                sender.sendMessage("§cThe Player " + args[0] + " is already banned");
+                sender.sendMessage(prefix + "The Player " + args[0] + " is already banned");
                 return true;
             }
 
@@ -82,10 +84,10 @@ public class PermBan implements CommandExecutor {
                         + "\n§7 You can appeal at our Reddit: http://reddit.com/r/ChaincraftORG "
                         + "\n");
                 }
-                Bukkit.broadcastMessage("§a" + sender.getName() + " banned " + args[0] + "(" + args[1] + ")");
-                sender.sendMessage("§aSuccessful banned " + args[0] + " for " + args[1]);
+                Bukkit.broadcastMessage(prefix + sender.getName() + " banned " + args[0] + " for " + args[1]);
+                sender.sendMessage(prefix + "Successful banned " + args[0] + " for " + args[1]);
 
-        } else sender.sendMessage("§cPlease use /ban <Player> <Reason> ");
+        } else sender.sendMessage(prefix + "Please use /ban <Player> <Reason> ");
 
         return false;
     }
