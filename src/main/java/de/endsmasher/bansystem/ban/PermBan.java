@@ -49,12 +49,12 @@ public class PermBan implements CommandExecutor {
 
             PlayerLogall playerLogall = servicel.getReader().readObject(query, PlayerLogall.class);
 
-            if (!servicel.getReader().containsObject(query)) {
+            if (!servicelog.getReader().containsObject(query)) {
                 sender.sendMessage(prefix + "Unknown Player " + args[0]);
                 return true;
 
             }
-            if (servicelog.getReader().containsObject(query)) {
+            if (servicel.getReader().containsObject(query)) {
                 sender.sendMessage(prefix + "You are not permitted to ban " + args[0]);
                 return true;
             }
