@@ -63,6 +63,7 @@ public class LoginListener implements Listener {
                  , -1
                  , new Date().getTime()));
 
+         /// TODO: 28.05.2019 Change the Ban messages !
          event.setKickMessage("§c§l Chaincraft.ORG"
                  + "\n"
                  + "§r§c You were permanently banned "
@@ -128,7 +129,7 @@ public class LoginListener implements Listener {
                 event.setResult(PlayerLoginEvent.Result.KICK_BANNED);
             }
 
-            if (playerBan.getReason() == "To Many Warns") {
+            if (playerBan.getReason() == "Too Many Warns") {
                 List <PlayerWarn> playerWarns = serviceWarns.getReader().readAllObjects(query, PlayerWarn.class);
 
                 event.setKickMessage("§c§l Chaincraft.ORG"
