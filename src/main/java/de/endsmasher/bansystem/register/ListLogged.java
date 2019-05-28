@@ -26,7 +26,7 @@ public class ListLogged implements CommandExecutor {
         String prefix = "§7[§6Ocelot§7] ";
 
         if (!sender.hasPermission("Ocelot.Admin")) {
-            sender.sendMessage("§cYou don't have enough permissions to perform this command!");
+            sender.sendMessage(prefix +"You don't have enough permissions to perform this command!");
             return true;
         }
 
@@ -45,7 +45,7 @@ public class ListLogged implements CommandExecutor {
             if (args[0] == "log") {
 
                 if (!servicel.getReader().containsObject(queryall)) {
-                    sender.sendMessage("§c Unknown Player " + args[1]);
+                    sender.sendMessage(prefix +"Unknown Player " + args[1]);
                     return true;
                 }
 
@@ -53,7 +53,7 @@ public class ListLogged implements CommandExecutor {
                 PlayerLog playerLog = service.getReader().readObject(query, PlayerLog.class);
 
                 if (!service.getReader().containsObject(query)) {
-                    sender.sendMessage("§c This Player isn't logged yet!");
+                    sender.sendMessage(prefix +"This Player isn't logged yet!");
                     return true;
                 }
 
