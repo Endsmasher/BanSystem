@@ -26,7 +26,7 @@ public class BanIp implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         DriveService serviceban = plugin.getBanService();
         DriveService servicelogteam = plugin.getLogService();
-        DriveService servicelogall = plugin.getlService();
+        DriveService servicelogall = plugin.getTeamLogService();
 
         String prefix = "§7[§6Ocelot§7] ";
 

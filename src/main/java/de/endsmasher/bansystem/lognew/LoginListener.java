@@ -21,7 +21,7 @@ public class LoginListener implements Listener {
 
         @EventHandler(ignoreCancelled = true)
     public void onPlayerJoin(PlayerLoginEvent event) {
-        DriveService service = plugin.getlService();
+        DriveService service = plugin.getTeamLogService();
         Player player = event.getPlayer();
 
 

@@ -21,7 +21,7 @@ public class ListLogged implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String args[]) {
         DriveService service = plugin.getLogService();
-        DriveService servicel = plugin.getlService();
+        DriveService servicel = plugin.getTeamLogService();
 
         String prefix = "§7[§6Ocelot§7] ";
 

@@ -27,7 +27,7 @@ public class History implements CommandExecutor {
         DriveService warnService = plugin.getWarnService();
         DriveService banService = plugin.getBanService();
         DriveService muteService = plugin.getMuteService();
-        DriveService servicelogall = plugin.getlService();
+        DriveService servicelogall = plugin.getTeamLogService();
 
         String prefix = "§7[§6Ocelot§7] ";
 

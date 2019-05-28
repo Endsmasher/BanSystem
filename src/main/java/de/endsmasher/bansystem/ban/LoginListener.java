@@ -27,7 +27,7 @@ public class LoginListener implements Listener {
 
     public void onPlayerJoin(PlayerLoginEvent event) {
         DriveService service = plugin.getBanService();
-        DriveService service1 = plugin.getlService();
+        DriveService service1 = plugin.getTeamLogService();
         DriveService serviceWarns = plugin.getWarnService();
 
         Player player = event.getPlayer();

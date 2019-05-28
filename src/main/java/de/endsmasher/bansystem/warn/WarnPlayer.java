@@ -26,7 +26,7 @@ public class WarnPlayer implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         DriveService service = plugin.getWarnService();
         DriveService servicelog = plugin.getLogService();
-        DriveService servicelogall = plugin.getlService();
+        DriveService servicelogall = plugin.getTeamLogService();
         DriveService serviceWarnCount = plugin.getWarncountService();
         DriveService serviceBan = plugin.getBanService();
 

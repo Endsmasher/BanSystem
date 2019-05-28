@@ -33,8 +33,8 @@ public final class Ocelot extends JavaPlugin {
     public DriveService logService;
     public DriveService getLogService() {return logService;}
 
-    public DriveService lService;
-    public DriveService getlService() {return lService;}
+    public DriveService TeamLogService;
+    public DriveService getTeamLogService() {return TeamLogService;}
 
     public DriveService WarncountService;
     public DriveService getWarncountService() {return WarncountService;}
@@ -130,8 +130,8 @@ public final class Ocelot extends JavaPlugin {
                 .database("Ocelot")
                 .table("logNew")
                 .build();
-        lService = new DriveServiceFactory().getDriveService(settingsl);
-        ConversionHandler conversionl = lService.getConversionHandler();
+        TeamLogService = new DriveServiceFactory().getDriveService(settingsl);
+        ConversionHandler conversionl = TeamLogService.getConversionHandler();
         conversionl.registerClasses(PlayerLogall.class);
 
 
