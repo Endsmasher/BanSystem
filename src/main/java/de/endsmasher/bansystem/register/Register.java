@@ -30,20 +30,7 @@ public class Register implements CommandExecutor {
             sender.sendMessage(prefix +"You don't have enough permissions to perform this command!");
             return true;
         }
-        if (args.length == 2) {
-
-            if(!(args[1] == "check") || !(args[1] == "add") || !(args[1] == "remove" )|| !(args[1] == "check" ))  {
-                sender.sendMessage("§7----------§6 Ocelot §7----------");
-                sender.sendMessage(" ");
-                sender.sendMessage("§6oc log <player>§7    : §3Shows you the Team");
-                sender.sendMessage("§6oc add <player>§7    : §3Allows you to add the Target player to the Team");
-                sender.sendMessage("§6oc remove <player>§7 : §3Allows you to remove the Target player from the Team");
-                sender.sendMessage("§6oc check <player>§7  : §3Shows you the Warns/Bans/Mutes of the Target player");
-                sender.sendMessage(" ");
-                sender.sendMessage("§7--------------------------------");
-
-                return true;
-            }
+        if (args.length == 1) {
 
             Query queryall = new Query().addEq().setField("name").setValue(args[1]).close().build();
             PlayerLogall playerLogall = servicelogall.getReader().readObject(queryall, PlayerLogall.class);

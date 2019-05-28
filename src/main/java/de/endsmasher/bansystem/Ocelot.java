@@ -144,14 +144,14 @@ public final class Ocelot extends JavaPlugin {
 
         getCommand("warn").setExecutor(new WarnPlayer(this));
         getCommand("unwarn").setExecutor(new UnWarnPlayer(this));
-        getCommand("oc check").setExecutor(new History(this));
+        getCommand("history").setExecutor(new History(this));
 
         getCommand("mute").setExecutor(new Mute(this));
         getCommand("unmute").setExecutor(new UnMute(this));
 
-        getCommand("oc log").setExecutor(new ListLogged(this));
-        getCommand("oc add").setExecutor(new Register(this));
-        getCommand("oc remove").setExecutor(new Remove(this));
+        getCommand("systemlog").setExecutor(new ListLogged(this));
+        getCommand("register").setExecutor(new Register(this));
+        getCommand("remove").setExecutor(new Remove(this));
 
 
         // Register the Events

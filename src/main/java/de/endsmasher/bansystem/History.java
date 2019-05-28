@@ -35,7 +35,7 @@ public class History implements CommandExecutor {
             sender.sendMessage(prefix + "You don't have enough permissions to perform this command");
             return true;
         }
-        if (args.length == 2) {
+        if (args.length == 1) {
 
             Query queryall = new Query()
                     .addEq()

@@ -25,7 +25,7 @@ commands:
   unwarn:
     description: Unwarns the target player if warned
 
-  oc check:
+  history:
     description: Shows you the History of a player
 
   mute:
@@ -34,11 +34,11 @@ commands:
   unmute:
     description: Allows you to unmute other players
 
-  oc add:
+  register:
     description: Add the Target player to the Team
 
-  oc remove:
+  remove:
     description: Remove the Target player from the Team
 
-  oc log:
+  systemlog:
     description: Shows you the
