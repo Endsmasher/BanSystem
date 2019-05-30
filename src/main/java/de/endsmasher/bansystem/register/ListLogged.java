@@ -65,7 +65,7 @@ public class ListLogged implements CommandExecutor {
 
             }
         } else
-            sender.sendMessage(prefix + "please use /systemlog <player> ");
+            sender.sendMessage(prefix + "please use /teamcheck <player> ");
 
         return false;
     }

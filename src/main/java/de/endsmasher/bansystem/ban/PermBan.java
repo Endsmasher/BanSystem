@@ -1,6 +1,7 @@
 package de.endsmasher.bansystem.ban;
 
 import de.endsmasher.bansystem.Ocelot;
+import de.endsmasher.bansystem.utils.ConfigHolder;
 import de.endsmasher.bansystem.utils.PlayerBan;
 import de.endsmasher.bansystem.utils.PlayerLogall;
 import net.endrealm.realmdrive.interfaces.DriveService;
@@ -88,9 +89,10 @@ public class PermBan implements CommandExecutor {
                         + "\n§7 You can appeal at our Reddit: http://reddit.com/r/ChaincraftORG "
                         + "\n");
                 }
-                Bukkit.broadcastMessage(prefix + sender.getName() + " banned " + args[0] + " for " + args[1]);
                 sender.sendMessage(prefix + "Successful banned " + args[0] + " for " + args[1]);
-
+            if (ConfigHolder.Configs.CONFIG.getConfig().getBoolean("settings.BroadcastBan/UnbanMessages") == true) {
+                Bukkit.broadcastMessage(prefix + sender.getName() + " banned " + args[0] + " for " + args[1]);
+            }
         } else sender.sendMessage(prefix + "Please use /ban <Player> <Reason> ");
 
         return false;

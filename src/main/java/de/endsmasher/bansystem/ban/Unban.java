@@ -1,9 +1,11 @@
 package de.endsmasher.bansystem.ban;
 
 import de.endsmasher.bansystem.Ocelot;
+import de.endsmasher.bansystem.utils.ConfigHolder;
 import de.endsmasher.bansystem.utils.PlayerLogall;
 import net.endrealm.realmdrive.interfaces.DriveService;
 import net.endrealm.realmdrive.query.Query;
+import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -59,6 +61,10 @@ public class Unban implements CommandExecutor {
                                     .build(), 1);
 
                     sender.sendMessage(prefix + " Successful unbanned " + args[0]);
+
+                if (ConfigHolder.Configs.CONFIG.getConfig().getBoolean("settings.BroadcastBanMessages") == true) {
+                    Bukkit.broadcastMessage(prefix + sender.getName() + " unbanned " + args[0]);
+                }
 
                 } else sender.sendMessage(prefix + "Please use /unban <player>");
 

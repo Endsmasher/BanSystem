@@ -37,7 +37,8 @@ public class MuteListener implements Listener {
                 service.getWriter().delete(query, 1);
                 return;
             } else
-                event.getPlayer().sendMessage("§7You'r still muted!");
+                event.getPlayer().sendMessage("§e Mute reason§7: §c" + playerMute.getReason());
+                event.getPlayer().sendMessage("§a You will be unbanned at " + playerMute.getPrettyUnmuteDate());
                 event.setCancelled(true);
         }
     }

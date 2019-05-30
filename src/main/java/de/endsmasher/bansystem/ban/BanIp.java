@@ -1,6 +1,7 @@
 package de.endsmasher.bansystem.ban;
 
 import de.endsmasher.bansystem.Ocelot;
+import de.endsmasher.bansystem.utils.ConfigHolder;
 import de.endsmasher.bansystem.utils.PlayerBan;
 import de.endsmasher.bansystem.utils.PlayerLogall;
 import net.endrealm.realmdrive.interfaces.DriveService;
@@ -30,7 +31,7 @@ public class BanIp implements CommandExecutor {
 
         String prefix = "§7[§6Ocelot§7] ";
 
-        if (!sender.hasPermission("Ocelot.BanIp")) {
+        if (!sender.hasPermission(ConfigHolder.Configs.CONFIG.getConfig().getString("permissions.BanIp"))) {
             sender.sendMessage(prefix + "You are not allowed to perform this command");
             return true;
         }
@@ -77,8 +78,9 @@ public class BanIp implements CommandExecutor {
                 , new Date().getTime()));
 
         sender.sendMessage(prefix + "Successful banned " + args[0] + " for " + args[1]);
-        Bukkit.broadcastMessage(prefix + sender.getName() + " banned " + args[0] + " for " + args[1]);
-
+        if (ConfigHolder.Configs.CONFIG.getConfig().getBoolean("settings.BroadcastBan/UnbanMessages") == true) {
+            Bukkit.broadcastMessage(prefix + sender.getName() + " banned " + args[0] + " for " + args[1]);
+        }
         return false;
     }
 }

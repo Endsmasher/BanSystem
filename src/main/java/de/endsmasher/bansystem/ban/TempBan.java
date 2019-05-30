@@ -1,6 +1,7 @@
 package de.endsmasher.bansystem.ban;
 
 import de.endsmasher.bansystem.Ocelot;
+import de.endsmasher.bansystem.utils.ConfigHolder;
 import de.endsmasher.bansystem.utils.PlayerBan;
 import de.endsmasher.bansystem.utils.PlayerLogall;
 import net.endrealm.realmdrive.interfaces.DriveService;
@@ -98,13 +99,13 @@ public class TempBan implements CommandExecutor {
                 + new Date().toString());
             }
 
-            //Broadcast the Message to the Server if you banned a player
-
-            Bukkit.broadcastMessage(prefix + sender.getName() + " temporarily banned " + args[0] + " for " + args[1]);
-
             //Sends a ban confirmation to the Command Sender
 
             sender.sendMessage(prefix + "Successful temp banned " + args[0] + " for " + args[1]);
+
+            if (ConfigHolder.Configs.CONFIG.getConfig().getBoolean("settings.BroadcastBan/UnbanMessages") == true) {
+                Bukkit.broadcastMessage(prefix + sender.getName() + " banned " + args[0] + " for " + args[1]);
+            }
 
 
         } else sender.sendMessage(prefix + "Please use /tempban <player> <reason> <time(in days)> ");

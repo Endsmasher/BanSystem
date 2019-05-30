@@ -40,5 +40,5 @@ commands:
   remove:
     description: Remove the Target player from the Team
 
-  systemlog:
+  teamcheck:
     description: Shows you the

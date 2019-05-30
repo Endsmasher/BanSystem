@@ -46,13 +46,14 @@ public class PlayerMute {
 
     public String getPunisher() { return punisher;}
 
-
     public String getPrettyMuteDate() {
         SimpleDateFormat format = new SimpleDateFormat("EEE dd / MM / yyyy");
         return format.format(new Date(getMutedate()));
-
     }
-
+    public String getPrettyUnmuteDate() {
+        SimpleDateFormat formatunmute = new SimpleDateFormat("EEE dd / MM");
+        return  formatunmute.format(new Date(getUnmutedate()));
+    }
 
 
 }

@@ -13,17 +13,54 @@
 
 settings:
 
+  Databasekind: "Mongo_DB"
 
 # Don't forget to set these apostrophes!
   hosturl: "mongodb://localhost:27017"
 
   username: ""
-
 # You'r password won't get logged!
   password: ""
 
 
 # The needed count of warns to get auto banned!
   AutoBan:
+
+  BroadcastBan/UnbanMessages: true
+
+
+
+# Here you can change the needed permissions!
+permissions:
+
+# Ban and Unban Permissions
+  BanIp: "Ocelot.BanIp"
+
+  PermBan: "Ocelot.BanPerm"
+
+  TempBan: "Ocelot.BanTemp"
+
+  Unban: "Ocelot.Unban"
+
+# Mute Permissions
+  Mute: "Ocelot.Mute"
+
+  Unmute: "Ocelot.Unmute"
+
+# Add to Team permissions!
+  Register: "Ocelot.Register"
+
+  Remove: "Ocelot.Remove"
+
+# Warn player Permissions!
+  Warn: "Ocelot.Warn"
+
+  Unwarn: "Ocelot.unwarn"
+
+# Information Permissions!
+  History: "Ocelot.History"
+
+  teamcheck: "Ocelot.teamcheck"
+
 
 
