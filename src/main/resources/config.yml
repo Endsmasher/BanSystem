@@ -13,8 +13,6 @@
 
 settings:
 
-  Databasekind: "Mongo_DB"
-
 # Don't forget to set these apostrophes!
   hosturl: "mongodb://localhost:27017"
 
