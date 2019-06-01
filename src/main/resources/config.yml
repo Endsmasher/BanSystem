@@ -32,7 +32,7 @@ settings:
 permissions:
 
 # Ban and Unban Permissions
-  BanIp: "Ocelot.BanIp"
+  banip: "Ocelot.BanIp"
 
   PermBan: "Ocelot.BanPerm"
 

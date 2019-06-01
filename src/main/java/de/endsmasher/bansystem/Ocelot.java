@@ -31,11 +31,11 @@ public final class Ocelot extends JavaPlugin {
     private DriveService muteService;
     public DriveService getMuteService() {return muteService;}
 
-    public DriveService logService;
-    public DriveService getLogService() {return logService;}
-
     public DriveService TeamLogService;
-    public DriveService getTeamLogService() {return TeamLogService;}
+    public DriveService getLogService() {return TeamLogService;}
+
+    public DriveService LogService;
+    public DriveService getTeamLogService() {return LogService;}
 
     public DriveService WarncountService;
     public DriveService getWarncountService() {return WarncountService;}
@@ -116,8 +116,8 @@ public final class Ocelot extends JavaPlugin {
                 .database("Ocelot")
                 .table("log")
                 .build();
-         logService = new DriveServiceFactory().getDriveService(settingslog);
-         ConversionHandler conversionlog = logService.getConversionHandler();
+         TeamLogService = new DriveServiceFactory().getDriveService(settingslog);
+         ConversionHandler conversionlog = TeamLogService.getConversionHandler();
          conversionlog.registerClasses(PlayerLog.class);
 
 
@@ -131,8 +131,8 @@ public final class Ocelot extends JavaPlugin {
                 .database("Ocelot")
                 .table("logNew")
                 .build();
-        TeamLogService = new DriveServiceFactory().getDriveService(settingsl);
-        ConversionHandler conversionl = TeamLogService.getConversionHandler();
+        LogService = new DriveServiceFactory().getDriveService(settingsl);
+        ConversionHandler conversionl = LogService.getConversionHandler();
         conversionl.registerClasses(PlayerLogall.class);
 
 

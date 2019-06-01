@@ -32,8 +32,10 @@ public class BanIp implements CommandExecutor {
 
         String prefix = "§7[§6Ocelot§7] ";
 
-        if (!sender.hasPermission(ConfigHolder.Configs.CONFIG.getConfig().getString("permissions.BanIp"))) {
+        if (!sender.hasPermission("Ocelot.BanIp")) {
+
             sender.sendMessage(prefix + "You are not allowed to perform this command");
+
             return true;
         }
         if (args.length != 2) {
