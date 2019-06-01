@@ -16,8 +16,9 @@ public class Remove implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String args[]) {
-        DriveService service = plugin.getLogService();
-        DriveService servicelogall = plugin.getTeamLogService();
+
+        DriveService servicelogall = plugin.getLogService();
+        DriveService servicelogteam = plugin.getTeamLogService();
 
         String prefix = "§7[§6Ocelot§7] ";
 
@@ -35,27 +36,27 @@ public class Remove implements CommandExecutor {
                     .setValue(args[0])
                     .close()
                     .build();
-
-            PlayerLogall playerLogall = servicelogall.getReader().readObject(queryall, PlayerLogall.class);
+            PlayerLogall playerLogallname = servicelogall.getReader().readObject(queryall, PlayerLogall.class);
 
             Query query = new Query()
                     .addEq()
                     .setField("id")
-                    .setValue(playerLogall.getId())
+                    .setValue(playerLogallname.getId())
                     .close()
                     .build();
+            PlayerLogall playerLogall = servicelogall.getReader().readObject(query, PlayerLogall.class);
 
-            if (!servicelogall.getReader().containsObject(queryall)) {
+            if (!servicelogall.getReader().containsObject(query)) {
                 sender.sendMessage(prefix +"Unknown Player " + args[0]);
                 return true;
             }
 
-            if (!service.getReader().containsObject(query)) {
+            if (!servicelogteam.getReader().containsObject(query)) {
                 sender.sendMessage(prefix +"This Player isn't logged yet");
                 return true;
             }
 
-                service.getWriter().delete(new Query()
+                servicelogteam.getWriter().delete(new Query()
                         .addEq()
                         .setField("id")
                         .setValue(playerLogall.getId())

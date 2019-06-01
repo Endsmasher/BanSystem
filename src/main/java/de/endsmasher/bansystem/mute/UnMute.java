@@ -19,30 +19,54 @@ public class UnMute implements CommandExecutor {
     }
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+
         DriveService service = plugin.getMuteService();
-        DriveService servicelogall = plugin.getTeamLogService();
+        DriveService servicelogall = plugin.getLogService();
 
         String prefix = "§7[§6Ocelot§7] ";
 
-        if (sender.hasPermission("Ocelot.Team")) {
+        if (!sender.hasPermission("Ocelot.Team")) {
+
+            sender.sendMessage(prefix + "You are not allowed to perform this command");
+
+            return true;
+        }
+
             if (args.length == 1) {
-                Query query = new Query()
+
+                Query queryname = new Query()
                         .addEq()
                         .setField("name")
                         .setValue(args[0])
                         .close()
                         .build();
 
+                PlayerLogall playerLogallname = servicelogall.getReader().readObject(queryname, PlayerLogall.class);
+
+
+                Query query = new Query()
+                        .addEq()
+                            .setField("id")
+                            .setValue(playerLogallname.getId())
+                        .close()
+                        .build();
+
                 PlayerLogall playerLogall = servicelogall.getReader().readObject(query, PlayerLogall.class);
 
+
                 if (!servicelogall.getReader().containsObject(query)) {
+
                     sender.sendMessage(prefix +"Unknown Player " + args[0]);
+
                     return true;
                 }
                 if (!service.getReader().containsObject(query)) {
+
                     sender.sendMessage(prefix +"The Player " + args[0] + " is not muted");
+
                     return true;
                 }
+
 
                 service.getWriter()
                         .delete(new Query()
@@ -52,11 +76,13 @@ public class UnMute implements CommandExecutor {
                                 .close()
                                 .build(), 1);
 
+
                 sender.sendMessage(prefix + "Successful unmuted " + args[0]);
+
                 Bukkit.broadcastMessage(prefix + sender.getName() + " unmuted " + args[0]);
+
             } else sender.sendMessage(prefix + "Please use /unmute <player>");
 
-        } else sender.sendMessage(prefix +"You don't have enough permissions");
         return true;
     }
 }

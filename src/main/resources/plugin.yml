@@ -41,4 +41,7 @@ commands:
     description: Remove the Target player from the Team
 
   teamcheck:
-    description: Shows you the
+    description: Shows you some informations about the player
+
+  teamlist:
+    description: Shows you all registered team members

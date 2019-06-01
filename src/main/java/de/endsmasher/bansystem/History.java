@@ -27,7 +27,7 @@ public class History implements CommandExecutor {
         DriveService warnService = plugin.getWarnService();
         DriveService banService = plugin.getBanService();
         DriveService muteService = plugin.getMuteService();
-        DriveService servicelogall = plugin.getTeamLogService();
+        DriveService servicelogall = plugin.getLogService();
 
         String prefix = "§7[§6Ocelot§7] ";
 
@@ -40,22 +40,26 @@ public class History implements CommandExecutor {
             Query queryall = new Query()
                     .addEq()
                     .setField("name")
-                    .setValue(args[1])
+                    .setValue(args[0])
                     .close()
                     .build();
 
-            PlayerLogall playerLogall = servicelogall.getReader().readObject(queryall, PlayerLogall.class);
+            PlayerLogall playerLogallname = servicelogall.getReader().readObject(queryall, PlayerLogall.class);
 
-            if (!servicelogall.getReader().containsObject(queryall)) {
-                sender.sendMessage(prefix + "Unknown Player " + args[1]);
-                return true;
-            }
             Query query = new Query()
                     .addEq()
                     .setField("id")
-                    .setValue(playerLogall.getId())
+                    .setValue(playerLogallname.getId())
                     .close()
                     .build();
+
+            PlayerLogall playerLogall = servicelogall.getReader().readObject(query, PlayerLogall.class);
+
+            if (!servicelogall.getReader().containsObject(query)) {
+                sender.sendMessage(prefix + "Unknown Player " + args[1]);
+                return true;
+            }
+
 
 
             List <PlayerWarn> playerWarns = warnService.getReader().readAllObjects(query, PlayerWarn.class);
@@ -63,7 +67,7 @@ public class History implements CommandExecutor {
             List <PlayerMute> playerMutes = muteService.getReader().readAllObjects(query, PlayerMute.class);
 
 
-            sender.sendMessage("§6 ---------- History of " + args[1] + " ---------- ");
+            sender.sendMessage("§6 ---------- History of " + args[0] + " ---------- ");
             sender.sendMessage("§6 UUID: §7" + playerLogall.getId());
             sender.sendMessage("§6 Bans: §7");
             for (PlayerBan playerBan : playerBans) {

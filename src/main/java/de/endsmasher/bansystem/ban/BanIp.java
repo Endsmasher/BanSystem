@@ -25,9 +25,10 @@ public class BanIp implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+
         DriveService serviceban = plugin.getBanService();
-        DriveService servicelogteam = plugin.getLogService();
-        DriveService servicelogall = plugin.getTeamLogService();
+        DriveService servicelogall = plugin.getLogService();
+        DriveService servicelogteam = plugin.getTeamLogService();
 
         String prefix = "§7[§6Ocelot§7] ";
 
@@ -37,39 +38,52 @@ public class BanIp implements CommandExecutor {
         }
         if (args.length != 2) {
             sender.sendMessage(prefix + "Please use /BanIp <target> <reason>");
-            sender.sendMessage(prefix + "Keep in mind BanIp's are permanently");
+            sender.sendMessage(prefix + "Keep in mind IpBan's are permanently");
             return true;
         }
 
-        Query mainquery = new Query()
+        Query queryname = new Query()
                 .addEq()
                 .setField("name")
                 .setValue(args[0])
                 .close()
                 .build();
 
-        PlayerLogall playerLogall = servicelogall.getReader().readObject(mainquery, PlayerLogall.class);
+        PlayerLogall playerLogallname = servicelogall.getReader().readObject(queryname, PlayerLogall.class);
 
 
-        Query uuidquery = new Query()
+        Query query = new Query()
                 .addEq()
                 .setField("id")
-                .setValue(playerLogall.getId())
+                .setValue(playerLogallname.getId())
                 .close()
                 .build();
 
+        PlayerLogall playerLogall = servicelogall.getReader().readObject(query, PlayerLogall.class);
 
-        if(!servicelogall.getReader().containsObject(uuidquery)) {
+
+        if(!servicelogall.getReader().containsObject(query)) {
+
             sender.sendMessage(prefix + "Unknown Player " + args[0]);
+
             return true;
+
         }
-        if (servicelogteam.getReader().containsObject(uuidquery)) {
+
+        if (servicelogteam.getReader().containsObject(query)) {
+
             sender.sendMessage(prefix + "You are not permitted to ban " + args[0]);
+
             return true;
+
         }
-        if (serviceban.getReader().containsObject(uuidquery)) {
+
+        if (serviceban.getReader().containsObject(query)) {
+
             sender.sendMessage(prefix + "The Player " + args[0] + " is already banned!");
+
         }
+
         serviceban.getWriter().write(new PlayerBan(playerLogall.getId()
                 , sender.getName()
                 , args[1]
@@ -77,10 +91,16 @@ public class BanIp implements CommandExecutor {
                 , -1
                 , new Date().getTime()));
 
+
         sender.sendMessage(prefix + "Successful banned " + args[0] + " for " + args[1]);
+
+
         if (ConfigHolder.Configs.CONFIG.getConfig().getBoolean("settings.BroadcastBan/UnbanMessages") == true) {
+
             Bukkit.broadcastMessage(prefix + sender.getName() + " banned " + args[0] + " for " + args[1]);
+
         }
+
         return false;
     }
 }

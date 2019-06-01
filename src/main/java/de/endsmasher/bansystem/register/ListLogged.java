@@ -20,18 +20,20 @@ public class ListLogged implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String args[]) {
+
         DriveService service = plugin.getLogService();
         DriveService servicel = plugin.getTeamLogService();
 
         String prefix = "§7[§6Ocelot§7] ";
 
         if (!sender.hasPermission("Ocelot.Admin")) {
+
             sender.sendMessage(prefix +"You don't have enough permissions to perform this command!");
+
             return true;
         }
 
         if (args.length == 1) {
-
 
             Query queryall = new Query()
                     .addEq()
@@ -40,33 +42,45 @@ public class ListLogged implements CommandExecutor {
                     .close()
                     .build();
 
-            PlayerLogall playerLogall = servicel.getReader().readObject(queryall, PlayerLogall.class);
+            PlayerLogall playerLogallname = service.getReader().readObject(queryall, PlayerLogall.class);
 
-            if (args[0] == "log") {
 
-                if (!servicel.getReader().containsObject(queryall)) {
+            Query query = new Query()
+                    .addEq()
+                        .setField("id")
+                        .setValue(playerLogallname.getId())
+                    .close()
+                    .build();
+
+            PlayerLogall playerLogall = service.getReader().readObject(query, PlayerLogall.class);
+
+
+                if (!servicel.getReader().containsObject(query)) {
+
                     sender.sendMessage(prefix +"Unknown Player " + args[1]);
+
                     return true;
                 }
 
-                Query query = new Query().addEq().setField("id").setValue(playerLogall.getId()).close().build();
-                PlayerLog playerLog = service.getReader().readObject(query, PlayerLog.class);
+                PlayerLog playerLogTeam = service.getReader().readObject(query, PlayerLog.class);
+
 
                 if (!service.getReader().containsObject(query)) {
+
                     sender.sendMessage(prefix +"This Player isn't logged yet!");
+
                     return true;
                 }
 
-
                 sender.sendMessage("§6 ---------- " + args[1] + " ----------");
-                sender.sendMessage("§6- UUID:   §7" + playerLog.getid());
-                sender.sendMessage("§6- Added by:   §7" + playerLog.getSenderName());
-                sender.sendMessage("§6- Date:   §7" + playerLog.getPrettyAddDate());
+                sender.sendMessage("§6- UUID:   §7" + playerLogTeam.getid());
+                sender.sendMessage("§6- Added by:   §7" + playerLogTeam.getSenderName());
+                sender.sendMessage("§6- Date:   §7" + playerLogTeam.getPrettyAddDate());
 
-            }
         } else
+
             sender.sendMessage(prefix + "please use /teamcheck <player> ");
 
-        return false;
+        return true;
     }
 }

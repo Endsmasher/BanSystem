@@ -23,6 +23,7 @@ public class MuteListener implements Listener {
 
     @EventHandler
     public void onChat(AsyncPlayerChatEvent event) {
+
         DriveService service = plugin.getMuteService();
         Query query = new Query()
                 .addEq()
@@ -32,6 +33,7 @@ public class MuteListener implements Listener {
                 .build();
 
         PlayerMute playerMute = service.getReader().readObject(query, PlayerMute.class);
+
         if (playerMute != null) {
             if(playerMute.getUnmutedate() <= new Date().getTime()) {
                 service.getWriter().delete(query, 1);

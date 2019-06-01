@@ -26,6 +26,7 @@ public class PermBan implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+
         DriveService service = plugin.getBanService();
         DriveService servicelog = plugin.getLogService();
         DriveService servicel = plugin.getTeamLogService();
@@ -34,42 +35,58 @@ public class PermBan implements CommandExecutor {
 
 
         if (!sender.hasPermission("Ocelot.Team")) {
+
             sender.sendMessage(prefix + "You don't have enough permissions");
+
             return true;
         }
         if (args.length == 2) {
 
 
-            Query query = new Query()
+            Query queryname = new Query()
                     .addEq()
                     .setField("name")
                     .setValue(args[0])
                     .close()
                     .build();
 
-            PlayerLogall playerLogall = servicel.getReader().readObject(query, PlayerLogall.class);
+            PlayerLogall playerLogallname = servicelog.getReader().readObject(queryname, PlayerLogall.class);
 
 
-            Query uuidquery = new Query()
+            Query query = new Query()
                     .addEq()
                     .setField("id")
-                    .setValue(playerLogall.getId())
+                    .setValue(playerLogallname.getId())
                     .close()
                     .build();
 
-            if (!servicelog.getReader().containsObject(uuidquery)) {
+            PlayerLogall playerLogall = servicelog.getReader().readObject(query, PlayerLogall.class);
+
+
+            if (!servicelog.getReader().containsObject(query)) {
+
                 sender.sendMessage(prefix + "Unknown Player " + args[0]);
+
                 return true;
 
             }
-            if (servicel.getReader().containsObject(uuidquery)) {
+
+            if (servicel.getReader().containsObject(query)) {
+
                 sender.sendMessage(prefix + "You are not permitted to ban " + args[0]);
+
                 return true;
+
             }
-            if (service.getReader().containsObject(uuidquery)) {
+
+            if (service.getReader().containsObject(query)) {
+
                 sender.sendMessage(prefix + "The Player " + args[0] + " is already banned");
+
                 return true;
+
             }
+
 
                 service.getWriter().write(new PlayerBan(playerLogall.getId()
                         ,sender.getName()
@@ -78,7 +95,9 @@ public class PermBan implements CommandExecutor {
                         , -1,
                         new Date().getTime()));
 
+
             if (Bukkit.getPlayer(playerLogall.getId()) != null) {
+
                 Bukkit.getPlayer(playerLogall.getId()).kickPlayer("§c§l Chaincraft.ORG"
                         + "\n"
                         + "\n§r§c You were permanently banned "
@@ -88,11 +107,18 @@ public class PermBan implements CommandExecutor {
                         + "\n"
                         + "\n§7 You can appeal at our Reddit: http://reddit.com/r/ChaincraftORG "
                         + "\n");
+
                 }
+
                 sender.sendMessage(prefix + "Successful banned " + args[0] + " for " + args[1]);
+
+
             if (ConfigHolder.Configs.CONFIG.getConfig().getBoolean("settings.BroadcastBan/UnbanMessages") == true) {
+
                 Bukkit.broadcastMessage(prefix + sender.getName() + " banned " + args[0] + " for " + args[1]);
+
             }
+
         } else sender.sendMessage(prefix + "Please use /ban <Player> <Reason> ");
 
         return false;

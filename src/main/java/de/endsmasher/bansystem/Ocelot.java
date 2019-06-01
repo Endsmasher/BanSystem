@@ -5,6 +5,7 @@ import de.endsmasher.bansystem.mute.Mute;
 import de.endsmasher.bansystem.mute.MuteListener;
 import de.endsmasher.bansystem.mute.UnMute;
 import de.endsmasher.bansystem.register.ListLogged;
+import de.endsmasher.bansystem.register.ListTeam;
 import de.endsmasher.bansystem.register.Register;
 import de.endsmasher.bansystem.register.Remove;
 import de.endsmasher.bansystem.utils.*;
@@ -153,6 +154,7 @@ public final class Ocelot extends JavaPlugin {
         getCommand("systemlog").setExecutor(new ListLogged(this));
         getCommand("register").setExecutor(new Register(this));
         getCommand("remove").setExecutor(new Remove(this));
+        getCommand("teamlist").setExecutor(new ListTeam(this));
 
 
         // Register the Events

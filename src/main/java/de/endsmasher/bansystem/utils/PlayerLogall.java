@@ -21,7 +21,7 @@ public class PlayerLogall {
     @SaveVar
     public String address;
 
-    public PlayerLogall(String id, String name, String Address,long FirstLogin) {
+    public PlayerLogall(String id, String name, String Address, long FirstLogin) {
         this.id = id;
         this.name = name;
         this.address = Address;

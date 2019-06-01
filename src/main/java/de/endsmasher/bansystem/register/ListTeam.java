@@ -9,73 +9,78 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 
-import java.util.Date;
+import java.util.List;
 
-public class Register implements CommandExecutor {
+public class ListTeam implements CommandExecutor {
 
     private Ocelot plugin;
 
-    public Register(Ocelot plugin) {
+    public ListTeam(Ocelot plugin) {
         this.plugin = plugin;
     }
+
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String args[]) {
 
-        DriveService servicelogall = plugin.getLogService();
+        DriveService service = plugin.getLogService();
         DriveService servicelogteam = plugin.getTeamLogService();
 
         String prefix = "§7[§6Ocelot§7] ";
 
         if (!sender.hasPermission("Ocelot.Admin")) {
-
             sender.sendMessage(prefix +"You don't have enough permissions to perform this command!");
-
             return true;
         }
+
         if (args.length == 1) {
+
 
             Query queryall = new Query()
                     .addEq()
                     .setField("name")
-                    .setValue(args[1])
+                    .setValue(args[0])
                     .close()
                     .build();
 
-            PlayerLogall playerLogallname = servicelogall.getReader().readObject(queryall, PlayerLogall.class);
-
+            PlayerLogall playerLogAllName = service.getReader().readObject(queryall, PlayerLogall.class);
 
             Query query = new Query()
                     .addEq()
                         .setField("id")
-                        .setValue(playerLogallname.getId())
+                        .setValue(playerLogAllName.getId())
                     .close()
                     .build();
 
-            PlayerLogall playerLogall = servicelogall.getReader().readObject(query, PlayerLogall.class);
+            PlayerLogall playerLogall = service.getReader().readObject(query, PlayerLogall.class);
 
 
-            if (!servicelogall.getReader().containsObject(queryall)) {
-
+            if (!service.getReader().containsObject(query)) {
                 sender.sendMessage(prefix +"Unknown Player " + args[1]);
-
-                return true;
-            }
-            if (servicelogteam.getReader().containsObject(query)) {
-
-                sender.sendMessage(prefix +"This Player is already logged");
-
                 return true;
             }
 
-            servicelogteam.getWriter().write(new PlayerLog(playerLogall.getId(), sender.getName(), new Date().getTime()));
+
+            if (!servicelogteam.getReader().containsObject(query)) {
+                sender.sendMessage(prefix +"This Player isn't logged yet!");
+                return true;
+            }
 
 
-            sender.sendMessage(prefix +"Successful registered " + args[1]);
+            List <PlayerLog> playerLogs = service.getReader().readAllObjects(query, PlayerLog.class);
 
-        } else sender.sendMessage(prefix +"Please use /register <player>");
+            for (PlayerLog playerLog : playerLogs) {
+                sender.sendMessage("§6 ---------- " + args[1] + " ----------");
+                sender.sendMessage(" ");
+                sender.sendMessage("§6- UUID:   §7" + playerLog.getid());
+                sender.sendMessage("§6- Added by:   §7" + playerLog.getSenderName());
+                sender.sendMessage("§6- Date:   §7" + playerLog.getPrettyAddDate());
+                sender.sendMessage(" ");
+                sender.sendMessage("§6 ---------- " + args[1] + " ----------");
+            }
 
+        } else
+            sender.sendMessage(prefix + "please use /teamlist");
         return false;
     }
 }
-

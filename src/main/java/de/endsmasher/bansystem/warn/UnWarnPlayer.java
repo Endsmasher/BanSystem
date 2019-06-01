@@ -21,8 +21,9 @@ public class UnWarnPlayer implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+
         DriveService service = plugin.getWarnService();
-        DriveService servicelogall = plugin.getTeamLogService();
+        DriveService servicelogall = plugin.getLogService();
 
         String prefix = "§7[§6Ocelot§7] ";
 
@@ -52,22 +53,21 @@ public class UnWarnPlayer implements CommandExecutor {
                     .close()
                     .build();
 
-            PlayerLogall playerLogall = servicelogall.getReader().readObject(queryall, PlayerLogall.class);
-
-
-            if (!servicelogall.getReader().containsObject(queryall)) {
-                sender.sendMessage(prefix +"Unknown Player " + args[0]);
-                return true;
-            }
+            PlayerLogall playerLogallname = servicelogall.getReader().readObject(queryall, PlayerLogall.class);
 
             Query query = new Query()
                     .addEq()
                     .setField("id")
-                    .setValue(playerLogall.getId())
+                    .setValue(playerLogallname.getId())
                     .close()
                     .build();
 
-            Query query1 = new Query()
+            if (!servicelogall.getReader().containsObject(query)) {
+                sender.sendMessage(prefix +"Unknown Player " + args[0]);
+                return true;
+            }
+
+            Query queryreason = new Query()
                     .addEq()
                     .setField("reason")
                     .setValue(args[1])
@@ -86,7 +86,7 @@ public class UnWarnPlayer implements CommandExecutor {
                 sender.sendMessage(prefix +"The Player " + args[0] + " is not warned yet");
                 return true;
             }
-            if (!service.getReader().containsObject(query1)) {
+            if (!service.getReader().containsObject(queryreason)) {
                 sender.sendMessage(prefix + "Invalid warn");
                 return true;
             }

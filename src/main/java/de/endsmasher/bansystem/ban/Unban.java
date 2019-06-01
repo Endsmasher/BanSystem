@@ -23,52 +23,73 @@ public class Unban implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+
         DriveService service = plugin.getBanService();
-        DriveService servicel = plugin.getTeamLogService();
+        DriveService servicel = plugin.getLogService();
 
         String prefix = "§7[§6Ocelot§7] ";
 
-        if (sender.hasPermission("Ocelot.Team")) {
+        if (!sender.hasPermission("Ocelot.Team")) {
+
+            sender.sendMessage(prefix +"You are not allowed to perform this command");
+
+            return true;
+        }
+
             if (args.length == 1) {
 
-                Query query = new Query()
+
+                Query queryname = new Query()
                         .addEq()
                             .setField("name")
                             .setValue(args[0])
                         .close()
                         .build();
+
+                PlayerLogall playerLogallname = servicel.getReader().readObject(queryname, PlayerLogall.class);
+
+
+                Query query = new Query()
+                        .addEq()
+                        .setField("id")
+                        .setValue(playerLogallname.getId())
+                        .close()
+                        .build();
+
                 PlayerLogall playerLogall = servicel.getReader().readObject(query, PlayerLogall.class);
 
 
                 if (!servicel.getReader().containsObject(query)) {
+
                     sender.sendMessage(prefix +"Unknown Player " + args[0]);
+
                     return true;
                 }
 
-                Query query1 = new Query()
-                        .addEq()
-                            .setField("id")
-                            .setValue(playerLogall.getId())
-                        .close()
-                        .build();
-                if (!service.getReader().containsObject(query1)) {
+
+                if (!service.getReader().containsObject(query)) {
+
                      sender.sendMessage(prefix + "The Player " + args[0] + " is not banned");
+
                     return true;
                 }
 
                     service.getWriter()
-                            .delete(query1
+                            .delete(query
                                     .build(), 1);
+
 
                     sender.sendMessage(prefix + " Successful unbanned " + args[0]);
 
                 if (ConfigHolder.Configs.CONFIG.getConfig().getBoolean("settings.BroadcastBanMessages") == true) {
+
                     Bukkit.broadcastMessage(prefix + sender.getName() + " unbanned " + args[0]);
+
                 }
+
 
                 } else sender.sendMessage(prefix + "Please use /unban <player>");
 
-            } else sender.sendMessage(prefix + " You don't have enough permissions");
             return true;
         }
 

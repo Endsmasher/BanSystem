@@ -26,63 +26,83 @@ public class TempBan implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+
         DriveService service = plugin.getBanService();
         DriveService servicelog = plugin.getLogService();
-        DriveService servicel = plugin.getTeamLogService();
+        DriveService servicelogteam = plugin.getTeamLogService();
 
         String prefix = "§7[§6Ocelot§7] ";
 
         if (!sender.hasPermission("Ocelot.Team")) {
+
             sender.sendMessage(prefix + "You don't have enough permissions to perform this command");
+
             return true;
         }
         if (args.length == 3) {
 
 
-            Query query = new Query()
+            Query queryname = new Query()
                     .addEq()
                     .setField("name")
                     .setValue(args[0])
                     .close()
                     .build();
 
-            PlayerLogall playerLogall = servicel.getReader().readObject(query, PlayerLogall.class);
+            PlayerLogall playerLogallname = servicelog.getReader().readObject(queryname, PlayerLogall.class);
 
-            Query uuidquery = new Query()
+
+            Query query = new Query()
                     .addEq()
                     .setField("id")
-                    .setValue(playerLogall.getId())
+                    .setValue(playerLogallname.getId())
                     .close()
                     .build();
 
-            if (!servicelog.getReader().containsObject(uuidquery)) {
+            PlayerLogall playerLogall = servicelog.getReader().readObject(query, PlayerLogall.class);
+
+
+            if (!servicelog.getReader().containsObject(query)) {
+
                 sender.sendMessage(prefix +"Unknown Player " + args[0]);
+
                 return true;
 
             }
-            if (servicel.getReader().containsObject(uuidquery)) {
+            if (servicelogteam.getReader().containsObject(query)) {
+
                 sender.sendMessage(prefix + "You are not permitted to ban " + args[0]);
+
                 return true;
 
-            }if (service.getReader().containsObject(uuidquery)) {
+            }if (service.getReader().containsObject(query)) {
+
                 sender.sendMessage(prefix + "The target player is already banned!");
+
                 return true;
             }
 
-            // "Translate" args[2] into a number
 
             int days = 0;
             try {
                 days = Integer.parseInt(args[2]);
             } catch (Exception ex) {
+
                 sender.sendMessage(prefix + "The entered ban time is not a number!");
+
                 sender.sendMessage(prefix + "Please use /tempban <player> <reason> <time(in days)> ");
+
             }
 
-            // create the database entry
+            service.getWriter().write(new PlayerBan(playerLogall.getId()
+                    ,sender.getName()
+                    , args[1]
+                    ,"-1"
+                    , new Date().getTime() + 1000 * 60 * 60 * 24* days, new Date().getTime()));
 
-            service.getWriter().write(new PlayerBan(playerLogall.getId(),sender.getName(), args[1],"-1", new Date().getTime() + 1000 * 60 * 60 * 24* days, new Date().getTime()));
+
             if (Bukkit.getPlayer(playerLogall.getId()) != null) {
+
                 Bukkit.getPlayer(playerLogall.getId()).kickPlayer("§c§l Chaincraft.ORG"
                 + "\n"
                 + "\n§r§c You were temporarily banned " + "\n" + "\n§7 Reason: "
@@ -97,14 +117,16 @@ public class TempBan implements CommandExecutor {
                 + "\n"
                 + " You were banned at "
                 + new Date().toString());
+
             }
 
-            //Sends a ban confirmation to the Command Sender
 
             sender.sendMessage(prefix + "Successful temp banned " + args[0] + " for " + args[1]);
 
             if (ConfigHolder.Configs.CONFIG.getConfig().getBoolean("settings.BroadcastBan/UnbanMessages") == true) {
+
                 Bukkit.broadcastMessage(prefix + sender.getName() + " banned " + args[0] + " for " + args[1]);
+
             }
 
 
