@@ -32,7 +32,7 @@ settings:
 permissions:
 
 # Ban and Unban Permissions
-  banip: "Ocelot.BanIp"
+  BanIp: "Ocelot.BanIp"
 
   PermBan: "Ocelot.BanPerm"
 
@@ -59,6 +59,8 @@ permissions:
   History: "Ocelot.History"
 
   teamcheck: "Ocelot.teamcheck"
+
+  teamlist: "Ocelot.teamlist"
 
 
 

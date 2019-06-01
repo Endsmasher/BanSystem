@@ -1,9 +1,6 @@
 package de.endsmasher.bansystem;
 
-import de.endsmasher.bansystem.utils.PlayerBan;
-import de.endsmasher.bansystem.utils.PlayerLogall;
-import de.endsmasher.bansystem.utils.PlayerMute;
-import de.endsmasher.bansystem.utils.PlayerWarn;
+import de.endsmasher.bansystem.utils.*;
 import net.endrealm.realmdrive.interfaces.DriveService;
 import net.endrealm.realmdrive.query.Query;
 import org.bukkit.command.Command;
@@ -31,7 +28,7 @@ public class History implements CommandExecutor {
 
         String prefix = "§7[§6Ocelot§7] ";
 
-        if (!sender.hasPermission("Ocelot.Team")) {
+        if (!sender.hasPermission("Ocelot.Team") || !sender.hasPermission(ConfigHolder.Configs.CONFIG.getConfig().getString("permissions.History"))) {
             sender.sendMessage(prefix + "You don't have enough permissions to perform this command");
             return true;
         }

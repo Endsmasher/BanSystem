@@ -41,7 +41,7 @@ public class WarnPlayer implements CommandExecutor {
             ConfigHolder.Configs.CONFIG.getConfig().set("settings.AutoBan", "This isn't a valid number");
         }
 
-        if (!sender.hasPermission("Ocelot.Team")) {
+        if (!sender.hasPermission("Ocelot.Team") || !sender.hasPermission(ConfigHolder.Configs.CONFIG.getConfig().getString("permissions.Warn"))) {
             sender.sendMessage(prefix +"You don't have enough permissions to perform this command");
             return true;
         }

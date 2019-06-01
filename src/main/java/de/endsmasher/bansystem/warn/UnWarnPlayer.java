@@ -1,6 +1,7 @@
 package de.endsmasher.bansystem.warn;
 
 import de.endsmasher.bansystem.Ocelot;
+import de.endsmasher.bansystem.utils.ConfigHolder;
 import de.endsmasher.bansystem.utils.PlayerLogall;
 import de.endsmasher.bansystem.utils.PlayerWarn;
 import net.endrealm.realmdrive.interfaces.DriveService;
@@ -27,7 +28,7 @@ public class UnWarnPlayer implements CommandExecutor {
 
         String prefix = "§7[§6Ocelot§7] ";
 
-        if (!sender.hasPermission("Ocelot.Team")) {
+        if (!sender.hasPermission("Ocelot.Team") || !sender.hasPermission(ConfigHolder.Configs.CONFIG.getConfig().getString("permissions.Unwarn"))) {
             sender.sendMessage(prefix +"You don't have enough permissions to perform this command");
             return true;
         }

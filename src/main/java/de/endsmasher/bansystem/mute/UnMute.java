@@ -1,6 +1,7 @@
 package de.endsmasher.bansystem.mute;
 
 import de.endsmasher.bansystem.Ocelot;
+import de.endsmasher.bansystem.utils.ConfigHolder;
 import de.endsmasher.bansystem.utils.PlayerLogall;
 import net.endrealm.realmdrive.interfaces.DriveService;
 import net.endrealm.realmdrive.query.Query;
@@ -25,7 +26,7 @@ public class UnMute implements CommandExecutor {
 
         String prefix = "§7[§6Ocelot§7] ";
 
-        if (!sender.hasPermission("Ocelot.Team")) {
+        if (!sender.hasPermission("Ocelot.Team") || !sender.hasPermission(ConfigHolder.Configs.CONFIG.getConfig().getString("permissions.Unmute"))) {
 
             sender.sendMessage(prefix + "You are not allowed to perform this command");
 

@@ -1,6 +1,7 @@
 package de.endsmasher.bansystem.mute;
 
 import de.endsmasher.bansystem.Ocelot;
+import de.endsmasher.bansystem.utils.ConfigHolder;
 import de.endsmasher.bansystem.utils.PlayerLogall;
 import de.endsmasher.bansystem.utils.PlayerMute;
 import net.endrealm.realmdrive.interfaces.DriveService;
@@ -29,7 +30,7 @@ public class Mute implements CommandExecutor {
 
         String prefix = "§7[§6Ocelot§7] ";
 
-        if (!sender.hasPermission("Ocelot.Team")) {
+        if (!sender.hasPermission("Ocelot.Team") || !sender.hasPermission(ConfigHolder.Configs.CONFIG.getConfig().getString("permissions.Mute"))) {
 
             sender.sendMessage(prefix +"You are not allowed to perform this command");
 

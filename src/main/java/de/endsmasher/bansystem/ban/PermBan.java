@@ -34,7 +34,7 @@ public class PermBan implements CommandExecutor {
         String prefix = "§7[§6Ocelot§7] ";
 
 
-        if (!sender.hasPermission("Ocelot.Team")) {
+        if (!sender.hasPermission("Ocelot.Team") || !sender.hasPermission(ConfigHolder.Configs.CONFIG.getConfig().getString("permissions.PermBan"))) {
 
             sender.sendMessage(prefix + "You don't have enough permissions");
 

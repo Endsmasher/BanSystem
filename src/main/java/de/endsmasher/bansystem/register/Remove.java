@@ -1,6 +1,7 @@
 package de.endsmasher.bansystem.register;
 
 import de.endsmasher.bansystem.Ocelot;
+import de.endsmasher.bansystem.utils.ConfigHolder;
 import de.endsmasher.bansystem.utils.PlayerLogall;
 import net.endrealm.realmdrive.interfaces.DriveService;
 import net.endrealm.realmdrive.query.Query;
@@ -23,7 +24,7 @@ public class Remove implements CommandExecutor {
         String prefix = "§7[§6Ocelot§7] ";
 
 
-        if (!sender.hasPermission("Ocelot.Admin")) {
+        if (!sender.hasPermission("Ocelot.Admin") || !sender.hasPermission(ConfigHolder.Configs.CONFIG.getConfig().getString("permissions.Remove"))) {
             sender.sendMessage(prefix +"You don't have enough permissions to perform this command!");
             return true;
         }
