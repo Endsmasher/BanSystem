@@ -30,13 +30,19 @@ public class Remove implements CommandExecutor {
 
         if (args.length == 1) {
 
-            Query queryall = new Query()
+            Query queryname = new Query()
                     .addEq()
                     .setField("name")
                     .setValue(args[0])
                     .close()
                     .build();
-            PlayerLogall playerLogallname = servicelogall.getReader().readObject(queryall, PlayerLogall.class);
+            PlayerLogall playerLogallname = servicelogall.getReader().readObject(queryname, PlayerLogall.class);
+
+
+            if (!servicelogall.getReader().containsObject(queryname)) {
+                sender.sendMessage(prefix +"Unknown Player " + args[0]);
+                return true;
+            }
 
             Query query = new Query()
                     .addEq()
@@ -46,10 +52,6 @@ public class Remove implements CommandExecutor {
                     .build();
             PlayerLogall playerLogall = servicelogall.getReader().readObject(query, PlayerLogall.class);
 
-            if (!servicelogall.getReader().containsObject(query)) {
-                sender.sendMessage(prefix +"Unknown Player " + args[0]);
-                return true;
-            }
 
             if (!servicelogteam.getReader().containsObject(query)) {
                 sender.sendMessage(prefix +"This Player isn't logged yet");

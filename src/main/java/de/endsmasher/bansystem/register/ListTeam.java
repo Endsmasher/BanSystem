@@ -36,29 +36,29 @@ public class ListTeam implements CommandExecutor {
         if (args.length == 1) {
 
 
-            Query queryall = new Query()
+            Query queryname = new Query()
                     .addEq()
                     .setField("name")
                     .setValue(args[0])
                     .close()
                     .build();
 
-            PlayerLogall playerLogAllName = service.getReader().readObject(queryall, PlayerLogall.class);
+            PlayerLogall playerLogAllName = service.getReader().readObject(queryname, PlayerLogall.class);
+
+
+            if (!service.getReader().containsObject(queryname)) {
+                sender.sendMessage(prefix +"Unknown Player " + args[1]);
+                return true;
+            }
 
             Query query = new Query()
                     .addEq()
-                        .setField("id")
-                        .setValue(playerLogAllName.getId())
+                    .setField("id")
+                    .setValue(playerLogAllName.getId())
                     .close()
                     .build();
 
             PlayerLogall playerLogall = service.getReader().readObject(query, PlayerLogall.class);
-
-
-            if (!service.getReader().containsObject(query)) {
-                sender.sendMessage(prefix +"Unknown Player " + args[1]);
-                return true;
-            }
 
 
             if (!servicelogteam.getReader().containsObject(query)) {

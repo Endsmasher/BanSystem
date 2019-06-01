@@ -44,22 +44,23 @@ public class UnMute implements CommandExecutor {
                 PlayerLogall playerLogallname = servicelogall.getReader().readObject(queryname, PlayerLogall.class);
 
 
+                if (!servicelogall.getReader().containsObject(queryname)) {
+
+                    sender.sendMessage(prefix +"Unknown Player " + args[0]);
+
+                    return true;
+                }
+
                 Query query = new Query()
                         .addEq()
-                            .setField("id")
-                            .setValue(playerLogallname.getId())
+                        .setField("id")
+                        .setValue(playerLogallname.getId())
                         .close()
                         .build();
 
                 PlayerLogall playerLogall = servicelogall.getReader().readObject(query, PlayerLogall.class);
 
 
-                if (!servicelogall.getReader().containsObject(query)) {
-
-                    sender.sendMessage(prefix +"Unknown Player " + args[0]);
-
-                    return true;
-                }
                 if (!service.getReader().containsObject(query)) {
 
                     sender.sendMessage(prefix +"The Player " + args[0] + " is not muted");

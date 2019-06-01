@@ -31,18 +31,6 @@ public class UnWarnPlayer implements CommandExecutor {
             sender.sendMessage(prefix +"You don't have enough permissions to perform this command");
             return true;
         }
-        if(!(args[1] == "check") || !(args[1] == "add") || !(args[1] == "remove" )|| !(args[1] == "check" ))  {
-            sender.sendMessage("§7----------§6 Ocelot §7----------");
-            sender.sendMessage(" ");
-            sender.sendMessage("§6oc log <player>§7    : §3Shows you the Team");
-            sender.sendMessage("§6oc add <player>§7    : §3Allows you to add the Target player to the Team");
-            sender.sendMessage("§6oc remove <player>§7 : §3Allows you to remove the Target player from the Team");
-            sender.sendMessage("§6oc check <player>§7  : §3Shows you the Warns/Bans/Mutes of the Target player");
-            sender.sendMessage(" ");
-            sender.sendMessage("§7--------------------------------");
-
-            return true;
-        }
 
         if (args.length == 3) {
 
@@ -55,17 +43,20 @@ public class UnWarnPlayer implements CommandExecutor {
 
             PlayerLogall playerLogallname = servicelogall.getReader().readObject(queryall, PlayerLogall.class);
 
+
+            if (!servicelogall.getReader().containsObject(queryall)) {
+                sender.sendMessage(prefix +"Unknown Player " + args[0]);
+                return true;
+            }
+
             Query query = new Query()
                     .addEq()
                     .setField("id")
                     .setValue(playerLogallname.getId())
                     .close()
                     .build();
+            PlayerLogall playerLogall = servicelogall.getReader().readObject(query, PlayerLogall.class);
 
-            if (!servicelogall.getReader().containsObject(query)) {
-                sender.sendMessage(prefix +"Unknown Player " + args[0]);
-                return true;
-            }
 
             Query queryreason = new Query()
                     .addEq()
@@ -80,7 +71,6 @@ public class UnWarnPlayer implements CommandExecutor {
                         .setValue("INACTIVE")
                     .close()
                     .build();
-
 
             if (!service.getReader().containsObject(query)) {
                 sender.sendMessage(prefix +"The Player " + args[0] + " is not warned yet");

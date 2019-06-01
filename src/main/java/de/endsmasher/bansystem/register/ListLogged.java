@@ -35,32 +35,32 @@ public class ListLogged implements CommandExecutor {
 
         if (args.length == 1) {
 
-            Query queryall = new Query()
+            Query queryname = new Query()
                     .addEq()
                         .setField("name")
                         .setValue(args[0])
                     .close()
                     .build();
 
-            PlayerLogall playerLogallname = service.getReader().readObject(queryall, PlayerLogall.class);
+            PlayerLogall playerLogallname = service.getReader().readObject(queryname, PlayerLogall.class);
 
 
-            Query query = new Query()
-                    .addEq()
-                        .setField("id")
-                        .setValue(playerLogallname.getId())
-                    .close()
-                    .build();
-
-            PlayerLogall playerLogall = service.getReader().readObject(query, PlayerLogall.class);
-
-
-                if (!servicel.getReader().containsObject(query)) {
+                if (!servicel.getReader().containsObject(queryname)) {
 
                     sender.sendMessage(prefix +"Unknown Player " + args[1]);
 
                     return true;
                 }
+
+            Query query = new Query()
+                    .addEq()
+                    .setField("id")
+                    .setValue(playerLogallname.getId())
+                    .close()
+                    .build();
+
+            PlayerLogall playerLogall = service.getReader().readObject(query, PlayerLogall.class);
+
 
                 PlayerLog playerLogTeam = service.getReader().readObject(query, PlayerLog.class);
 

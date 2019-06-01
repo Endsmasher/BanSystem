@@ -56,6 +56,13 @@ public class WarnPlayer implements CommandExecutor {
 
             PlayerLogall playerLogallname = servicelogall.getReader().readObject(queryall, PlayerLogall.class);
 
+
+            if (!servicelogall.getReader().containsObject(queryall)) {
+                sender.sendMessage(prefix + "Unknown Player " + args[0]);
+                return true;
+
+            }
+
             Query query = new Query()
                     .addEq()
                     .setField("id")
@@ -64,13 +71,6 @@ public class WarnPlayer implements CommandExecutor {
                     .build();
 
             PlayerLogall playerLogall = servicelogall.getReader().readObject(query, PlayerLogall.class);
-
-
-            if (!servicelogall.getReader().containsObject(query)) {
-                sender.sendMessage(prefix + "Unknown Player " + args[0]);
-                return true;
-
-            }
 
 
             Query queryCount = new Query()

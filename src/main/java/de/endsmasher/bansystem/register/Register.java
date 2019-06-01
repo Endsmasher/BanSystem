@@ -45,22 +45,23 @@ public class Register implements CommandExecutor {
             PlayerLogall playerLogallname = servicelogall.getReader().readObject(queryall, PlayerLogall.class);
 
 
-            Query query = new Query()
-                    .addEq()
-                        .setField("id")
-                        .setValue(playerLogallname.getId())
-                    .close()
-                    .build();
-
-            PlayerLogall playerLogall = servicelogall.getReader().readObject(query, PlayerLogall.class);
-
-
             if (!servicelogall.getReader().containsObject(queryall)) {
 
                 sender.sendMessage(prefix +"Unknown Player " + args[1]);
 
                 return true;
             }
+
+            Query query = new Query()
+                    .addEq()
+                    .setField("id")
+                    .setValue(playerLogallname.getId())
+                    .close()
+                    .build();
+
+            PlayerLogall playerLogall = servicelogall.getReader().readObject(query, PlayerLogall.class);
+
+
             if (servicelogteam.getReader().containsObject(query)) {
 
                 sender.sendMessage(prefix +"This Player is already logged");

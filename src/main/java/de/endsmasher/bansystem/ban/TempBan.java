@@ -52,6 +52,14 @@ public class TempBan implements CommandExecutor {
             PlayerLogall playerLogallname = servicelog.getReader().readObject(queryname, PlayerLogall.class);
 
 
+            if (!servicelog.getReader().containsObject(queryname)) {
+
+                sender.sendMessage(prefix +"Unknown Player " + args[0]);
+
+                return true;
+
+            }
+
             Query query = new Query()
                     .addEq()
                     .setField("id")
@@ -62,13 +70,6 @@ public class TempBan implements CommandExecutor {
             PlayerLogall playerLogall = servicelog.getReader().readObject(query, PlayerLogall.class);
 
 
-            if (!servicelog.getReader().containsObject(query)) {
-
-                sender.sendMessage(prefix +"Unknown Player " + args[0]);
-
-                return true;
-
-            }
             if (servicelogteam.getReader().containsObject(query)) {
 
                 sender.sendMessage(prefix + "You are not permitted to ban " + args[0]);

@@ -49,6 +49,13 @@ public class Unban implements CommandExecutor {
                 PlayerLogall playerLogallname = servicel.getReader().readObject(queryname, PlayerLogall.class);
 
 
+                if (!servicel.getReader().containsObject(queryname)) {
+
+                    sender.sendMessage(prefix +"Unknown Player " + args[0]);
+
+                    return true;
+                }
+
                 Query query = new Query()
                         .addEq()
                         .setField("id")
@@ -57,14 +64,6 @@ public class Unban implements CommandExecutor {
                         .build();
 
                 PlayerLogall playerLogall = servicel.getReader().readObject(query, PlayerLogall.class);
-
-
-                if (!servicel.getReader().containsObject(query)) {
-
-                    sender.sendMessage(prefix +"Unknown Player " + args[0]);
-
-                    return true;
-                }
 
 
                 if (!service.getReader().containsObject(query)) {
