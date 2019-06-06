@@ -32,10 +32,10 @@ public final class Ocelot extends JavaPlugin {
     public DriveService getMuteService() {return muteService;}
 
     public DriveService TeamLogService;
-    public DriveService getLogService() {return TeamLogService;}
+    public DriveService getTeamLogService() {return TeamLogService;}
 
     public DriveService LogService;
-    public DriveService getTeamLogService() {return LogService;}
+    public DriveService getLogService() {return LogService;}
 
     public DriveService WarncountService;
     public DriveService getWarncountService() {return WarncountService;}
@@ -88,7 +88,8 @@ public final class Ocelot extends JavaPlugin {
         ConversionHandler conversionWarn = warnService.getConversionHandler();
             WarncountService = new DriveServiceFactory().getDriveService(settings1);
             ConversionHandler conversionWarnCount = WarncountService.getConversionHandler();
-        conversionWarn.registerClasses(PlayerWarn.class, PlayerWarnCount.class);
+        conversionWarn.registerClasses(PlayerWarn.class);
+        conversionWarnCount.registerClasses(PlayerWarnCount.class);
 
 
 
@@ -117,8 +118,8 @@ public final class Ocelot extends JavaPlugin {
                 .table("log")
                 .build();
          TeamLogService = new DriveServiceFactory().getDriveService(settingslog);
-         ConversionHandler conversionlog = TeamLogService.getConversionHandler();
-         conversionlog.registerClasses(PlayerLog.class);
+         ConversionHandler conversionlogteam = TeamLogService.getConversionHandler();
+         conversionlogteam.registerClasses(PlayerLog.class);
 
 
 
@@ -132,8 +133,8 @@ public final class Ocelot extends JavaPlugin {
                 .table("logNew")
                 .build();
         LogService = new DriveServiceFactory().getDriveService(settingsl);
-        ConversionHandler conversionl = LogService.getConversionHandler();
-        conversionl.registerClasses(PlayerLogall.class);
+        ConversionHandler conversionlogall = LogService.getConversionHandler();
+        conversionlogall.registerClasses(PlayerLogall.class);
 
 
 
@@ -151,7 +152,7 @@ public final class Ocelot extends JavaPlugin {
         getCommand("mute").setExecutor(new Mute(this));
         getCommand("unmute").setExecutor(new UnMute(this));
 
-        getCommand("systemlog").setExecutor(new ListLogged(this));
+        getCommand("teamcheck").setExecutor(new ListLogged(this));
         getCommand("register").setExecutor(new Register(this));
         getCommand("remove").setExecutor(new Remove(this));
         getCommand("teamlist").setExecutor(new ListTeam(this));
