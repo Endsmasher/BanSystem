@@ -1,0 +1,76 @@
+
+# Ocelot ban System developed by Endsmasher
+#
+# Show up the Server team he is in
+#
+#
+# Website:
+#
+# www.endrealm.net/
+#
+#
+# Discord: www.endrealm.net/discord
+#
+#
+
+# Extra informations:
+#   "\n" skips a line or starts a new one
+
+BanScreen:
+
+
+  IpBanned:
+
+    line1: "§c§lYOUR NETWORK.NET"
+    line2: "\n"
+    line3: "§c§l Your Ip were permanently banned"
+    line4: "\n"
+    line5: "§7Reason:§r"
+    line6: "{REASON}"
+    line7: "\n"
+    line8: "§7You can appeal on our website: www.endrealm.net"
+    line9: "\n"
+    line10: "You were banned at"
+    line11: "{BANDATE}"
+    line12:
+    line13:
+    line14:
+    line15:
+
+
+  PermBanned:
+
+    line1: "§c§lYOUR NETWORK.NET"
+    line2: "\n"
+    line3: "§c§l You were permanently banned"
+    line4: "\n"
+    line5: "§7Reason:§r"
+    line6: "{REASON}"
+    line7: "\n"
+    line8: "§7You can appeal on our website: www.endrealm.net"
+    line9: "\n"
+    line10: "You were banned at"
+    line11: "{BANDATE}"
+    line12:
+    line13:
+    line14:
+    line15:
+
+
+  TempBanned:
+
+    line1: "§c§lYOUR NETWORK.NET"
+    line2: "\n"
+    line3: "§c§l You were temporarily banned"
+    line4: "\n"
+    line5: "§7Reason:§r"
+    line6: "{REASON"
+    line7: "\n"
+    line8: "§7You can appeal on our website: www.endrealm.net"
+    line9: "\n"
+    line10: "Your bann will expire on"
+    line11: "{UNBANDATE} "
+    line12: "\n"
+    line13: "You were banned at"
+    line14: "{BANDATE}"
+    line15:

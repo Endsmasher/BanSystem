@@ -1,6 +1,7 @@
 package de.endsmasher.bansystem.ban;
 
 import de.endsmasher.bansystem.Ocelot;
+import de.endsmasher.bansystem.utils.ConfigHolder;
 import de.endsmasher.bansystem.utils.PlayerBan;
 import de.endsmasher.bansystem.utils.PlayerLogall;
 import de.endsmasher.bansystem.utils.PlayerWarn;
@@ -31,6 +32,8 @@ public class LoginListener implements Listener {
         DriveService service1og = plugin.getLogService();
         DriveService serviceWarns = plugin.getWarnService();
 
+
+
         Player player = event.getPlayer();
         Query query = new Query()
                 .addEq()
@@ -56,8 +59,78 @@ public class LoginListener implements Listener {
 
             service.getWriter().write(new PlayerBan(player.getUniqueId().toString(), "CONSOLE", "Ban Evading", player.getAddress().toString(), -1, new Date().getTime()));
 
-            /// TODO: 28.05.2019 Change the Ban messages !
-            event.setKickMessage("§c§l Chaincraft.ORG" + "\n" + "§r§c You were permanently banned " + "\n" + "\n§7 Reason: " + "§r" + playerBan.getReason() + "\n" + "\n§7 You can appeal at our Reddit: http://reddit.com/r/ChaincraftORG " + "\n" + "\n§7 You were banned at " + new Date(playerBan.getBanDate()));
+            event.setKickMessage(ConfigHolder.Configs.CONFIG.getConfig().getString("BanScreen.line1")
+
+                    + ConfigHolder.Configs.CONFIG.getConfig().getString("BanScreen.line2")
+                    .replace("{REASON}", playerBan.getReason())
+                    .replace("{BANDATE}", playerBan.getPrettyBanDate())
+                    .replace("{UNBANDATE}", playerBan.getPrettyUnBanDate())
+
+                    + ConfigHolder.Configs.CONFIG.getConfig().getString("BanScreen.line3")
+                    .replace("{REASON}", playerBan.getReason())
+                    .replace("{BANDATE}", playerBan.getPrettyBanDate())
+                    .replace("{UNBANDATE}", playerBan.getPrettyUnBanDate())
+
+                    + ConfigHolder.Configs.CONFIG.getConfig().getString("BanScreen.line4")
+                    .replace("{REASON}", playerBan.getReason())
+                    .replace("{BANDATE}", playerBan.getPrettyBanDate())
+                    .replace("{UNBANDATE}", playerBan.getPrettyUnBanDate())
+
+                    + ConfigHolder.Configs.CONFIG.getConfig().getString("BanScreen.line5")
+                    .replace("{REASON}", playerBan.getReason())
+                    .replace("{BANDATE}", playerBan.getPrettyBanDate())
+                    .replace("{UNBANDATE}", playerBan.getPrettyUnBanDate())
+
+                    + ConfigHolder.Configs.CONFIG.getConfig().getString("BanScreen.line6")
+                    .replace("{REASON}", playerBan.getReason())
+                    .replace("{BANDATE}", playerBan.getPrettyBanDate())
+                    .replace("{UNBANDATE}", playerBan.getPrettyUnBanDate())
+
+                    + ConfigHolder.Configs.CONFIG.getConfig().getString("BanScreen.line7")
+                    .replace("{REASON}", playerBan.getReason())
+                    .replace("{BANDATE}", playerBan.getPrettyBanDate())
+                    .replace("{UNBANDATE}", playerBan.getPrettyUnBanDate())
+
+                    + ConfigHolder.Configs.CONFIG.getConfig().getString("BanScreen.line8")
+                    .replace("{REASON}", playerBan.getReason())
+                    .replace("{BANDATE}", playerBan.getPrettyBanDate())
+                    .replace("{UNBANDATE}", playerBan.getPrettyUnBanDate())
+
+                    + ConfigHolder.Configs.CONFIG.getConfig().getString("BanScreen.line9")
+                    .replace("{REASON}", playerBan.getReason())
+                    .replace("{BANDATE}", playerBan.getPrettyBanDate())
+                    .replace("{UNBANDATE}", playerBan.getPrettyUnBanDate())
+
+                    + ConfigHolder.Configs.CONFIG.getConfig().getString("BanScreen.line10")
+                    .replace("{REASON}", playerBan.getReason())
+                    .replace("{BANDATE}", playerBan.getPrettyBanDate())
+                    .replace("{UNBANDATE}", playerBan.getPrettyUnBanDate())
+
+                    + ConfigHolder.Configs.CONFIG.getConfig().getString("BanScreen.line11")
+                    .replace("{REASON}", playerBan.getReason())
+                    .replace("{BANDATE}", playerBan.getPrettyBanDate())
+                    .replace("{UNBANDATE}", playerBan.getPrettyUnBanDate())
+
+                    + ConfigHolder.Configs.CONFIG.getConfig().getString("BanScreen.line12")
+                    .replace("{REASON}", playerBan.getReason())
+                    .replace("{BANDATE}", playerBan.getPrettyBanDate())
+                    .replace("{UNBANDATE}", playerBan.getPrettyUnBanDate())
+
+                    + ConfigHolder.Configs.CONFIG.getConfig().getString("BanScreen.line13")
+                    .replace("{REASON}", playerBan.getReason())
+                    .replace("{BANDATE}", playerBan.getPrettyBanDate())
+                    .replace("{UNBANDATE}", playerBan.getPrettyUnBanDate())
+
+                    + ConfigHolder.Configs.CONFIG.getConfig().getString("BanScreen.line14")
+                    .replace("{REASON}", playerBan.getReason())
+                    .replace("{BANDATE}", playerBan.getPrettyBanDate())
+                    .replace("{UNBANDATE}", playerBan.getPrettyUnBanDate())
+
+                    + ConfigHolder.Configs.CONFIG.getConfig().getString("BanScreen.line15")
+                    .replace("{REASON}", playerBan.getReason())
+                    .replace("{BANDATE}", playerBan.getPrettyBanDate())
+                    .replace("{UNBANDATE}", playerBan.getPrettyUnBanDate()));
+
 
             event.setResult(PlayerLoginEvent.Result.KICK_BANNED);
 
@@ -73,20 +146,237 @@ public class LoginListener implements Listener {
         }
         if (playerBan.getUnBanDate() == -1) {
 
-            event.setKickMessage("§c§l Chaincraft.ORG" + "\n" + "§r§c You were permanently banned " + "\n" + "\n§7 Reason: " + "§r" + playerBan.getReason() + "\n" + "\n§7 You can appeal at our Reddit: http://reddit.com/r/ChaincraftORG " + "\n" + "\n§7 You were banned at " + new Date(playerBan.getBanDate()));
+
+            event.setKickMessage(ConfigHolder.Configs.CONFIG.getConfig().getString("BanScreen.line1")
+
+                    + ConfigHolder.Configs.CONFIG.getConfig().getString("BanScreen.line2")
+                    .replace("{REASON}", playerBan.getReason())
+                    .replace("{BANDATE}", playerBan.getPrettyBanDate())
+                    .replace("{UNBANDATE}", playerBan.getPrettyUnBanDate())
+
+                    + ConfigHolder.Configs.CONFIG.getConfig().getString("BanScreen.line3")
+                    .replace("{REASON}", playerBan.getReason())
+                    .replace("{BANDATE}", playerBan.getPrettyBanDate())
+                    .replace("{UNBANDATE}", playerBan.getPrettyUnBanDate())
+
+                    + ConfigHolder.Configs.CONFIG.getConfig().getString("BanScreen.line4")
+                    .replace("{REASON}", playerBan.getReason())
+                    .replace("{BANDATE}", playerBan.getPrettyBanDate())
+                    .replace("{UNBANDATE}", playerBan.getPrettyUnBanDate())
+
+                    + ConfigHolder.Configs.CONFIG.getConfig().getString("BanScreen.line5")
+                    .replace("{REASON}", playerBan.getReason())
+                    .replace("{BANDATE}", playerBan.getPrettyBanDate())
+                    .replace("{UNBANDATE}", playerBan.getPrettyUnBanDate())
+
+                    + ConfigHolder.Configs.CONFIG.getConfig().getString("BanScreen.line6")
+                    .replace("{REASON}", playerBan.getReason())
+                    .replace("{BANDATE}", playerBan.getPrettyBanDate())
+                    .replace("{UNBANDATE}", playerBan.getPrettyUnBanDate())
+
+                    + ConfigHolder.Configs.CONFIG.getConfig().getString("BanScreen.line7")
+                    .replace("{REASON}", playerBan.getReason())
+                    .replace("{BANDATE}", playerBan.getPrettyBanDate())
+                    .replace("{UNBANDATE}", playerBan.getPrettyUnBanDate())
+
+                    + ConfigHolder.Configs.CONFIG.getConfig().getString("BanScreen.line8")
+                    .replace("{REASON}", playerBan.getReason())
+                    .replace("{BANDATE}", playerBan.getPrettyBanDate())
+                    .replace("{UNBANDATE}", playerBan.getPrettyUnBanDate())
+
+                    + ConfigHolder.Configs.CONFIG.getConfig().getString("BanScreen.line9")
+                    .replace("{REASON}", playerBan.getReason())
+                    .replace("{BANDATE}", playerBan.getPrettyBanDate())
+                    .replace("{UNBANDATE}", playerBan.getPrettyUnBanDate())
+
+                    + ConfigHolder.Configs.CONFIG.getConfig().getString("BanScreen.line10")
+                    .replace("{REASON}", playerBan.getReason())
+                    .replace("{BANDATE}", playerBan.getPrettyBanDate())
+                    .replace("{UNBANDATE}", playerBan.getPrettyUnBanDate())
+
+                    + ConfigHolder.Configs.CONFIG.getConfig().getString("BanScreen.line11")
+                    .replace("{REASON}", playerBan.getReason())
+                    .replace("{BANDATE}", playerBan.getPrettyBanDate())
+                    .replace("{UNBANDATE}", playerBan.getPrettyUnBanDate())
+
+                    + ConfigHolder.Configs.CONFIG.getConfig().getString("BanScreen.line12")
+                    .replace("{REASON}", playerBan.getReason())
+                    .replace("{BANDATE}", playerBan.getPrettyBanDate())
+                    .replace("{UNBANDATE}", playerBan.getPrettyUnBanDate())
+
+                    + ConfigHolder.Configs.CONFIG.getConfig().getString("BanScreen.line13")
+                    .replace("{REASON}", playerBan.getReason())
+                    .replace("{BANDATE}", playerBan.getPrettyBanDate())
+                    .replace("{UNBANDATE}", playerBan.getPrettyUnBanDate())
+
+                    + ConfigHolder.Configs.CONFIG.getConfig().getString("BanScreen.line14")
+                    .replace("{REASON}", playerBan.getReason())
+                    .replace("{BANDATE}", playerBan.getPrettyBanDate())
+                    .replace("{UNBANDATE}", playerBan.getPrettyUnBanDate())
+
+                    + ConfigHolder.Configs.CONFIG.getConfig().getString("BanScreen.line15")
+                    .replace("{REASON}", playerBan.getReason())
+                    .replace("{BANDATE}", playerBan.getPrettyBanDate())
+                    .replace("{UNBANDATE}", playerBan.getPrettyUnBanDate()));
+
+
             event.setResult(PlayerLoginEvent.Result.KICK_BANNED);
 
         }
         if (playerBan.getUnBanDate() != -1) {
 
-            event.setKickMessage("§c§l Chaincraft.ORG" + "\n" + "\n§r§c You were temporarily banned " + "\n" + "\n§7 Reason: " + "§r" + playerBan.getReason() + "\n" + "\n§7 You can appeal at our Reddit: http://reddit.com/r/ChaincraftORG " + "\n" + "\n§7 Your ban will expire on " + playerBan.getUnBanDate() + "\n" + " You were banned at " + new Date(playerBan.getBanDate()));
+            event.setKickMessage(
+                    ConfigHolder.Configs.CONFIG.getConfig().getString("BanScreen.line1")
+
+                            + ConfigHolder.Configs.CONFIG.getConfig().getString("BanScreen.line2")
+                            .replace("{REASON}", playerBan.getReason())
+                            .replace("{BANDATE}", playerBan.getPrettyBanDate())
+                            .replace("{UNBANDATE}", playerBan.getPrettyUnBanDate())
+
+                            + ConfigHolder.Configs.CONFIG.getConfig().getString("BanScreen.line3")
+                            .replace("{REASON}", playerBan.getReason())
+                            .replace("{BANDATE}", playerBan.getPrettyBanDate())
+                            .replace("{UNBANDATE}", playerBan.getPrettyUnBanDate())
+
+                            + ConfigHolder.Configs.CONFIG.getConfig().getString("BanScreen.line4")
+                            .replace("{REASON}", playerBan.getReason())
+                            .replace("{BANDATE}", playerBan.getPrettyBanDate())
+                            .replace("{UNBANDATE}", playerBan.getPrettyUnBanDate())
+
+                            + ConfigHolder.Configs.CONFIG.getConfig().getString("BanScreen.line5")
+                            .replace("{REASON}", playerBan.getReason())
+                            .replace("{BANDATE}", playerBan.getPrettyBanDate())
+                            .replace("{UNBANDATE}", playerBan.getPrettyUnBanDate())
+
+                            + ConfigHolder.Configs.CONFIG.getConfig().getString("BanScreen.line6")
+                            .replace("{REASON}", playerBan.getReason())
+                            .replace("{BANDATE}", playerBan.getPrettyBanDate())
+                            .replace("{UNBANDATE}", playerBan.getPrettyUnBanDate())
+
+                            + ConfigHolder.Configs.CONFIG.getConfig().getString("BanScreen.line7")
+                            .replace("{REASON}", playerBan.getReason())
+                            .replace("{BANDATE}", playerBan.getPrettyBanDate())
+                            .replace("{UNBANDATE}", playerBan.getPrettyUnBanDate())
+
+                            + ConfigHolder.Configs.CONFIG.getConfig().getString("BanScreen.line8")
+                            .replace("{REASON}", playerBan.getReason())
+                            .replace("{BANDATE}", playerBan.getPrettyBanDate())
+                            .replace("{UNBANDATE}", playerBan.getPrettyUnBanDate())
+
+                            + ConfigHolder.Configs.CONFIG.getConfig().getString("BanScreen.line9")
+                            .replace("{REASON}", playerBan.getReason())
+                            .replace("{BANDATE}", playerBan.getPrettyBanDate())
+                            .replace("{UNBANDATE}", playerBan.getPrettyUnBanDate())
+
+                            + ConfigHolder.Configs.CONFIG.getConfig().getString("BanScreen.line10")
+                            .replace("{REASON}", playerBan.getReason())
+                            .replace("{BANDATE}", playerBan.getPrettyBanDate())
+                            .replace("{UNBANDATE}", playerBan.getPrettyUnBanDate())
+
+                            + ConfigHolder.Configs.CONFIG.getConfig().getString("BanScreen.line11")
+                            .replace("{REASON}", playerBan.getReason())
+                            .replace("{BANDATE}", playerBan.getPrettyBanDate())
+                            .replace("{UNBANDATE}", playerBan.getPrettyUnBanDate())
+
+                            + ConfigHolder.Configs.CONFIG.getConfig().getString("BanScreen.line12")
+                            .replace("{REASON}", playerBan.getReason())
+                            .replace("{BANDATE}", playerBan.getPrettyBanDate())
+                            .replace("{UNBANDATE}", playerBan.getPrettyUnBanDate())
+
+                            + ConfigHolder.Configs.CONFIG.getConfig().getString("BanScreen.line13")
+                            .replace("{REASON}", playerBan.getReason())
+                            .replace("{BANDATE}", playerBan.getPrettyBanDate())
+                            .replace("{UNBANDATE}", playerBan.getPrettyUnBanDate())
+
+                            + ConfigHolder.Configs.CONFIG.getConfig().getString("BanScreen.line14")
+                            .replace("{REASON}", playerBan.getReason())
+                            .replace("{BANDATE}", playerBan.getPrettyBanDate())
+                            .replace("{UNBANDATE}", playerBan.getPrettyUnBanDate())
+
+                            + ConfigHolder.Configs.CONFIG.getConfig().getString("BanScreen.line15")
+                            .replace("{REASON}", playerBan.getReason())
+                            .replace("{BANDATE}", playerBan.getPrettyBanDate())
+                            .replace("{UNBANDATE}", playerBan.getPrettyUnBanDate()));
+
+
             event.setResult(PlayerLoginEvent.Result.KICK_BANNED);
         }
 
         if (playerBan.getReason() == "Too Many Warns") {
             List<PlayerWarn> playerWarns = serviceWarns.getReader().readAllObjects(query, PlayerWarn.class);
 
-            event.setKickMessage("§c§l Chaincraft.ORG" + "\n" + "\n§r§c You were temporarily banned " + "\n" + "\n§7 Reason: " + "§r" + playerBan.getReason() + "\n" + "\n§7 You can appeal at our Reddit: http://reddit.com/r/ChaincraftORG " + "\n" + "\n§7 Your ban will expire on " + playerBan.getUnBanDate() + "\n" + " You were banned at " + new Date(playerBan.getBanDate()));
+            event.setKickMessage(ConfigHolder.Configs.CONFIG.getConfig().getString("BanScreen.line1")
+
+                    + ConfigHolder.Configs.CONFIG.getConfig().getString("BanScreen.line2")
+                    .replace("{REASON}", playerBan.getReason())
+                    .replace("{BANDATE}", playerBan.getPrettyBanDate())
+                    .replace("{UNBANDATE}", playerBan.getPrettyUnBanDate())
+
+                    + ConfigHolder.Configs.CONFIG.getConfig().getString("BanScreen.line3")
+                    .replace("{REASON}", playerBan.getReason())
+                    .replace("{BANDATE}", playerBan.getPrettyBanDate())
+                    .replace("{UNBANDATE}", playerBan.getPrettyUnBanDate())
+
+                    + ConfigHolder.Configs.CONFIG.getConfig().getString("BanScreen.line4")
+                    .replace("{REASON}", playerBan.getReason())
+                    .replace("{BANDATE}", playerBan.getPrettyBanDate())
+                    .replace("{UNBANDATE}", playerBan.getPrettyUnBanDate())
+
+                    + ConfigHolder.Configs.CONFIG.getConfig().getString("BanScreen.line5")
+                    .replace("{REASON}", playerBan.getReason())
+                    .replace("{BANDATE}", playerBan.getPrettyBanDate())
+                    .replace("{UNBANDATE}", playerBan.getPrettyUnBanDate())
+
+                    + ConfigHolder.Configs.CONFIG.getConfig().getString("BanScreen.line6")
+                    .replace("{REASON}", playerBan.getReason())
+                    .replace("{BANDATE}", playerBan.getPrettyBanDate())
+                    .replace("{UNBANDATE}", playerBan.getPrettyUnBanDate())
+
+                    + ConfigHolder.Configs.CONFIG.getConfig().getString("BanScreen.line7")
+                    .replace("{REASON}", playerBan.getReason())
+                    .replace("{BANDATE}", playerBan.getPrettyBanDate())
+                    .replace("{UNBANDATE}", playerBan.getPrettyUnBanDate())
+
+                    + ConfigHolder.Configs.CONFIG.getConfig().getString("BanScreen.line8")
+                    .replace("{REASON}", playerBan.getReason())
+                    .replace("{BANDATE}", playerBan.getPrettyBanDate())
+                    .replace("{UNBANDATE}", playerBan.getPrettyUnBanDate())
+
+                    + ConfigHolder.Configs.CONFIG.getConfig().getString("BanScreen.line9")
+                    .replace("{REASON}", playerBan.getReason())
+                    .replace("{BANDATE}", playerBan.getPrettyBanDate())
+                    .replace("{UNBANDATE}", playerBan.getPrettyUnBanDate())
+
+                    + ConfigHolder.Configs.CONFIG.getConfig().getString("BanScreen.line10")
+                    .replace("{REASON}", playerBan.getReason())
+                    .replace("{BANDATE}", playerBan.getPrettyBanDate())
+                    .replace("{UNBANDATE}", playerBan.getPrettyUnBanDate())
+
+                    + ConfigHolder.Configs.CONFIG.getConfig().getString("BanScreen.line11")
+                    .replace("{REASON}", playerBan.getReason())
+                    .replace("{BANDATE}", playerBan.getPrettyBanDate())
+                    .replace("{UNBANDATE}", playerBan.getPrettyUnBanDate())
+
+                    + ConfigHolder.Configs.CONFIG.getConfig().getString("BanScreen.line12")
+                    .replace("{REASON}", playerBan.getReason())
+                    .replace("{BANDATE}", playerBan.getPrettyBanDate())
+                    .replace("{UNBANDATE}", playerBan.getPrettyUnBanDate())
+
+                    + ConfigHolder.Configs.CONFIG.getConfig().getString("BanScreen.line13")
+                    .replace("{REASON}", playerBan.getReason())
+                    .replace("{BANDATE}", playerBan.getPrettyBanDate())
+                    .replace("{UNBANDATE}", playerBan.getPrettyUnBanDate())
+
+                    + ConfigHolder.Configs.CONFIG.getConfig().getString("BanScreen.line14")
+                    .replace("{REASON}", playerBan.getReason())
+                    .replace("{BANDATE}", playerBan.getPrettyBanDate())
+                    .replace("{UNBANDATE}", playerBan.getPrettyUnBanDate())
+
+                    + ConfigHolder.Configs.CONFIG.getConfig().getString("BanScreen.line15")
+                    .replace("{REASON}", playerBan.getReason())
+                    .replace("{BANDATE}", playerBan.getPrettyBanDate())
+                    .replace("{UNBANDATE}", playerBan.getPrettyUnBanDate()));
+
             event.setResult(PlayerLoginEvent.Result.KICK_BANNED);
         }
     }

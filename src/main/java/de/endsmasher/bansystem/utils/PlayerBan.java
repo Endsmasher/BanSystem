@@ -64,7 +64,9 @@ public class PlayerBan  {
     public String getPrettyBanDate() {
         SimpleDateFormat format = new SimpleDateFormat("EEE dd / MM / yyyy");
         return format.format(new Date(getBanDate()));
-
     }
-
+    public String getPrettyUnBanDate() {
+        SimpleDateFormat format = new SimpleDateFormat("EEE dd / MM / yyyy");
+        return format.format(new Date(getUnBanDate()));
+    }
 }
