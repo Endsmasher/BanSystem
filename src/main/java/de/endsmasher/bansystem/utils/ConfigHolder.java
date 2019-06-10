@@ -53,7 +53,7 @@ public class ConfigHolder {
     }
 
     public enum Configs {
-        CONFIG("config.yml");
+        CONFIG("config.yml"), BanScreen("BanScreen.yml");
 
         private String name;
         private FileConfiguration fileConfiguration;

@@ -4,6 +4,7 @@ import de.endsmasher.bansystem.Ocelot;
 import de.endsmasher.bansystem.utils.ConfigHolder;
 import de.endsmasher.bansystem.utils.PlayerLogall;
 import de.endsmasher.bansystem.utils.PlayerWarn;
+import de.endsmasher.bansystem.utils.PlayerWarnCount;
 import net.endrealm.realmdrive.interfaces.DriveService;
 import net.endrealm.realmdrive.query.Query;
 import org.bukkit.Bukkit;
@@ -24,6 +25,7 @@ public class UnWarnPlayer implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 
         DriveService service = plugin.getWarnService();
+        DriveService serviceWarnCount = plugin.getWarncountService();
         DriveService servicelogall = plugin.getLogService();
 
         String prefix = "§7[§6Ocelot§7] ";
@@ -73,6 +75,13 @@ public class UnWarnPlayer implements CommandExecutor {
                     .close()
                     .build();
 
+            Query querycount = new Query()
+                    .addEq()
+                        .setField("count")
+                        .setValue(-1)
+                    .close()
+                    .build();
+
             if (!service.getReader().containsObject(query)) {
                 sender.sendMessage(prefix +"The Player " + args[0] + " is not warned yet");
                 return true;
@@ -86,12 +95,15 @@ public class UnWarnPlayer implements CommandExecutor {
                 return true;
             }
             PlayerWarn playerwarn = service.getReader().readObject(query, PlayerWarn.class);
+            PlayerWarnCount playerWarnCount = serviceWarnCount.getReader().readObject(query, PlayerWarnCount.class);
 
             service.getWriter().write(playerwarn, true, query2);
 
+            serviceWarnCount.getWriter().write(playerWarnCount, true, querycount);
+
             sender.sendMessage(prefix +"Successful unwarned " + args[0]);
-            Bukkit.broadcastMessage(prefix + sender.getName() + " unwarned " + args[0] + " for reason: " + args[2]);
-        } else sender.sendMessage(prefix + "§c Please use /unwarn <player> <warn reason> <unwarn reason>");
+            Bukkit.broadcastMessage(prefix + sender.getName() + " unwarned " + args[0] + " for reason: " + args[1]);
+        } else sender.sendMessage(prefix + "Please use /unwarn <player> <warn reason> <unwarn reason>");
         return false;
     }
 }

@@ -98,16 +98,13 @@ public class WarnPlayer implements CommandExecutor {
 
             Bukkit.broadcastMessage(prefix + sender.getName() + " warned " + args[0] + " for " + args[1]);
             sender.sendMessage(prefix + "Successful warned " + args[0] + " for " + args[1]);
+
             PlayerWarnCount playerWarnCount = serviceWarnCount.getReader().readObject(query, PlayerWarnCount.class);
             List <PlayerWarn> playerWarns = service.getReader().readAllObjects(query, PlayerWarn.class);
             PlayerWarn playerwarn = service.getReader().readObject(query, PlayerWarn.class);
 
-
-            if (serviceWarnCount.getReader().containsObject(query)) {
                 serviceWarnCount.getWriter().write(playerWarnCount, true, queryCount);
-            } else {
-                serviceWarnCount.getWriter().write(new PlayerWarnCount(playerLogall.getId(), 1));
-            }
+
 
             if (Bukkit.getPlayer(playerLogall.getId()) != null && playerWarnCount.getCount() != bancount) {
 

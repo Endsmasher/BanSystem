@@ -22,6 +22,7 @@ public class UnMute implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 
         DriveService service = plugin.getMuteService();
+
         DriveService servicelogall = plugin.getLogService();
 
         String prefix = "§7[§6Ocelot§7] ";
@@ -59,6 +60,7 @@ public class UnMute implements CommandExecutor {
                         .close()
                         .build();
 
+
                 PlayerLogall playerLogall = servicelogall.getReader().readObject(query, PlayerLogall.class);
 
 
@@ -77,6 +79,7 @@ public class UnMute implements CommandExecutor {
                                 .setValue(playerLogall.getId())
                                 .close()
                                 .build(), 1);
+
 
 
                 sender.sendMessage(prefix + "Successful unmuted " + args[0]);

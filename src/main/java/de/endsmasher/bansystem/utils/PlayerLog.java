@@ -9,6 +9,9 @@ public class PlayerLog {
 
 
     @SaveVar
+    private String name;
+
+    @SaveVar
     private String id;
 
     @SaveVar
@@ -18,7 +21,8 @@ public class PlayerLog {
     private long AddTime;
 
 
-    public PlayerLog(String id, String SenderName, long AddTime) {
+    public PlayerLog(String id, String name, String SenderName, long AddTime) {
+        this.name = name;
         this.id = id;
         this.SenderName = SenderName;
         this.AddTime = AddTime;
@@ -27,6 +31,8 @@ public class PlayerLog {
     public String getid() {
         return id;
     }
+
+    public String getName() {return name;}
 
     public String getSenderName() {
         return SenderName;

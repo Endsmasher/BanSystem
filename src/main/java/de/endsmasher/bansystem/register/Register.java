@@ -39,7 +39,7 @@ public class Register implements CommandExecutor {
             Query queryall = new Query()
                     .addEq()
                     .setField("name")
-                    .setValue(args[1])
+                    .setValue(args[0])
                     .close()
                     .build();
 
@@ -48,7 +48,7 @@ public class Register implements CommandExecutor {
 
             if (!servicelogall.getReader().containsObject(queryall)) {
 
-                sender.sendMessage(prefix +"Unknown Player " + args[1]);
+                sender.sendMessage(prefix +"Unknown Player " + args[0]);
 
                 return true;
             }
@@ -70,10 +70,10 @@ public class Register implements CommandExecutor {
                 return true;
             }
 
-            servicelogteam.getWriter().write(new PlayerLog(playerLogall.getId(), sender.getName(), new Date().getTime()));
+            servicelogteam.getWriter().write(new PlayerLog(playerLogall.getId(), playerLogall.getName(), sender.getName(), new Date().getTime()));
 
 
-            sender.sendMessage(prefix +"Successful registered " + args[1]);
+            sender.sendMessage(prefix +"Successful registered " + args[0]);
 
         } else sender.sendMessage(prefix +"Please use /register <player>");
 

@@ -56,6 +56,8 @@ public final class Ocelot extends JavaPlugin {
 
         configHolder = new ConfigHolder(this);
 
+        BanScreenStrings.init();
+
         String hostUrl = ConfigHolder.Configs.CONFIG.getConfig().getString("settings.hosturl");
         String password = ConfigHolder.Configs.CONFIG.getConfig().getString("settings.password");
         String username = ConfigHolder.Configs.CONFIG.getConfig().getString("settings.username");
@@ -102,6 +104,7 @@ public final class Ocelot extends JavaPlugin {
                 .database("Ocelot")
                 .table("mute")
                 .build();
+
         muteService = new DriveServiceFactory().getDriveService(settingsmute);
         ConversionHandler conversionmute = muteService.getConversionHandler();
         conversionmute.registerClasses(PlayerMute.class);
@@ -133,8 +136,8 @@ public final class Ocelot extends JavaPlugin {
                 .table("logNew")
                 .build();
         LogService = new DriveServiceFactory().getDriveService(settingsl);
-        ConversionHandler conversionlogall = LogService.getConversionHandler();
-        conversionlogall.registerClasses(PlayerLogall.class);
+        ConversionHandler conversionlog = LogService.getConversionHandler();
+        conversionlog.registerClasses(PlayerLogall.class);
 
 
 

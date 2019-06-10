@@ -78,7 +78,7 @@ public class Unban implements CommandExecutor {
                                     .build(), 1);
 
 
-                    sender.sendMessage(prefix + " Successful unbanned " + args[0]);
+                    sender.sendMessage(prefix + "Successful unbanned " + args[0]);
 
                 if (ConfigHolder.Configs.CONFIG.getConfig().getBoolean("settings.BroadcastBanMessages") == true) {
 

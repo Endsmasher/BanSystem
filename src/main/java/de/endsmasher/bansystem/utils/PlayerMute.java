@@ -51,7 +51,7 @@ public class PlayerMute {
         return format.format(new Date(getMutedate()));
     }
     public String getPrettyUnmuteDate() {
-        SimpleDateFormat formatunmute = new SimpleDateFormat("EEE dd / MM");
+        SimpleDateFormat formatunmute = new SimpleDateFormat("EEE dd / MM / yyyy");
         return  formatunmute.format(new Date(getUnmutedate()));
     }
 

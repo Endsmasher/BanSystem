@@ -34,54 +34,26 @@ public class ListTeam implements CommandExecutor {
             return true;
         }
 
-        if (args.length == 1) {
+        if (!(args.length == 0)) {
+            sender.sendMessage(prefix + "please use /teamlist");
+            return true;
+        }
 
-
-            Query queryname = new Query()
-                    .addEq()
-                    .setField("name")
-                    .setValue(args[0])
-                    .close()
-                    .build();
-
-            PlayerLogall playerLogAllName = service.getReader().readObject(queryname, PlayerLogall.class);
-
-
-            if (!service.getReader().containsObject(queryname)) {
-                sender.sendMessage(prefix +"Unknown Player " + args[1]);
-                return true;
-            }
 
             Query query = new Query()
-                    .addEq()
-                    .setField("id")
-                    .setValue(playerLogAllName.getId())
-                    .close()
                     .build();
 
-            PlayerLogall playerLogall = service.getReader().readObject(query, PlayerLogall.class);
+            List <PlayerLog> playerLogs = servicelogteam.getReader().readAllObjects(query, PlayerLog.class);
 
-
-            if (!servicelogteam.getReader().containsObject(query)) {
-                sender.sendMessage(prefix +"This Player isn't logged yet!");
-                return true;
-            }
-
-
-            List <PlayerLog> playerLogs = service.getReader().readAllObjects(query, PlayerLog.class);
+                sender.sendMessage("§6 ----------  Team list  ----------");
+                sender.sendMessage(" ");
 
             for (PlayerLog playerLog : playerLogs) {
-                sender.sendMessage("§6 ---------- " + args[1] + " ----------");
-                sender.sendMessage(" ");
-                sender.sendMessage("§6- UUID:   §7" + playerLog.getid());
-                sender.sendMessage("§6- Added by:   §7" + playerLog.getSenderName());
-                sender.sendMessage("§6- Date:   §7" + playerLog.getPrettyAddDate());
-                sender.sendMessage(" ");
-                sender.sendMessage("§6 ---------- " + args[1] + " ----------");
+                sender.sendMessage("" + playerLog.getName());
             }
+                sender.sendMessage(" ");
+                sender.sendMessage("§6 ----------  Team list  ----------");
 
-        } else
-            sender.sendMessage(prefix + "please use /teamlist");
         return false;
     }
 }

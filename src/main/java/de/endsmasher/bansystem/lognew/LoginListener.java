@@ -2,6 +2,7 @@ package de.endsmasher.bansystem.lognew;
 
 import de.endsmasher.bansystem.Ocelot;
 import de.endsmasher.bansystem.utils.PlayerLogall;
+import de.endsmasher.bansystem.utils.PlayerWarnCount;
 import net.endrealm.realmdrive.interfaces.DriveService;
 import net.endrealm.realmdrive.query.Query;
 import org.bukkit.entity.Player;
@@ -20,9 +21,10 @@ public class LoginListener implements Listener {
         this.plugin = plugin;
     }
 
-        @EventHandler(ignoreCancelled = true, priority = EventPriority.LOW)
+        @EventHandler(ignoreCancelled = true, priority = EventPriority.LOWEST)
     public void onPlayerJoin(PlayerLoginEvent event) {
-        DriveService service = plugin.getTeamLogService();
+        DriveService service = plugin.getLogService();
+        DriveService serviceWarnCount = plugin.getWarncountService();
         Player player = event.getPlayer();
 
 
@@ -54,5 +56,7 @@ public class LoginListener implements Listener {
              , event.getAddress().getHostAddress()
              , new Date().getTime()));
 
+        serviceWarnCount.getWriter().write(new PlayerWarnCount(player.getUniqueId().toString()
+                , 0));
     }
 }

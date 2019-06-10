@@ -48,7 +48,7 @@ public class Mute implements CommandExecutor {
             PlayerLogall playerLogallname = servicelog.getReader().readObject(queryname, PlayerLogall.class);
 
 
-            if (!servicelogteam.getReader().containsObject(queryname)) {
+            if (!servicelog.getReader().containsObject(queryname)) {
 
                 sender.sendMessage(prefix + "Unknown Player " + args[0]);
 
@@ -65,7 +65,7 @@ public class Mute implements CommandExecutor {
             PlayerLogall playerLogall = servicelog.getReader().readObject(query, PlayerLogall.class);
 
 
-            if (servicelog.getReader().containsObject(query)) {
+            if (servicelogteam.getReader().containsObject(query)) {
 
                 sender.sendMessage(prefix + "You are not allowed to mute " + args[0]);
 

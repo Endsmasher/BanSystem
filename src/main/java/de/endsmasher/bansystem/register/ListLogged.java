@@ -46,9 +46,9 @@ public class ListLogged implements CommandExecutor {
             PlayerLogall playerLogallname = service.getReader().readObject(queryname, PlayerLogall.class);
 
 
-                if (!servicel.getReader().containsObject(queryname)) {
+                if (!service.getReader().containsObject(queryname)) {
 
-                    sender.sendMessage(prefix +"Unknown Player " + args[1]);
+                    sender.sendMessage(prefix +"Unknown Player " + args[0]);
 
                     return true;
                 }
@@ -63,20 +63,24 @@ public class ListLogged implements CommandExecutor {
             PlayerLogall playerLogall = service.getReader().readObject(query, PlayerLogall.class);
 
 
-                PlayerLog playerLogTeam = service.getReader().readObject(query, PlayerLog.class);
+                PlayerLog playerLogTeam = servicel.getReader().readObject(query, PlayerLog.class);
 
 
-                if (!service.getReader().containsObject(query)) {
+                if (!servicel.getReader().containsObject(query)) {
 
                     sender.sendMessage(prefix +"This Player isn't logged yet!");
 
                     return true;
                 }
 
-                sender.sendMessage("§6 ---------- " + args[1] + " ----------");
+                sender.sendMessage("§6 ---------- " + args[0] + " ----------");
+                sender.sendMessage(" ");
+                sender.sendMessage("§6- Name:   §7 " + playerLogTeam.getName());
                 sender.sendMessage("§6- UUID:   §7" + playerLogTeam.getid());
                 sender.sendMessage("§6- Added by:   §7" + playerLogTeam.getSenderName());
                 sender.sendMessage("§6- Date:   §7" + playerLogTeam.getPrettyAddDate());
+                sender.sendMessage(" ");
+                sender.sendMessage("§6 ---------- " + args[0] + " ----------");
 
         } else
 
